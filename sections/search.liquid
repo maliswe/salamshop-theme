@@ -26,7 +26,7 @@
                   {% render 'search-product', product: result, compact: false %}
                 {% else %}
                   {% assign result_image = result.featured_image | default: result.image %}
-                  {% if result_image and settings.search_show_images %}{{ result_image | image_url: width: 480 | image_tag: loading: 'lazy', alt: '' }}{% endif %}
+                  {% if result_image and settings.search_show_images %}{{ result_image | image_url: width: 720 | image_tag: loading: 'lazy', widths: '160, 240, 360, 480, 720', sizes: '(min-width: 64rem) 20vw, (min-width: 40rem) 40vw, 100vw', alt: '' }}{% endif %}
                   <span class="search-product-title">{{ result.title | escape }}</span>
                   <span>{{ result.content | strip_html | truncatewords: 25 | escape }}</span>
                 {% endif %}

@@ -1,5 +1,12 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+{% liquid
+  assign text_direction = 'ltr'
+  assign rtl_locales = 'ar,fa,he,ur' | split: ','
+  if rtl_locales contains request.locale.iso_code
+    assign text_direction = 'rtl'
+  endif
+%}
+<html lang="{{ request.locale.iso_code }}" dir="{{ text_direction }}">
   <head>
     {% # Inlined CSS Variables %}
     {% render 'css-variables' %}
@@ -18,9 +25,12 @@
   </head>
 
   <body>
+    <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    <main id="MainContent" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
 
     {% sections 'footer-group' %}
   </body>

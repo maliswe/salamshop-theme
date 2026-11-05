@@ -11,7 +11,8 @@
     "comment_form_email": "E-post",
     "comment_form_name": "Namn",
     "comment_form_submit": "Publicera kommentar",
-    "comment_form_title": "Skriv en kommentar"
+    "comment_form_title": "Skriv en kommentar",
+    "empty": "Det finns inga artiklar att visa ännu."
   },
   "cart": {
     "checkout": "Till kassan",
@@ -106,11 +107,17 @@
   "accessibility": {
     "account": "Mitt konto",
     "cart": "Varukorg",
-    "search": "Sök"
+    "search": "Sök",
+    "skip_to_content": "Hoppa till innehållet"
   },
   "pagination": {
     "previous": "Föregående",
-    "next": "Nästa"
+    "next": "Nästa",
+    "label": "Sidnavigering"
+  },
+  "footer": {
+    "navigation": "Sidfotsnavigation",
+    "payment_methods": "Tillgängliga betalningsmetoder"
   },
   "meta": {
     "tags": "taggad med \"{{ tags }}\"",

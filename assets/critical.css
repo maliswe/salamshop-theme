@@ -18,6 +18,27 @@ body {
   min-height: 100svh;
 }
 
+main {
+  flex: 1 0 auto;
+  min-inline-size: 0;
+}
+
+.skip-link {
+  position: fixed;
+  inset-block-start: var(--space-3, 0.75rem);
+  inset-inline-start: var(--space-3, 0.75rem);
+  z-index: 1000;
+  padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+  border-radius: var(--radius-button, 0.25rem);
+  background: var(--color-button-primary, #252b29);
+  color: var(--color-button-primary-text, #fffefb);
+  transform: translateY(calc(-100% - 2rem));
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }

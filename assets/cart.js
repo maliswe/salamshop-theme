@@ -114,8 +114,8 @@
       try {
         const cart = await this.request(config.dataset.cartJsonUrl, { headers: { Accept: 'application/json' } });
         document.querySelectorAll('[data-cart-count]').forEach(count => { count.textContent = String(cart.item_count); });
-        document.querySelectorAll('[data-cart-count-link]').forEach(link => {
-          link.setAttribute('aria-label', config.dataset.cartCountLabel.replace('__COUNT__', String(cart.item_count)));
+        document.querySelectorAll('[data-cart-count-label]').forEach(label => {
+          label.textContent = config.dataset.cartCountLabel.replace('__COUNT__', String(cart.item_count));
         });
       } catch (_) { /* A count refresh must never repeat a cart mutation. */ }
     }

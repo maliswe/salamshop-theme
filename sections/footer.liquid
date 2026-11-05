@@ -1,39 +1,68 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
-
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
+<footer class="site-footer">
+  <div class="site-footer__inner container">
+    {% if section.settings.menu.links != blank %}
+      <nav class="footer__links" aria-label="{{ 'footer.navigation' | t | escape }}">
+        <ul role="list">
+          {% for link in section.settings.menu.links %}
+            <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
     {% endif %}
+
+    {% if section.settings.show_payment_icons and shop.enabled_payment_types != empty %}
+      <div class="footer__payment" aria-label="{{ 'footer.payment_methods' | t | escape }}">
+        <ul role="list">
+          {% for type in shop.enabled_payment_types %}<li>{{ type | payment_type_svg_tag }}</li>{% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <p class="footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. {{ powered_by_link }}
+    </p>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+  .site-footer {
+    margin-block-start: var(--section-space);
+    padding-block: var(--space-7);
+    border-block-start: var(--border-default);
+    background: var(--color-surface);
   }
-  footer a {
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-6);
+  }
+  .site-footer a {
     text-decoration: none;
     color: var(--color-foreground);
   }
-  footer .footer__links,
-  footer .footer__payment {
+  .site-footer a:hover { text-decoration: underline; }
+  .footer__links ul,
+  .footer__payment ul {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .footer__payment svg {
+    inline-size: auto;
+    block-size: 1.5rem;
+  }
+  .footer__copyright {
+    font-size: var(--font-size-small);
+  }
+  @media (min-width: 64rem) {
+    .site-footer__inner {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    .footer__copyright { grid-column: 1 / -1; }
   }
 {% endstylesheet %}
 

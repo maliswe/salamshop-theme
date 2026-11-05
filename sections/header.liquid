@@ -64,8 +64,9 @@
           <a class="header-icon-button header-account-desktop" href="{{ routes.account_url }}" aria-label="{{ 'accessibility.account' | t | escape }}"><span aria-hidden="true">{{ 'icon-account.svg' | inline_asset_content }}</span></a>
         {% endif %}
         <span data-cart-section data-section-id="{{ section.id }}">
-          <a class="header-icon-button header-cart" href="{{ routes.cart_url }}" aria-label="{{ 'header.cart_count' | t: count: cart.item_count | escape }}" data-cart-count-link{% if settings.cart_behavior == 'drawer' %} data-cart-drawer-open aria-haspopup="dialog"{% endif %}>
+          <a class="header-icon-button header-cart" href="{{ routes.cart_url }}" data-cart-count-link{% if settings.cart_behavior == 'drawer' %} data-cart-drawer-open aria-haspopup="dialog"{% endif %}>
             <span aria-hidden="true">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+            <span class="header-visually-hidden" data-cart-count-label>{{ 'header.cart_count' | t: count: cart.item_count }}</span>
             <span class="header-cart-count" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
           </a>
         </span>

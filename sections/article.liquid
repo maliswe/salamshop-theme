@@ -6,63 +6,64 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/article
 {% endcomment %}
 
-{% if article.image %}
-  {{ article.image | image_url: width: 1000 | image_tag }}
-{% endif %}
+{{ 'secondary.css' | asset_url | stylesheet_tag }}
 
-<h1>{{ article.title }}</h1>
+<article class="secondary-page article-page section">
+  {% if article.image %}
+    {{ article.image | image_url: width: 1800 | image_tag: class: 'article-page__hero', loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1500, 1800', sizes: '(min-width: 75rem) 70rem, 100vw', alt: article.image.alt | default: article.title | escape }}
+  {% endif %}
+  <header class="secondary-page__header">
+    <h1>{{ article.title | escape }}</h1>
+    {% assign date = article.published_at | time_tag: format: 'date' %}
+    <p class="article-page__meta">{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+  </header>
+  <div class="article-page__content rte">{{ article.content }}</div>
 
-{% assign date = article.published_at | time_tag: format: 'date' %}
-<p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
+  {% if blog.comments_enabled? %}
+    <section class="article-comments" id="comments" aria-labelledby="CommentsHeading-{{ section.id }}">
+      <h2 id="CommentsHeading-{{ section.id }}">{{ 'blog.article_comments' | t }}</h2>
+      {% paginate article.comments by 10 %}
+        {% for comment in article.comments %}
+          <article class="article-comment">
+            <h3>{{ comment.author | escape }}</h3>
+            <p class="article-page__meta">{{ comment.created_at | time_tag: format: 'date' }}</p>
+            <div class="prose">{{ comment.content }}</div>
+          </article>
+        {% endfor %}
 
-{{ article.content }}
+        {% if paginate.pages > 1 %}
+          <nav class="secondary-pagination" aria-label="{{ 'pagination.label' | t | escape }}">
+            {% assign previous_label = 'pagination.previous' | t %}
+            {% assign next_label = 'pagination.next' | t %}
+            {{ paginate | default_pagination: previous: previous_label, next: next_label, anchor: 'comments' }}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
+    </section>
 
-{% if blog.comments_enabled? %}
-  <h2>{{ 'blog.article_comments' | t }}</h2>
+    {% form 'new_comment', article, class: 'comment-form' %}
+      <h2>{{ 'blog.comment_form_title' | t }}</h2>
+      {% if form.errors %}<div role="alert">{{ form.errors | default_errors }}</div>{% endif %}
 
-  <div id="comments">
-    {% paginate article.comments by 10 %}
-      {% for comment in article.comments %}
-        <div>
-          <p>{{ comment.author }}</p>
-          <p>
-            {{- comment.created_at | time_tag: format: 'date' -}}
-          </p>
-          <p>{{ comment.content }}</p>
-        </div>
-      {% endfor %}
+      <div>
+        <label for="CommentAuthor-{{ section.id }}">{{ 'blog.comment_form_name' | t }}</label>
+        <input type="text" name="comment[author]" id="CommentAuthor-{{ section.id }}" value="{{ form.author | escape }}" autocomplete="name" required>
+      </div>
 
-      {% assign previous_label = 'pagination.previous' | t %}
+      <div>
+        <label for="CommentEmail-{{ section.id }}">{{ 'blog.comment_form_email' | t }}</label>
+        <input type="email" name="comment[email]" id="CommentEmail-{{ section.id }}" value="{{ form.email | escape }}" autocomplete="email" required>
+      </div>
 
-      {% assign next_label = 'pagination.next' | t %}
+      <div>
+        <label for="CommentBody-{{ section.id }}">{{ 'blog.comment_form_body' | t }}</label>
+        <textarea name="comment[body]" id="CommentBody-{{ section.id }}" required>{{ form.body | escape }}</textarea>
+      </div>
 
-      {{ paginate | default_pagination: previous: previous_label, next: next_label, anchor: 'comments' }}
-    {% endpaginate %}
-  </div>
-
-  {% form 'new_comment', article %}
-    <h2>{{ 'blog.comment_form_title' | t }}</h2>
-
-    {{ form.errors | default_errors }}
-
-    <div>
-      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
-    </div>
-
-    <div>
-      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-    </div>
-
-    <div>
-      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-    </div>
-
-    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-  {% endform %}
-{% endif %}
+      <button type="submit">{{ 'blog.comment_form_submit' | t }}</button>
+    {% endform %}
+  {% endif %}
+</article>
 
 {% schema %}
 {

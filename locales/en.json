@@ -11,7 +11,8 @@
     "comment_form_email": "Email",
     "comment_form_name": "Name",
     "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_title": "Add a comment",
+    "empty": "There are no articles to show yet."
   },
   "cart": {
     "checkout": "Checkout",
@@ -106,11 +107,17 @@
   "accessibility": {
     "account": "My account",
     "cart": "Cart",
-    "search": "Search"
+    "search": "Search",
+    "skip_to_content": "Skip to content"
   },
   "pagination": {
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "label": "Pagination"
+  },
+  "footer": {
+    "navigation": "Footer navigation",
+    "payment_methods": "Available payment methods"
   },
   "meta": {
     "tags": "tagged \"{{ tags }}\"",
