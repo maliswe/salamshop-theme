@@ -75,5 +75,28 @@
       "subtitle": "Subtitle",
       "normal": "Normal text"
     }
+  },
+  "design_system": {
+    "body_font": "Body and controls font",
+    "heading_font": "Heading font",
+    "base_font_size": "Base font size",
+    "width_standard": "Standard",
+    "section_spacing": "Section spacing",
+    "section_spacing_info": "Total vertical spacing per content section. Reduced on mobile. Header and footer groups are excluded.",
+    "surface": "Surface background",
+    "secondary_surface": "Secondary surface",
+    "accent": "Gold accent",
+    "border": "Decorative borders",
+    "contrast_info": "Use dark text on light surfaces. Gold is decorative. Check text, button and focus contrast after changing colors.",
+    "controls": "Buttons and corners",
+    "button_primary_background": "Primary button background",
+    "button_primary_text": "Primary button text",
+    "button_secondary_background": "Secondary button background",
+    "button_secondary_text": "Secondary button text",
+    "button_radius": "Button corner radius",
+    "card_radius": "Card corner radius",
+    "brand": "Brand",
+    "logo": "Original SalamShop logo",
+    "logo_info": "Upload the original SalamShop logo unchanged. The header will use it in a later task. Do not use a placeholder as the production logo."
   }
 }

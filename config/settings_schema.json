@@ -18,8 +18,24 @@
         "type": "font_picker",
         "id": "type_primary_font",
         "default": "work_sans_n4",
-        "label": "t:general.primary"
+        "label": "t:design_system.body_font"
       },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "label": "t:design_system.heading_font",
+        "default": "serif"
+      },
+      {
+        "type": "range",
+        "id": "base_font_size",
+        "label": "t:design_system.base_font_size",
+        "min": 16,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "default": 16
+      }
     ]
   },
   {
@@ -31,6 +47,10 @@
         "label": "t:labels.page_width",
         "options": [
           {
+            "value": "80rem",
+            "label": "t:design_system.width_standard"
+          },
+          {
             "value": "90rem",
             "label": "t:options.page_width.narrow"
           },
@@ -39,7 +59,7 @@
             "label": "t:options.page_width.wide"
           }
         ],
-        "default": "90rem"
+        "default": "80rem"
       },
       {
         "type": "range",
@@ -50,6 +70,17 @@
         "unit": "px",
         "label": "t:labels.page_margin",
         "default": 20
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "label": "t:design_system.section_spacing",
+        "info": "t:design_system.section_spacing_info",
+        "min": 0,
+        "max": 120,
+        "step": 4,
+        "unit": "px",
+        "default": 64
       }
     ]
   },
@@ -59,14 +90,91 @@
       {
         "type": "color",
         "id": "background_color",
-        "default": "#FFFFFF",
+        "default": "#F7F3EC",
         "label": "t:labels.background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#333333",
+        "default": "#252B29",
         "label": "t:labels.foreground"
+      },
+      {
+        "type": "color",
+        "id": "surface_color",
+        "label": "t:design_system.surface",
+        "default": "#FFFEFB"
+      },
+      {
+        "type": "color",
+        "id": "secondary_surface_color",
+        "label": "t:design_system.secondary_surface",
+        "default": "#E7DECF"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "t:design_system.accent",
+        "default": "#C9A76A"
+      },
+      {
+        "type": "color",
+        "id": "border_color",
+        "label": "t:design_system.border",
+        "default": "#DED8CD"
+      },
+      {
+        "type": "paragraph",
+        "content": "t:design_system.contrast_info"
+      }
+    ]
+  },
+  {
+    "name": "t:design_system.controls",
+    "settings": [
+      {
+        "type": "color",
+        "id": "button_primary_background",
+        "label": "t:design_system.button_primary_background",
+        "default": "#252B29"
+      },
+      {
+        "type": "color",
+        "id": "button_primary_text",
+        "label": "t:design_system.button_primary_text",
+        "default": "#FFFEFB"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_background",
+        "label": "t:design_system.button_secondary_background",
+        "default": "#FFFEFB"
+      },
+      {
+        "type": "color",
+        "id": "button_secondary_text",
+        "label": "t:design_system.button_secondary_text",
+        "default": "#252B29"
+      },
+      {
+        "type": "range",
+        "id": "button_corner_radius",
+        "label": "t:design_system.button_radius",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "card_corner_radius",
+        "label": "t:design_system.card_radius",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 8
       },
       {
         "type": "range",
@@ -77,6 +185,17 @@
         "unit": "px",
         "label": "t:labels.input_corner_radius",
         "default": 4
+      }
+    ]
+  },
+  {
+    "name": "t:design_system.brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:design_system.logo",
+        "info": "t:design_system.logo_info"
       }
     ]
   }

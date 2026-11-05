@@ -6,6 +6,11 @@
   margin: 0;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -73,10 +78,162 @@ p:empty {
 
 /** Theme styles below */
 body {
-  font-family: var(--font-primary--family);
+  font-family: var(--font-body-family);
+  font-size: var(--font-size-base);
+  font-style: var(--font-body-style);
+  font-weight: var(--font-body-weight);
+  line-height: var(--line-height-body);
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
+
+/* Low specificity lets sections and merchant settings override foundations. */
+:where(h1, h2, h3, h4, h5, h6, .heading) {
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  line-height: var(--line-height-heading);
+  text-wrap: balance;
+}
+
+:where(h1) { font-size: var(--font-size-h1); }
+:where(h2) { font-size: var(--font-size-h2); }
+:where(h3) { font-size: var(--font-size-h3); }
+:where(h4) { font-size: calc(var(--font-size-base) * 1.25); }
+:where(h5, h6) { font-size: var(--font-size-base); }
+:where(small, .text-small) { font-size: var(--font-size-small); }
+
+:where(a) {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+:where(a:hover) { text-decoration-thickness: 2px; }
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--focus-width) solid var(--focus-color);
+  outline-offset: var(--focus-offset);
+  box-shadow: 0 0 0 var(--focus-offset) var(--focus-halo);
+}
+
+:where(button, input[type='submit'], input[type='button'], input[type='reset'], .button):not(.shopify-payment-button__button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: var(--control-min-height);
+  max-inline-size: 100%;
+  padding: var(--space-3) var(--space-5);
+  border: var(--border-width) solid var(--color-button-primary);
+  border-radius: var(--radius-button);
+  background: var(--color-button-primary);
+  color: var(--color-button-primary-text);
+  font: inherit;
+  line-height: var(--line-height-control);
+  text-align: center;
+  text-decoration: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.button--secondary {
+  background: var(--color-button-secondary);
+  color: var(--color-button-secondary-text);
+  border-color: var(--color-button-secondary-text);
+}
+
+:where(button, input[type='submit'], input[type='button'], input[type='reset'], .button):not(.shopify-payment-button__button):not(:disabled):not([aria-disabled='true']):hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+:where(button, input, select, textarea):disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Excludes hidden, checkbox, radio, file, range and payment controls. */
+:where(input:not([type]), input[type='text'], input[type='email'], input[type='password'], input[type='search'], input[type='tel'], input[type='url'], input[type='number'], input[type='date'], textarea, select, .field) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: var(--control-min-height);
+  padding: var(--space-3) var(--space-4);
+  border: var(--border-width) solid var(--color-foreground);
+  border-radius: var(--radius-input);
+  background: var(--color-surface);
+  color: var(--color-foreground);
+  font: inherit;
+  line-height: var(--line-height-control);
+}
+
+:where(textarea) { min-block-size: 8rem; resize: vertical; }
+:where(input, textarea)::placeholder { color: var(--color-foreground); opacity: 0.7; }
+:where(label, .form-label) { display: block; margin-block-end: var(--space-2); }
+:where(form > div + div) { margin-block-start: var(--space-4); }
+:where(input, select, textarea)[aria-invalid='true'] { border-color: var(--color-error); border-width: 2px; }
+:where(.form-message, .errors) { padding: var(--space-4); border: var(--border-default); border-radius: var(--radius-input); }
+:where(.form-message--error, .errors) { color: var(--color-error); background: var(--color-error-surface); border-color: var(--color-error); }
+:where(.price) { font-family: var(--font-body-family); font-variant-numeric: tabular-nums; }
+
+:where(.product-card, .collection-product) {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  border: var(--border-default);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+:where(.product-card__media, .collection-product__image) {
+  border-start-start-radius: var(--radius-card);
+  border-start-end-radius: var(--radius-card);
+}
+
+:where(.product-card__media img, .collection-product__image img) {
+  aspect-ratio: 1;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+:where(.product-card__content, .collection-product__content) {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+:where(.badge) {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-secondary);
+  color: var(--color-foreground);
+  font-size: var(--font-size-small);
+  font-weight: 700;
+}
+
+.badge--accent { background: var(--color-accent); }
+
+.container {
+  inline-size: min(calc(100% - var(--page-margin) * 2), var(--page-width));
+  margin-inline: auto;
+}
+
+.section { padding-block: var(--section-space); }
+.prose { max-inline-size: var(--content-width-prose); }
+.stack { display: grid; gap: var(--space-4); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-item-min)), 1fr));
+  gap: var(--grid-gap);
+}
+
+:where(.grid, .stack, .container) > * { min-inline-size: 0; }
 
 /** Section layout utilities */
 
@@ -109,9 +266,25 @@ body {
 /* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
   grid-column: 2;
+  min-inline-size: 0;
 }
 
 /* Child elements that use the full-width utility class span the entire viewport. */
 .shopify-section > .full-width {
   grid-column: 1 / -1;
+}
+
+/* Layout sections only; header/footer groups keep their existing spacing. */
+.shopify-section:not(.shopify-section-group-header-group):not(.shopify-section-group-footer-group) {
+  padding-block: var(--section-space);
+}
+
+/* Foundations have no animation or smooth scrolling. Keep future motion opt-in. */
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .product-card,
+  .badge {
+    animation: none;
+    transition: none;
+  }
 }

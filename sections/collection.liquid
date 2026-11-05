@@ -41,7 +41,11 @@
 {% stylesheet %}
   .collection-products {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-item-min)), 1fr));
+    gap: var(--grid-gap);
+  }
+  .collection-products > :is(.prev, .page, .next) {
+    grid-column: 1 / -1;
   }
 {% endstylesheet %}
 

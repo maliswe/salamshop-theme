@@ -75,5 +75,28 @@
       "subtitle": "Underrubrik",
       "normal": "Brödtext"
     }
+  },
+  "design_system": {
+    "body_font": "Typsnitt för brödtext och kontroller",
+    "heading_font": "Typsnitt för rubriker",
+    "base_font_size": "Grundstorlek för text",
+    "width_standard": "Standard",
+    "section_spacing": "Sektionsavstånd",
+    "section_spacing_info": "Sammanlagt vertikalt avstånd per innehållssektion. Minskas på mobil. Sidhuvuds- och sidfotsgrupper undantas.",
+    "surface": "Bakgrund för ytor",
+    "secondary_surface": "Sekundär yta",
+    "accent": "Guldaccent",
+    "border": "Dekorativa kantlinjer",
+    "contrast_info": "Använd mörk text på ljusa ytor. Guld används dekorativt. Kontrollera kontrasten för text, knappar och fokusmarkeringar efter färgändringar.",
+    "controls": "Knappar och hörn",
+    "button_primary_background": "Bakgrund för primär knapp",
+    "button_primary_text": "Text på primär knapp",
+    "button_secondary_background": "Bakgrund för sekundär knapp",
+    "button_secondary_text": "Text på sekundär knapp",
+    "button_radius": "Hörnradie för knappar",
+    "card_radius": "Hörnradie för kort",
+    "brand": "Varumärke",
+    "logo": "SalamShops originallogotyp",
+    "logo_info": "Ladda upp SalamShops originallogotyp utan ändringar. Sidhuvudet kommer att använda den i en senare uppgift. Använd inte en platshållare som logotyp i produktion."
   }
 }
