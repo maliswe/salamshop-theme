@@ -130,5 +130,99 @@
     "limit": "Maximum suggestions",
     "limit_info": "Total across products, collections and searches. Also applies to search on the results page.",
     "predictive_section": "Predictive search"
+  },
+  "homepage": {
+    "common": {
+      "eyebrow": "Eyebrow",
+      "heading": "Heading",
+      "description": "Description",
+      "image": "Image",
+      "collection": "Collection",
+      "button_label": "Button label",
+      "button_link": "Button link",
+      "primary_action": "Primary action",
+      "secondary_action": "Secondary action",
+      "layout": "Layout",
+      "text_alignment": "Text alignment",
+      "background": "Background"
+    },
+    "options": {
+      "top": "Top",
+      "middle": "Middle",
+      "bottom": "Bottom",
+      "portrait": "Portrait",
+      "square": "Square",
+      "background_default": "Page background",
+      "background_surface": "Surface",
+      "background_secondary": "Secondary surface",
+      "icon_check": "Check",
+      "icon_heart": "Heart",
+      "icon_gift": "Gift",
+      "icon_star": "Star",
+      "icon_moon": "Moon"
+    },
+    "hero": {
+      "name": "Premium hero",
+      "image": "Desktop image",
+      "mobile_image": "Mobile image",
+      "mobile_image_info": "Optional. The desktop image is used when no mobile image is selected.",
+      "content_position": "Content position",
+      "height_mobile": "Mobile height",
+      "height_desktop": "Desktop height",
+      "overlay": "Dark image overlay",
+      "text_color": "Text color"
+    },
+    "categories": {
+      "name": "Shop by category",
+      "block_name": "Category",
+      "image_override": "Image override",
+      "image_override_info": "Leave blank to use the collection image.",
+      "label_override": "Label override",
+      "label_override_info": "Leave blank to use the collection title."
+    },
+    "featured_products": { "name": "Featured products" },
+    "new_arrivals": { "name": "New arrivals" },
+    "products": {
+      "show_view_all": "Show View all link",
+      "product_limit": "Number of products",
+      "columns_mobile": "Mobile columns",
+      "columns_desktop": "Desktop columns",
+      "image_ratio": "Image ratio"
+    },
+    "editorial": {
+      "name": "Editorial promotion",
+      "button_style": "Button style",
+      "image_position": "Image position"
+    },
+    "values": {
+      "name": "Brand values",
+      "block_name": "Value",
+      "image": "Icon image",
+      "image_info": "Optional. Replaces the selected standard icon.",
+      "icon": "Standard icon",
+      "claims_info": "Use only statements and promises that SalamShop can substantiate."
+    },
+    "newsletter": { "name": "Newsletter" },
+    "defaults": {
+      "hero_eyebrow": "SalamShop",
+      "hero_heading": "Discover beauty in the everyday",
+      "hero_description": "<p>Thoughtfully selected products for faith, tradition and a personal lifestyle.</p>",
+      "explore": "Explore the collection",
+      "categories_eyebrow": "Explore",
+      "categories_heading": "Shop by category",
+      "featured_eyebrow": "Selected",
+      "featured_heading": "Thoughtfully selected favourites",
+      "arrivals_eyebrow": "Latest at SalamShop",
+      "arrivals_heading": "New arrivals",
+      "editorial_eyebrow": "Stories",
+      "editorial_heading": "Tradition in a contemporary home",
+      "editorial_description": "<p>Create a personal story about a collection, season or campaign.</p>",
+      "discover_more": "Discover more",
+      "values_heading": "What shapes our selection",
+      "newsletter_eyebrow": "SalamShop",
+      "newsletter_heading": "Inspiration in your inbox",
+      "newsletter_description": "<p>Receive news, inspiration and selected stories from SalamShop.</p>",
+      "newsletter_button": "Subscribe"
+    }
   }
 }

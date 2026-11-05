@@ -9,12 +9,93 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "settings": {}
+    "hero": {
+      "type": "home-hero",
+      "settings": {
+        "eyebrow": "SalamShop",
+        "heading": "Upptäck det vackra i vardagen",
+        "description": "<p>Omsorgsfullt utvalda produkter för tro, tradition och en personlig livsstil.</p>",
+        "primary_label": "Utforska sortimentet",
+        "primary_link": "shopify://collections/all",
+        "text_alignment": "left",
+        "content_position": "center",
+        "height_mobile": 70,
+        "height_desktop": 75,
+        "overlay_opacity": 25,
+        "text_color": "#FFFEFB"
+      }
+    },
+    "categories": {
+      "type": "home-categories",
+      "blocks": {
+        "prayer_mats": { "type": "category", "settings": { "label": "Bönemattor" } },
+        "womenswear": { "type": "category", "settings": { "label": "Damkläder" } },
+        "menswear": { "type": "category", "settings": { "label": "Herrkläder" } },
+        "fragrance": { "type": "category", "settings": { "label": "Dofter och rökelse" } },
+        "quran_prayer": { "type": "category", "settings": { "label": "Koranen och bönetillbehör" } },
+        "home_decor": { "type": "category", "settings": { "label": "Hem och dekoration" } },
+        "personal_care": { "type": "category", "settings": { "label": "Personlig vård" } }
+      },
+      "block_order": ["prayer_mats", "womenswear", "menswear", "fragrance", "quran_prayer", "home_decor", "personal_care"],
+      "settings": { "eyebrow": "Utforska", "heading": "Handla efter kategori" }
+    },
+    "featured": {
+      "type": "home-featured-products",
+      "settings": {
+        "eyebrow": "Utvalt",
+        "heading": "Omsorgsfullt utvalda favoriter",
+        "show_view_all": true,
+        "product_limit": 4,
+        "columns_mobile": "2",
+        "columns_desktop": "4",
+        "image_ratio": "portrait"
+      }
+    },
+    "editorial": {
+      "type": "home-editorial",
+      "settings": {
+        "eyebrow": "En stund för det som betyder något",
+        "heading": "Tradition i ett samtida hem",
+        "description": "<p>Upptäck detaljer som skapar en lugn och personlig plats för vardagens stunder.</p>",
+        "button_label": "Upptäck mer",
+        "button_link": "shopify://collections/all",
+        "button_style": "primary",
+        "image_position": "left",
+        "background": "secondary"
+      }
+    },
+    "arrivals": {
+      "type": "home-new-arrivals",
+      "settings": {
+        "eyebrow": "Senast hos oss",
+        "heading": "Nyheter",
+        "show_view_all": true,
+        "product_limit": 4,
+        "columns_mobile": "2",
+        "columns_desktop": "4",
+        "image_ratio": "portrait"
+      }
+    },
+    "values": {
+      "type": "home-brand-values",
+      "disabled": true,
+      "blocks": {
+        "value_1": { "type": "value", "settings": { "icon": "check" } },
+        "value_2": { "type": "value", "settings": { "icon": "heart" } },
+        "value_3": { "type": "value", "settings": { "icon": "gift" } }
+      },
+      "block_order": ["value_1", "value_2", "value_3"],
+      "settings": { "heading": "Det som formar vårt urval" }
+    },
+    "newsletter": {
+      "type": "home-newsletter",
+      "settings": {
+        "eyebrow": "SalamShop",
+        "heading": "Inspiration i din inkorg",
+        "description": "<p>Ta del av nyheter, inspiration och utvalda berättelser från SalamShop.</p>",
+        "button_label": "Prenumerera"
+      }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["hero", "categories", "featured", "editorial", "arrivals", "values", "newsletter"]
 }

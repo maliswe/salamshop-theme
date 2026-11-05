@@ -1,0 +1,58 @@
+{% assign form_id = 'NewsletterForm-' | append: section.id %}
+{% assign newsletter_button = section.settings.button_label %}
+{% if newsletter_button == blank %}{% assign newsletter_button = 'homepage.newsletter.submit' | t %}{% endif %}
+
+<section class="home-section home-newsletter" aria-labelledby="HomeNewsletter-{{ section.id }}">
+  <div class="home-section__inner">
+    <div class="home-newsletter__panel">
+      <div class="home-newsletter__content">
+        {% if section.settings.eyebrow != blank %}<p class="home-section__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        <h2 id="HomeNewsletter-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.description != blank %}<div>{{ section.settings.description }}</div>{% endif %}
+      </div>
+
+      {% form 'customer', id: form_id, class: 'home-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="NewsletterEmail-{{ section.id }}">{{ 'homepage.newsletter.email' | t }}</label>
+        <div class="home-newsletter__field">
+          <input
+            id="NewsletterEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            value="{% if customer %}{{ customer.email }}{% else %}{{ form.email }}{% endif %}"
+            autocomplete="email"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+            placeholder="{{ 'homepage.newsletter.placeholder' | t | escape }}"
+            required
+            {% if form.errors %}aria-invalid="true" aria-describedby="NewsletterError-{{ section.id }}"{% endif %}
+          >
+          <button type="submit">{{ newsletter_button | escape }}</button>
+        </div>
+        {% if form.errors %}
+          <div id="NewsletterError-{{ section.id }}" class="form-message form-message--error home-newsletter__message" role="alert">
+            {{ form.errors | default_errors }}
+          </div>
+        {% endif %}
+        {% if form.posted_successfully? %}
+          <p class="form-message home-newsletter__message" role="status">{{ 'homepage.newsletter.success' | t }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:homepage.newsletter.name",
+  "class": "home-section-wrapper",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:homepage.common.eyebrow", "default": "t:homepage.defaults.newsletter_eyebrow" },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "t:homepage.defaults.newsletter_heading" },
+    { "type": "richtext", "id": "description", "label": "t:homepage.common.description", "default": "t:homepage.defaults.newsletter_description" },
+    { "type": "text", "id": "button_label", "label": "t:homepage.common.button_label", "default": "t:homepage.defaults.newsletter_button" }
+  ],
+  "presets": [{ "name": "t:homepage.newsletter.name" }]
+}
+{% endschema %}

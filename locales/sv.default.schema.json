@@ -130,5 +130,99 @@
     "limit": "Högsta antal sökförslag",
     "limit_info": "Sammanlagt för produkter, kollektioner och sökningar. Gäller även sökfältet på resultatsidan.",
     "predictive_section": "Sökförslag"
+  },
+  "homepage": {
+    "common": {
+      "eyebrow": "Överrubrik",
+      "heading": "Rubrik",
+      "description": "Beskrivning",
+      "image": "Bild",
+      "collection": "Kollektion",
+      "button_label": "Knapptext",
+      "button_link": "Knapplänk",
+      "primary_action": "Primär åtgärd",
+      "secondary_action": "Sekundär åtgärd",
+      "layout": "Layout",
+      "text_alignment": "Textjustering",
+      "background": "Bakgrund"
+    },
+    "options": {
+      "top": "Överst",
+      "middle": "Mitten",
+      "bottom": "Nederst",
+      "portrait": "Stående",
+      "square": "Kvadratisk",
+      "background_default": "Sidans bakgrund",
+      "background_surface": "Yta",
+      "background_secondary": "Sekundär yta",
+      "icon_check": "Bock",
+      "icon_heart": "Hjärta",
+      "icon_gift": "Gåva",
+      "icon_star": "Stjärna",
+      "icon_moon": "Måne"
+    },
+    "hero": {
+      "name": "Premiumhero",
+      "image": "Bild för dator",
+      "mobile_image": "Bild för mobil",
+      "mobile_image_info": "Valfri. Om ingen mobilbild väljs används bilden för dator.",
+      "content_position": "Innehållets placering",
+      "height_mobile": "Höjd på mobil",
+      "height_desktop": "Höjd på dator",
+      "overlay": "Mörk bildtoning",
+      "text_color": "Textfärg"
+    },
+    "categories": {
+      "name": "Handla efter kategori",
+      "block_name": "Kategori",
+      "image_override": "Alternativ bild",
+      "image_override_info": "Lämna tomt för att använda kollektionens bild.",
+      "label_override": "Alternativ etikett",
+      "label_override_info": "Lämna tomt för att använda kollektionens namn."
+    },
+    "featured_products": { "name": "Utvalda produkter" },
+    "new_arrivals": { "name": "Nyheter" },
+    "products": {
+      "show_view_all": "Visa länken Visa alla",
+      "product_limit": "Antal produkter",
+      "columns_mobile": "Kolumner på mobil",
+      "columns_desktop": "Kolumner på dator",
+      "image_ratio": "Bildformat"
+    },
+    "editorial": {
+      "name": "Redaktionell kampanj",
+      "button_style": "Knappstil",
+      "image_position": "Bildens placering"
+    },
+    "values": {
+      "name": "Varumärkesvärden",
+      "block_name": "Värde",
+      "image": "Ikonbild",
+      "image_info": "Valfri. Ersätter den valda standardikonen.",
+      "icon": "Standardikon",
+      "claims_info": "Använd endast uppgifter och löften som SalamShop kan styrka."
+    },
+    "newsletter": { "name": "Nyhetsbrev" },
+    "defaults": {
+      "hero_eyebrow": "SalamShop",
+      "hero_heading": "Upptäck det vackra i vardagen",
+      "hero_description": "<p>Omsorgsfullt utvalda produkter för tro, tradition och en personlig livsstil.</p>",
+      "explore": "Utforska sortimentet",
+      "categories_eyebrow": "Utforska",
+      "categories_heading": "Handla efter kategori",
+      "featured_eyebrow": "Utvalt",
+      "featured_heading": "Omsorgsfullt utvalda favoriter",
+      "arrivals_eyebrow": "Senast hos oss",
+      "arrivals_heading": "Nyheter",
+      "editorial_eyebrow": "Berättelser",
+      "editorial_heading": "Tradition i ett samtida hem",
+      "editorial_description": "<p>Skapa en personlig berättelse om ett sortiment, en säsong eller en kampanj.</p>",
+      "discover_more": "Upptäck mer",
+      "values_heading": "Det som formar vårt urval",
+      "newsletter_eyebrow": "SalamShop",
+      "newsletter_heading": "Inspiration i din inkorg",
+      "newsletter_description": "<p>Ta del av nyheter, inspiration och utvalda berättelser från SalamShop.</p>",
+      "newsletter_button": "Prenumerera"
+    }
   }
 }

@@ -120,5 +120,14 @@
     "pagination": "Search results pages",
     "close_suggestions": "Close suggestions",
     "close_search": "Close search"
+  },
+  "homepage": {
+    "view_all": "View all",
+    "newsletter": {
+      "email": "Email address",
+      "placeholder": "name@example.com",
+      "submit": "Subscribe",
+      "success": "Thank you! You are now subscribed to our newsletter."
+    }
   }
 }

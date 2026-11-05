@@ -47,10 +47,19 @@ contrast('Input boundary and focus', defaults.foreground_color, defaults.surface
 // Check template/section/block references without uploading a theme.
 const parseShopifyJson = source => JSON.parse(source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/,\s*([}\]])/g, '$1'));
 let templates = 0;
-function checkBlocks(blocks = {}) {
+function localBlockTypes(sectionType) {
+  const source = read(`sections/${sectionType}.liquid`);
+  const match = source.match(/{% schema %}([\s\S]*?){% endschema %}/);
+  if (!match) return new Set();
+  const sectionSchema = JSON.parse(match[1]);
+  return new Set((sectionSchema.blocks || []).map(block => block.type).filter(type => !type.startsWith('@')));
+}
+function checkBlocks(blocks = {}, allowedLocalTypes = new Set()) {
   for (const block of Object.values(blocks)) {
-    if (block.type && !block.type.startsWith('@')) assert.ok(fs.existsSync(path.join(root, 'blocks', `${block.type}.liquid`)), `Missing block ${block.type}`);
-    checkBlocks(block.blocks);
+    if (block.type && !block.type.startsWith('@') && !allowedLocalTypes.has(block.type)) {
+      assert.ok(fs.existsSync(path.join(root, 'blocks', `${block.type}.liquid`)), `Missing block ${block.type}`);
+    }
+    checkBlocks(block.blocks, allowedLocalTypes);
   }
 }
 for (const dir of ['templates', 'sections']) {
@@ -59,7 +68,7 @@ for (const dir of ['templates', 'sections']) {
     if (template.layout) assert.ok(fs.existsSync(path.join(root, 'layout', `${template.layout}.liquid`)), `Missing layout ${template.layout}`);
     for (const section of Object.values(template.sections || {})) {
       assert.ok(fs.existsSync(path.join(root, 'sections', `${section.type}.liquid`)), `Missing section ${section.type}`);
-      checkBlocks(section.blocks);
+      checkBlocks(section.blocks, localBlockTypes(section.type));
     }
     for (const id of template.order || []) assert.ok(template.sections[id], `Invalid section order in ${file}`);
     templates++;

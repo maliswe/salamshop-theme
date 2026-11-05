@@ -1,0 +1,41 @@
+{% doc %}
+  Shared storefront product card for collection-driven product grids.
+
+  @param {product} product - Shopify product to render
+  @param {string} image_ratio - "square" or "portrait"
+{% enddoc %}
+
+{% liquid
+  assign card_product = product
+  assign card_url = card_product.url
+  assign card_image = card_product.featured_media.preview_image
+  assign ratio_class = image_ratio | default: 'portrait'
+  assign image_loading = 'lazy'
+%}
+
+<article class="product-card home-product-card">
+  <a class="home-product-card__link" href="{{ card_url }}">
+    <span class="home-product-card__media home-product-card__media--{{ ratio_class }}">
+      {% if card_image %}
+        {{ card_image | image_url: width: 900 | image_tag: loading: image_loading, widths: '240, 360, 480, 720, 900', sizes: '(min-width: 80rem) 22vw, (min-width: 48rem) 30vw, 50vw', alt: card_image.alt | default: card_product.title | escape }}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
+      {% endif %}
+      {% unless card_product.available %}
+        <span class="badge home-product-card__badge">{{ 'product.sold_out' | t }}</span>
+      {% endunless %}
+    </span>
+
+    <span class="product-card__content home-product-card__content">
+      <span class="home-product-card__title">{{ card_product.title | escape }}</span>
+      <span class="price home-product-card__price">
+        <span class="header-visually-hidden">{{ 'discovery.price' | t }} </span>
+        {% if card_product.price_varies %}{{ 'discovery.from_price' | t }} {% endif %}
+        {{ card_product.price | money_with_currency }}
+        {% if card_product.compare_at_price > card_product.price and card_product.price_varies == false and card_product.compare_at_price_varies == false %}
+          <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ card_product.compare_at_price | money_with_currency }}</s>
+        {% endif %}
+      </span>
+    </span>
+  </a>
+</article>

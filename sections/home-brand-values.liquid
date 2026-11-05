@@ -1,0 +1,66 @@
+<section class="home-section home-values" aria-labelledby="HomeValues-{{ section.id }}">
+  <div class="home-section__inner">
+    <div class="home-section__header">
+      <div class="home-section__heading-group">
+        {% if section.settings.eyebrow != blank %}<p class="home-section__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        <h2 id="HomeValues-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.description != blank %}<div class="prose">{{ section.settings.description }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="home-values__grid">
+      {% for block in section.blocks %}
+        <article class="home-value" {{ block.shopify_attributes }}>
+          <div class="home-value__icon">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', sizes: '48px', alt: '' }}
+            {% else %}
+              {% render 'value-icon', icon: block.settings.icon %}
+            {% endif %}
+          </div>
+          <div class="home-value__content">
+            {% if block.settings.title != blank %}<h3 class="home-value__title">{{ block.settings.title | escape }}</h3>{% endif %}
+            {% if block.settings.description != blank %}<div>{{ block.settings.description }}</div>{% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:homepage.values.name",
+  "class": "home-section-wrapper",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:homepage.common.eyebrow" },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "t:homepage.defaults.values_heading" },
+    { "type": "richtext", "id": "description", "label": "t:homepage.common.description", "info": "t:homepage.values.claims_info" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "t:homepage.values.block_name",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "t:homepage.values.image", "info": "t:homepage.values.image_info" },
+        {
+          "type": "select", "id": "icon", "label": "t:homepage.values.icon",
+          "options": [
+            { "value": "check", "label": "t:homepage.options.icon_check" },
+            { "value": "heart", "label": "t:homepage.options.icon_heart" },
+            { "value": "gift", "label": "t:homepage.options.icon_gift" },
+            { "value": "star", "label": "t:homepage.options.icon_star" },
+            { "value": "moon", "label": "t:homepage.options.icon_moon" }
+          ], "default": "check"
+        },
+        { "type": "text", "id": "title", "label": "t:homepage.common.heading" },
+        { "type": "richtext", "id": "description", "label": "t:homepage.common.description", "info": "t:homepage.values.claims_info" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "t:homepage.values.name", "blocks": [{ "type": "value" }, { "type": "value" }, { "type": "value" }] }
+  ]
+}
+{% endschema %}

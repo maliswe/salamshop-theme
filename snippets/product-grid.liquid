@@ -1,0 +1,33 @@
+{% doc %}
+  Shared collection product grid used by homepage product sections.
+
+  @param {collection} collection - Selected collection
+  @param {number} limit - Maximum products or placeholders
+  @param {number} columns_desktop - Desktop column count
+  @param {number} columns_mobile - Mobile column count
+  @param {string} image_ratio - Product media ratio
+{% enddoc %}
+
+<div
+  class="home-product-grid"
+  style="--home-columns-mobile: {{ columns_mobile }}; --home-columns-desktop: {{ columns_desktop }};"
+>
+  {% if collection != blank and collection.products_count > 0 %}
+    {% for product in collection.products limit: limit %}
+      {% render 'product-card', product: product, image_ratio: image_ratio %}
+    {% endfor %}
+  {% else %}
+    {% for index in (1..limit) %}
+      {% capture placeholder_name %}{% cycle 'product-1', 'product-2', 'product-3', 'product-4' %}{% endcapture %}
+      <article class="product-card home-product-card home-product-card--placeholder" aria-hidden="true">
+        <div class="home-product-card__media home-product-card__media--{{ image_ratio | default: 'portrait' }}">
+          {{ placeholder_name | placeholder_svg_tag: 'home-placeholder-svg' }}
+        </div>
+        <div class="product-card__content home-product-card__content">
+          <span class="home-placeholder-line"></span>
+          <span class="home-placeholder-line home-placeholder-line--short"></span>
+        </div>
+      </article>
+    {% endfor %}
+  {% endif %}
+</div>

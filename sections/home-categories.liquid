@@ -1,0 +1,64 @@
+<section class="home-section home-categories" aria-labelledby="HomeCategories-{{ section.id }}">
+  <div class="home-section__inner">
+    <div class="home-section__header">
+      <div class="home-section__heading-group">
+        {% if section.settings.eyebrow != blank %}<p class="home-section__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+        <h2 id="HomeCategories-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.description != blank %}<div class="prose">{{ section.settings.description }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="home-categories__grid">
+      {% for block in section.blocks %}
+        {% liquid
+          assign card_collection = block.settings.collection
+          assign card_image = block.settings.image | default: card_collection.featured_image
+          assign card_label = block.settings.label | default: card_collection.title
+        %}
+        {% if card_collection != blank %}<a class="home-category-card" href="{{ card_collection.url }}" {{ block.shopify_attributes }}>{% else %}<div class="home-category-card" {{ block.shopify_attributes }}>{% endif %}
+          <span class="home-category-card__media" aria-hidden="true">
+            {% if card_image != blank %}
+              {{ card_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 540, 720, 960, 1200', sizes: '(min-width: 80rem) 25vw, (min-width: 48rem) 50vw, 50vw', alt: '' }}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
+            {% endif %}
+          </span>
+          {% if card_label != blank %}<span class="home-category-card__label">{{ card_label | escape }}</span>{% endif %}
+        {% if card_collection != blank %}</a>{% else %}</div>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "t:homepage.categories.name",
+  "class": "home-section-wrapper",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "t:homepage.common.eyebrow", "default": "t:homepage.defaults.categories_eyebrow" },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "t:homepage.defaults.categories_heading" },
+    { "type": "richtext", "id": "description", "label": "t:homepage.common.description" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "t:homepage.categories.block_name",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "t:homepage.common.collection" },
+        { "type": "image_picker", "id": "image", "label": "t:homepage.categories.image_override", "info": "t:homepage.categories.image_override_info" },
+        { "type": "text", "id": "label", "label": "t:homepage.categories.label_override", "info": "t:homepage.categories.label_override_info" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:homepage.categories.name",
+      "blocks": [
+        { "type": "category" }, { "type": "category" }, { "type": "category" },
+        { "type": "category" }, { "type": "category" }, { "type": "category" }, { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

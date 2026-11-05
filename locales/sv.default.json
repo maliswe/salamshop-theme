@@ -120,5 +120,14 @@
     "pagination": "Sidor med sökresultat",
     "close_suggestions": "Stäng sökförslagen",
     "close_search": "Stäng sökningen"
+  },
+  "homepage": {
+    "view_all": "Visa alla",
+    "newsletter": {
+      "email": "E-postadress",
+      "placeholder": "namn@exempel.se",
+      "submit": "Prenumerera",
+      "success": "Tack! Du är nu anmäld till vårt nyhetsbrev."
+    }
   }
 }

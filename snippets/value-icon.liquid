@@ -1,0 +1,16 @@
+{% doc %}
+  Decorative inline icon for merchant-authored brand value blocks.
+  @param {string} icon - Icon identifier
+{% enddoc %}
+{% case icon %}
+  {% when 'heart' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.8 5.8a5.5 5.5 0 0 0-7.8 0L12 6.9l-1.1-1.1a5.5 5.5 0 0 0-7.7 7.8L12 22l8.8-8.4a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+  {% when 'gift' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 10h16v11H4zM2.5 6.5h19V10h-19zM12 6.5V21M12 6.5H7.8a2.3 2.3 0 1 1 2.3-2.3L12 6.5Zm0 0h4.2a2.3 2.3 0 1 0-2.3-2.3L12 6.5Z"/></svg>
+  {% when 'star' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z"/></svg>
+  {% when 'moon' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.5 15.2A8.8 8.8 0 0 1 8.8 3.5a9 9 0 1 0 11.7 11.7Z"/></svg>
+  {% else %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg>
+{% endcase %}
