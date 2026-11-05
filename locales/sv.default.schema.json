@@ -97,6 +97,27 @@
     "card_radius": "Hörnradie för kort",
     "brand": "Varumärke",
     "logo": "SalamShops originallogotyp",
-    "logo_info": "Ladda upp SalamShops originallogotyp utan ändringar. Sidhuvudet kommer att använda den i en senare uppgift. Använd inte en platshållare som logotyp i produktion."
+    "logo_info": "Ladda upp SalamShops originallogotyp utan ändringar. Sidhuvudet använder den valda bilden. Använd inte en platshållare som logotyp i produktion."
+  },
+  "header_settings": {
+    "navigation": "Navigation",
+    "sticky": "Fast sidhuvud vid rullning",
+    "show_search": "Visa sökfunktion",
+    "background": "Bakgrund för sidhuvud",
+    "background_info": "Lämna tomt för att använda den globala ytfärgen. Kontrollera kontrasten efter färgändringar.",
+    "logo": "Originallogotyp",
+    "logo_info": "Ladda upp originallogotypen utan ändringar under Temainställningar > Varumärke. Text visas bara när ingen bild är vald.",
+    "logo_width": "Logotypens bredd på dator",
+    "mobile_logo_width": "Logotypens bredd på mobil",
+    "mobile": "Mobilvisning",
+    "drawer_width": "Mobilmenyns bredd",
+    "compact": "Kompakt",
+    "full": "Full bredd",
+    "announcement": "Meddelandefält",
+    "show_announcement": "Visa meddelande",
+    "announcement_text": "Meddelandetext",
+    "announcement_default": "Välkommen till SalamShop",
+    "announcement_link": "Länk för meddelande",
+    "mobile_announcement": "Visa meddelande på mobil"
   }
 }

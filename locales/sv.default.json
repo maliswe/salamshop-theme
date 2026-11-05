@@ -91,5 +91,15 @@
     "practices_title": "Rekommenderade arbetssätt",
     "practices_description": "Shopify har tagit fram rekommenderade arbetssätt för att underlätta temautvecklingen. Följ dem när du utvecklar ditt tema och väljer verktyg och arbetsprocesser.",
     "practices_link": "Följ rekommenderade arbetssätt"
+  },
+  "header": {
+    "open_menu": "Öppna menyn",
+    "navigation": "Huvudnavigation",
+    "menu": "Meny",
+    "close": "Stäng",
+    "cart_count": "Varukorg ({{ count }})",
+    "view_category": "Visa alla: {{ category }}",
+    "product_search": "Sök produkter",
+    "search_placeholder": "Sök produkter"
   }
 }

@@ -91,5 +91,15 @@
     "practices_title": "Best Practices",
     "practices_description": "To optimize your theme development experience, Shopify has established a set of best practices that you can refer to when developing your theme and setting up your toolchains and processes.",
     "practices_link": "Follow best practices"
+  },
+  "header": {
+    "open_menu": "Open menu",
+    "navigation": "Main navigation",
+    "menu": "Menu",
+    "close": "Close",
+    "cart_count": "Cart ({{ count }})",
+    "view_category": "View all: {{ category }}",
+    "product_search": "Search products",
+    "search_placeholder": "Search products"
   }
 }

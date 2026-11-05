@@ -1,17 +1,22 @@
-# OS generated files #
-######################
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-node_modules/
-
-# Shopify CLI files
+# Shopify CLI & Theme Kit configuration
 .shopify/
+config/settings_data.json
+config/settings_schema.json # Optional: Keep if you manage settings locally, ignore if only editing in Shopify admin
 
-## Release files
-release
-*.zip
+# Node / Build tools (if using Tailwind, Webpack, Vite, etc.)
+node_modules/
+dist/
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

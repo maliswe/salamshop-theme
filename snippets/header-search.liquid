@@ -1,0 +1,10 @@
+{% doc %}
+  Standard Shopify product search, without predictive search.
+  @param {string} id - Unique section ID
+{% enddoc %}
+<form class="header-search-form" action="{{ routes.search_url }}" method="get" role="search" aria-label="{{ 'header.product_search' | t | escape }}">
+  <label class="header-visually-hidden" for="HeaderSearch-{{ id }}">{{ 'header.product_search' | t }}</label>
+  <input id="HeaderSearch-{{ id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'header.search_placeholder' | t | escape }}">
+  <input type="hidden" name="type" value="product">
+  <button type="submit">{{ 'search.submit' | t }}</button>
+</form>

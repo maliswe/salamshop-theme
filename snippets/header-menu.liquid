@@ -1,0 +1,24 @@
+{% doc %}
+  Renders native menu links, nested disclosures and parent destinations.
+  @param {link[]} links - Shopify menu links at the current level
+  @param {string} id_prefix - Unique section and ancestor prefix
+  @param {string} context - desktop, mobile or fallback
+{% enddoc %}
+{% for link in links %}
+  {% capture item_id %}{{ id_prefix }}-{{ context }}-{{ forloop.index }}{% endcapture %}
+  <li>
+    {% if link.links != blank %}
+      <details class="header-menu-branch">
+        <summary aria-controls="HeaderSubmenu-{{ item_id }}"{% if link.child_active or link.current %} class="header-menu-active"{% endif %}>
+          {{ link.title | escape }}{% render 'header-icon', icon: 'chevron' %}
+        </summary>
+        <ul class="header-menu-list header-submenu" id="HeaderSubmenu-{{ item_id }}">
+          <li><a href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ 'header.view_category' | t: category: link.title | escape }}</a></li>
+          {% render 'header-menu', links: link.links, id_prefix: item_id, context: context %}
+        </ul>
+      </details>
+    {% else %}
+      <a href="{{ link.url | escape }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+    {% endif %}
+  </li>
+{% endfor %}

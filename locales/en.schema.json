@@ -97,6 +97,27 @@
     "card_radius": "Card corner radius",
     "brand": "Brand",
     "logo": "Original SalamShop logo",
-    "logo_info": "Upload the original SalamShop logo unchanged. The header will use it in a later task. Do not use a placeholder as the production logo."
+    "logo_info": "Upload the original SalamShop logo unchanged. The header uses the selected image. Do not use a placeholder as the production logo."
+  },
+  "header_settings": {
+    "navigation": "Navigation",
+    "sticky": "Sticky header",
+    "show_search": "Show search",
+    "background": "Header background",
+    "background_info": "Leave blank to use the global surface color. Check contrast after changing it.",
+    "logo": "Original logo",
+    "logo_info": "Upload the unchanged original logo under Theme settings > Brand. Text is shown only when no image is selected.",
+    "logo_width": "Desktop logo width",
+    "mobile_logo_width": "Mobile logo width",
+    "mobile": "Mobile presentation",
+    "drawer_width": "Mobile menu width",
+    "compact": "Compact",
+    "full": "Full width",
+    "announcement": "Announcement bar",
+    "show_announcement": "Show announcement",
+    "announcement_text": "Announcement text",
+    "announcement_default": "Welcome to SalamShop",
+    "announcement_link": "Announcement link",
+    "mobile_announcement": "Show announcement on mobile"
   }
 }
