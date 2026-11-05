@@ -1,5 +1,7 @@
 # SalamShop 2.0 design system
 
+> Historical Task 02 specification. Task 11A's [approved visual design](approved-visual-design.md) is authoritative for current defaults, typography, geometry and surface treatment. Existing merchant setting IDs remain valid.
+
 Task 02 establishes global styling and reusable foundations for Modern Islamic Elegance: warm surfaces, dark legible text, restrained gold accents, refined headings and practical shopping controls. It adds no major sections, dependencies, downloaded font files or storefront JavaScript. Task 03 has not been started.
 
 ## Architecture and scope

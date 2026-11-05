@@ -18,7 +18,7 @@
     <input id="HeaderSearch-{{ id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'header.search_placeholder' | t | escape }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
     <input type="hidden" name="type" value="product">
     <button class="search-clear button--secondary" type="button" data-search-clear hidden>{{ 'discovery.clear' | t }}</button>
-    <button type="submit">{{ 'search.submit' | t }}</button>
+    <button class="header-search-submit" type="submit" aria-label="{{ 'search.submit' | t | escape }}">{% render 'header-icon', icon: 'search' %}</button>
   </form>
   <p class="search-feedback" role="status" aria-live="polite" aria-atomic="true" data-search-status></p>
   <div class="search-popup" id="SearchSuggestions-{{ id }}" role="dialog" aria-label="{{ 'discovery.suggestions' | t | escape }}" data-search-popup hidden>

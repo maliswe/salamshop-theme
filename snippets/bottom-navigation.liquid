@@ -1,0 +1,77 @@
+{% if settings.show_bottom_navigation %}
+  {% assign navigation_count = 0 %}
+  {% assign navigation_types = '|' %}
+  {% assign account_path = routes.account_url | split: '?' | first %}
+  {% capture navigation_items %}
+    {% for link in settings.bottom_navigation_menu.links limit: 4 %}
+      {% liquid
+        assign path = link.url | split: '?' | first | split: '#' | first
+        assign navigation_icon = 'link'
+        assign label = link.title
+        if path == routes.root_url
+          assign navigation_icon = 'home'
+          assign label = 'collection_page.home' | t
+        elsif path == routes.collections_url or path == routes.all_products_collection_url
+          assign navigation_icon = 'grid'
+          assign label = 'header.categories' | t
+        elsif path == routes.search_url
+          assign navigation_icon = 'search'
+          assign label = 'accessibility.search' | t
+        elsif path == account_path
+          unless shop.customer_accounts_enabled
+            continue
+          endunless
+          assign navigation_icon = 'user'
+          assign label = 'accessibility.account' | t
+        elsif link.type == 'collection_link' or link.type == 'catalog_link' or link.type == 'collections_link'
+          assign navigation_icon = 'grid'
+        endif
+        assign navigation_count = navigation_count | plus: 1
+        assign navigation_types = navigation_types | append: navigation_icon | append: '|'
+      %}
+      <li>
+        <a href="{{ link.url | escape }}"{% if link.current or link.active %} class="bottom-navigation__active"{% endif %}{% if link.current %} aria-current="page"{% endif %}>
+          <span class="bottom-navigation__indicator">{% render 'header-icon', icon: navigation_icon %}</span>
+          <span>{{ label | escape }}</span>
+        </a>
+      </li>
+    {% endfor %}
+
+    {% assign fallback_icons = 'home,grid,search,user' | split: ',' %}
+    {% for icon in fallback_icons %}
+      {% if navigation_count >= 4 %}{% break %}{% endif %}
+      {% assign marker = icon | prepend: '|' | append: '|' %}
+      {% if navigation_types contains marker %}{% continue %}{% endif %}
+      {% liquid
+        case icon
+          when 'home'
+            assign destination = routes.root_url
+            assign label = 'collection_page.home' | t
+          when 'grid'
+            assign destination = routes.collections_url
+            assign label = 'header.categories' | t
+          when 'search'
+            assign destination = routes.search_url
+            assign label = 'accessibility.search' | t
+          when 'user'
+            unless shop.customer_accounts_enabled
+              continue
+            endunless
+            assign destination = routes.account_url
+            assign label = 'accessibility.account' | t
+        endcase
+        assign destination_path = destination | split: '?' | first
+        assign navigation_count = navigation_count | plus: 1
+      %}
+      <li>
+        <a href="{{ destination | escape }}"{% if request.path == destination_path %} aria-current="page"{% endif %}>
+          <span class="bottom-navigation__indicator">{% render 'header-icon', icon: icon %}</span>
+          <span>{{ label | escape }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  {% endcapture %}
+  <nav class="bottom-navigation" aria-label="{{ 'header.mobile_navigation' | t | escape }}">
+    <ul role="list">{{ navigation_items }}</ul>
+  </nav>
+{% endif %}

@@ -24,7 +24,7 @@
     {{ content_for_header }}
   </head>
 
-  <body>
+  <body class="template-{{ template.name | handle }} shape-{{ settings.shape_scale }}{% if settings.show_bottom_navigation %} has-bottom-navigation{% if settings.show_tablet_navigation_rail %} has-tablet-navigation-rail{% endif %}{% endif %}">
     <a class="skip-link" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
     {% sections 'header-group' %}
 
@@ -33,5 +33,6 @@
     </main>
 
     {% sections 'footer-group' %}
+    {% render 'bottom-navigation' %}
   </body>
 </html>

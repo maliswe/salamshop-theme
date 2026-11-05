@@ -1,4 +1,5 @@
 {% style %}
+  {% assign heading_bold = settings.type_heading_font | font_modify: 'weight', 'bold' %}
   {% # Shopify hosts selected fonts; system fonts require no font download. %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
@@ -6,6 +7,7 @@
   {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
   {% unless settings.type_heading_font == settings.type_primary_font %}
     {{ settings.type_heading_font | font_face: font_display: 'swap' }}
+    {{ settings.type_heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {% endunless %}
 
   :root {
@@ -17,13 +19,13 @@
     --font-body-weight: var(--font-primary--weight);
     --font-heading-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
     --font-heading-style: {{ settings.type_heading_font.style }};
-    --font-heading-weight: {{ settings.type_heading_font.weight }};
+    --font-heading-weight: {{ heading_bold.weight | default: settings.type_heading_font.weight }};
     --font-size-base: {{ settings.base_font_size | divided_by: 16.0 }}rem;
     --font-size-small: calc(var(--font-size-base) * 0.875);
-    --font-size-h1: clamp(calc(var(--font-size-base) * 2.25), 1.5rem + 3vw, calc(var(--font-size-base) * 3.5));
-    --font-size-h2: clamp(calc(var(--font-size-base) * 1.875), 1.25rem + 2vw, calc(var(--font-size-base) * 2.75));
-    --font-size-h3: clamp(calc(var(--font-size-base) * 1.5), 1rem + 1.5vw, calc(var(--font-size-base) * 2));
-    --line-height-body: 1.6;
+    --font-size-h1: clamp(calc(var(--font-size-base) * 1.75), 1.25rem + 2vw, calc(var(--font-size-base) * 2.5));
+    --font-size-h2: clamp(calc(var(--font-size-base) * 1.5), 1.25rem + 1vw, calc(var(--font-size-base) * 2));
+    --font-size-h3: clamp(calc(var(--font-size-base) * 1.25), 1rem + 1vw, calc(var(--font-size-base) * 1.5));
+    --line-height-body: 1.5;
     --line-height-heading: 1.15;
     --line-height-control: 1.25;
     --space-1: 0.25rem;
@@ -35,6 +37,9 @@
     --space-7: 3rem;
     --space-8: 4rem;
     --space-9: 6rem;
+    --space-10: 8rem;
+    --space-11: 10rem;
+    --space-12: 12rem;
     --page-width: {{ settings.max_page_width }};
     --page-margin: clamp({{ settings.min_page_margin }}px, 4vw, {{ settings.min_page_margin | times: 2 }}px);
     --content-width-prose: 65ch;
@@ -48,6 +53,14 @@
     --color-surface-secondary: {{ settings.secondary_surface_color }};
     --color-accent: {{ settings.accent_color }};
     --color-border: {{ settings.border_color }};
+    --color-primary: {{ settings.primary_color }};
+    --color-on-primary: {{ settings.on_primary_color }};
+    --color-primary-container: {{ settings.primary_container_color }};
+    --color-on-primary-container: {{ settings.on_primary_container_color }};
+    --color-surface-low: {{ settings.surface_low_color }};
+    --color-surface-high: {{ settings.surface_high_color }};
+    --color-on-surface-variant: {{ settings.on_surface_variant_color }};
+    --color-outline: {{ settings.outline_color }};
     --color-button-primary: {{ settings.button_primary_background }};
     --color-button-primary-text: {{ settings.button_primary_text }};
     --color-button-secondary: {{ settings.button_secondary_background }};
@@ -58,14 +71,27 @@
     --border-default: var(--border-width) solid var(--color-border);
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
     --radius-input: var(--style-border-radius-inputs);
-    --radius-button: {{ settings.button_corner_radius }}px;
+    --radius-button: {% if settings.button_corner_radius == 50 %}var(--radius-pill){% else %}{{ settings.button_corner_radius }}px{% endif %};
     --radius-card: {{ settings.card_corner_radius }}px;
+    --radius-card-large: min(calc(var(--radius-card) + 4px), 2rem);
+    --radius-container: min(calc(var(--radius-card) + 4px), 2rem);
     --radius-pill: 999px;
-    --control-min-height: 2.75rem;
+    --control-min-height: 3rem;
+    --elevation-1: 0 0.125rem 0.375rem rgb(73 57 30 / 8%), 0 0.5rem 1.5rem rgb(73 57 30 / 6%);
+    --elevation-2: 0 0.25rem 0.75rem rgb(73 57 30 / 10%), 0 1rem 2.5rem rgb(73 57 30 / 10%);
     --focus-color: var(--color-foreground);
     --focus-halo: var(--color-surface);
     --focus-width: 2px;
     --focus-offset: 3px;
+    {% if settings.shape_scale == 'compact' %}
+      --radius-card: 0.75rem;
+      --radius-card-large: 1rem;
+      --radius-container: 1rem;
+    {% elsif settings.shape_scale == 'soft' %}
+      --radius-card: 1.25rem;
+      --radius-card-large: 1.5rem;
+      --radius-container: 1.5rem;
+    {% endif %}
   }
 
   @media (min-width: 48rem) {

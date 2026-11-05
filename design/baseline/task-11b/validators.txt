@@ -1,0 +1,59 @@
+Task 11B automated validation
+2026-11-05
+
+$ node scripts/validate-cart.cjs
+Cart passed: native fallbacks, exact line keys, locale routes, bundled sections, count fallback, server errors, settings and duplicate-add guards
+Exit: 0
+
+$ node scripts/validate-collection.cjs
+Collection passed: editor settings, native filters/sort URLs, active removal, pagination, shared cards, responsive grid and drawer focus/Escape/lifecycle behavior
+Exit: 0
+
+$ node scripts/validate-design-system.cjs
+Text on background_color: 14.60:1
+Text on surface_color: 12.48:1
+Text on secondary_surface_color: 10.39:1
+Text on accent_color: 6.56:1
+Primary button: 4.71:1
+Secondary button: 9.29:1
+Primary role: 4.71:1
+Primary container: 9.29:1
+Supporting text: 6.10:1
+Input outline: 4.20:1
+Option outline: 3.96:1
+Error text: 7.89:1
+Input boundary and focus: 12.48:1
+Passed: 47 settings, CSS token references, default contrast and 13 template/group references
+Exit: 0
+
+$ node scripts/validate-header.cjs
+Header passed: 11 settings, native search contract, registration, lifecycle cleanup, drawer/cancel/backdrop/resize/focus and disclosure keyboard behavior
+Exit: 0
+
+$ node scripts/validate-homepage.cjs
+Homepage passed: seven editor sections/presets, JSON composition, shared product cards, responsive images/layout, customer newsletter form, localization hooks and reduced-motion support
+Exit: 0
+
+$ node scripts/validate-launch-readiness.cjs
+Launch-readiness regression passed: landmarks, localization, metadata, media priority, secondary templates and valid section-group JSON
+Exit: 0
+
+$ node scripts/validate-locales.cjs
+sv.default.json: 160 keys; JSON, parity, placeholders and HTML passed
+sv.default.schema.json: 288 keys; JSON, parity, placeholders and HTML passed
+storefront: 145 unique referenced translation keys resolved
+schema: 277 unique referenced translation keys resolved
+Exit: 0
+
+$ node scripts/validate-material3.cjs
+Passed: 12 settings, Material tokens, responsive navigation, product hierarchy and real-cart integration
+Exit: 0
+
+$ node scripts/validate-product.cjs
+Product passed: native form, high-variant picker, media, metafields, sticky purchase control, recommendations and editor settings
+Exit: 0
+
+$ node scripts/validate-search.cjs
+Search passed: structure/settings, locale URLs/encoding/limits, 275ms debounce, abort/stale responses, empty/error/password/HTTP paths, keyboard/native Enter, lifecycle/multiple instances, feature flag and markup allowlist
+Exit: 0
+

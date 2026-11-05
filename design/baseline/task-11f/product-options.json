@@ -1,0 +1,29 @@
+{
+  "islamisk-mossa": [
+    "    - 'radiogroup \"Color: Brun\"':",
+    "      - radio \"Brun\" [checked]:",
+    "      - radio \"Ljusbrun\":",
+    "      - radio \"Sandvit\":",
+    "      - radio \"Vitt\":",
+    "      - radio \"Svart\":",
+    "      - radio \"Mörkgrå\":",
+    "      - radio \"Marinblå\":",
+    "  - button \"Lägg i varukorgen\":",
+    "    - generic: Lägg i varukorgen"
+  ],
+  "imarat-thobe-ii": [
+    "    - 'radiogroup \"Färg: Svart\"':",
+    "      - radio \"Svart\" [checked]:",
+    "      - radio \"Blå\":",
+    "      - radio \"Brun\":",
+    "    - 'radiogroup \"storlek: XL\"':",
+    "      - radio \"M – Ej tillgänglig\":",
+    "      - radio \"XL\" [checked]:",
+    "      - radio \"XXL – Ej tillgänglig\":",
+    "      - radio \"XXXL – Ej tillgänglig\":",
+    "      - radio \"4XL\":",
+    "      - radio \"5XL – Ej tillgänglig\":",
+    "  - button \"Lägg i varukorgen\":",
+    "    - generic: Lägg i varukorgen"
+  ]
+}

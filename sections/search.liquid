@@ -5,33 +5,39 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/search
 {% endcomment %}
 
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+
 <div class="search-page">
-  <h1>{% if search.performed %}{{ 'discovery.results_heading' | t: terms: search.terms | escape }}{% else %}{{ 'search.title' | t }}{% endif %}</h1>
+  <header class="search-page__intro">
+    <h1>{% if search.performed %}{{ 'discovery.results_heading' | t: terms: search.terms | escape }}{% else %}{{ 'search.title' | t }}{% endif %}</h1>
+    {% if search.performed and search.results_count > 0 %}
+      <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count | escape }}</p>
+    {% endif %}
+  </header>
   {% capture search_id %}results-{{ section.id }}{% endcapture %}
   {% render 'header-search', id: search_id %}
   {% if search.performed %}
     {% if search.results_count == 0 %}
-      <div class="stack">
+      <div class="stack search-page__empty">
         <p>{{ 'search.no_results_html' | t: terms: search.terms | escape }}</p>
         <p>{{ 'discovery.try_another' | t }}</p>
       </div>
     {% else %}
-      <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count | escape }}</p>
       {% paginate search.results by 20 %}
         <div class="search-results">
           {% for result in search.results %}
-            <article class="product-card">
-              <a class="search-result-link" href="{{ result.url | escape }}">
-                {% if result.object_type == 'product' %}
-                  {% render 'search-product', product: result, compact: false %}
-                {% else %}
+            {% if result.object_type == 'product' %}
+              {% render 'product-card', product: result, image_ratio: 'portrait', search_settings: true %}
+            {% else %}
+              <article class="product-card">
+                <a class="search-result-link" href="{{ result.url | escape }}">
                   {% assign result_image = result.featured_image | default: result.image %}
                   {% if result_image and settings.search_show_images %}{{ result_image | image_url: width: 720 | image_tag: loading: 'lazy', widths: '160, 240, 360, 480, 720', sizes: '(min-width: 64rem) 20vw, (min-width: 40rem) 40vw, 100vw', alt: '' }}{% endif %}
                   <span class="search-product-title">{{ result.title | escape }}</span>
                   <span>{{ result.content | strip_html | truncatewords: 25 | escape }}</span>
-                {% endif %}
-              </a>
-            </article>
+                </a>
+              </article>
+            {% endif %}
           {% endfor %}
         </div>
         {% if paginate.pages > 1 %}

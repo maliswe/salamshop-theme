@@ -1,0 +1,300 @@
+{
+  "metrics": {
+    "home": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "collection": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "product": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "drawer": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "cart": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "empty": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ],
+    "search": [
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 320
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 390
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 768
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1024
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1440
+      },
+      {
+        "h1": 1,
+        "main": 1,
+        "overflow": 0,
+        "viewport": 1920
+      }
+    ]
+  },
+  "home": {
+    "footer": [
+      "SalamShop Development"
+    ],
+    "images": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Barn ll Bönematta",
+      "Bönematta II Sejjade Grön"
+    ],
+    "logo": false,
+    "meta": false
+  },
+  "predictiveWidths": [
+    320,
+    390,
+    768,
+    1024,
+    1440,
+    1920
+  ]
+}

@@ -1,0 +1,252 @@
+[
+  {
+    "client": 305,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 305,
+    "width": 320
+  },
+  {
+    "client": 360,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 360,
+    "width": 375
+  },
+  {
+    "client": 375,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 375,
+    "width": 390
+  },
+  {
+    "client": 415,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 415,
+    "width": 430
+  },
+  {
+    "client": 753,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 753,
+    "width": 768
+  },
+  {
+    "client": 945,
+    "dock": 69,
+    "header": 64,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 945,
+    "width": 960
+  },
+  {
+    "client": 1009,
+    "dock": 0,
+    "header": 124,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 1009,
+    "width": 1024
+  },
+  {
+    "client": 1265,
+    "dock": 0,
+    "header": 124,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 1265,
+    "width": 1280
+  },
+  {
+    "client": 1425,
+    "dock": 0,
+    "header": 124,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 1425,
+    "width": 1440
+  },
+  {
+    "client": 1905,
+    "dock": 0,
+    "header": 124,
+    "labels": [
+      [
+        "Hem",
+        "page"
+      ],
+      [
+        "Kategorier",
+        null
+      ],
+      [
+        "Contact",
+        null
+      ],
+      [
+        "Sök",
+        null
+      ]
+    ],
+    "scroll": 1905,
+    "width": 1920
+  }
+]

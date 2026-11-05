@@ -122,6 +122,8 @@
 
     async applyResponse(response, { openDrawer = false, announcement = '' } = {}) {
       const drawerWasOpen = Boolean(document.querySelector('[data-cart-drawer-dialog][open]'));
+      const previousTrigger = document.querySelector('cart-drawer')?.restoreTarget;
+      const floatingTrigger = previousTrigger?.matches('.floating-cart');
       const pendingNote = document.querySelector('[name="note"]')?.value;
       const rendered = this.renderSections(response.sections);
       if (!rendered) {
@@ -134,7 +136,9 @@
       }
       this.announce(announcement);
       if (openDrawer || drawerWasOpen) {
-        document.querySelector('cart-drawer')?.open(document.querySelector('[data-cart-drawer-open]'));
+        const trigger = previousTrigger?.isConnected ? previousTrigger
+          : floatingTrigger ? document.querySelector('.floating-cart[data-cart-drawer-open]') : null;
+        document.querySelector('cart-drawer')?.open(trigger);
       }
       document.dispatchEvent(new CustomEvent('cart:updated', { detail: { cart: response } }));
     }
@@ -251,7 +255,8 @@
     }
     close() { if (this.dialog?.open) this.dialog.close(); }
     restoreFocus() {
-      const target = this.restoreTarget?.isConnected ? this.restoreTarget : document.querySelector('[data-cart-drawer-open]');
+      const target = this.restoreTarget?.getClientRects().length ? this.restoreTarget
+        : [...document.querySelectorAll('[data-cart-drawer-open]')].find(opener => opener.getClientRects().length);
       target?.focus();
     }
   }

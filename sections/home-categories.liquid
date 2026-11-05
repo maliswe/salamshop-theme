@@ -1,14 +1,16 @@
-<section class="home-section home-categories" aria-labelledby="HomeCategories-{{ section.id }}">
+<section class="home-section home-categories"{% if section.settings.heading != blank %} aria-labelledby="HomeCategories-{{ section.id }}"{% endif %}>
   <div class="home-section__inner">
+    {% if section.settings.heading != blank or section.settings.eyebrow != blank or section.settings.description != blank %}
     <div class="home-section__header">
       <div class="home-section__heading-group">
         {% if section.settings.eyebrow != blank %}<p class="home-section__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
-        <h2 id="HomeCategories-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.heading != blank %}<h2 id="HomeCategories-{{ section.id }}">{{ section.settings.heading | escape }}</h2>{% endif %}
         {% if section.settings.description != blank %}<div class="prose">{{ section.settings.description }}</div>{% endif %}
       </div>
     </div>
+    {% endif %}
 
-    <div class="home-categories__grid">
+    <div class="home-categories__grid" style="--category-count: {{ section.blocks.size | at_least: 1 }};">
       {% for block in section.blocks %}
         {% liquid
           assign card_collection = block.settings.collection
@@ -18,7 +20,7 @@
         {% if card_collection != blank %}<a class="home-category-card" href="{{ card_collection.url }}" {{ block.shopify_attributes }}>{% else %}<div class="home-category-card" {{ block.shopify_attributes }}>{% endif %}
           <span class="home-category-card__media" aria-hidden="true">
             {% if card_image != blank %}
-              {{ card_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 540, 720, 960, 1200', sizes: '(min-width: 80rem) 25vw, (min-width: 48rem) 50vw, 50vw', alt: '' }}
+              {{ card_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '120, 180, 240, 360, 480', sizes: '(min-width: 64rem) 12vw, (min-width: 48rem) 18vw, 28vw', alt: '' }}
             {% else %}
               {{ 'collection-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
             {% endif %}

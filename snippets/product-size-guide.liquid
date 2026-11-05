@@ -7,9 +7,9 @@
   endif
 %}
 {% if has_guide %}
-  <details class="product-size-guide" {{ block.shopify_attributes }}>
-    <summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.size_guide' | t }}{% endif %}</summary>
-    <div class="product-size-guide__content prose">
+  <details class="product-information__item product-size-guide" {{ block.shopify_attributes }}>
+    <summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.size_guide' | t }}{% endif %}{% render 'header-icon', icon: 'chevron' %}</summary>
+    <div class="product-information__content prose">
       {% if guide_page != blank %}<h2>{{ guide_page.title | escape }}</h2>{{ guide_page.content }}
       {% elsif guide_metafield.type == 'page_reference' %}<h2>{{ guide_metafield.value.title | escape }}</h2>{{ guide_metafield.value.content }}
       {% else %}<h2>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.size_guide' | t }}{% endif %}</h2>{{ guide_metafield | metafield_tag }}{% endif %}

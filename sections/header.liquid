@@ -1,7 +1,7 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
 {% style %}
   #shopify-section-{{ section.id }} {
-    --header-background: {{ section.settings.header_background | default: settings.surface_color }};
+    --header-background: {{ section.settings.header_background | default: settings.background_color }};
     --header-logo-width: {{ section.settings.logo_width }}px;
     --header-logo-width-mobile: {{ section.settings.mobile_logo_width }}px;
     {% if section.settings.sticky_header %}

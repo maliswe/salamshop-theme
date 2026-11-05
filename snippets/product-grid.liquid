@@ -6,6 +6,7 @@
   @param {number} columns_desktop - Desktop column count
   @param {number} columns_mobile - Mobile column count
   @param {string} image_ratio - Product media ratio
+  @param {boolean} sort_recent - Show most recently published products in the selected collection
 {% enddoc %}
 
 <div
@@ -13,7 +14,9 @@
   style="--home-columns-mobile: {{ columns_mobile }}; --home-columns-desktop: {{ columns_desktop }};"
 >
   {% if collection != blank and collection.products_count > 0 %}
-    {% for product in collection.products limit: limit %}
+    {% assign grid_products = collection.products %}
+    {% if sort_recent %}{% assign grid_products = grid_products | sort: 'published_at' | reverse %}{% endif %}
+    {% for product in grid_products limit: limit %}
       {% render 'product-card', product: product, image_ratio: image_ratio %}
     {% endfor %}
   {% else %}

@@ -43,15 +43,16 @@
   align-content: start;
   gap: var(--space-4);
   overflow: hidden;
-  border: var(--border-default);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
+  border: 0;
+  border-radius: var(--radius-card-large);
+  background: var(--color-surface-low);
 }
 
 .article-card__image {
   display: block;
   aspect-ratio: 16 / 10;
   overflow: hidden;
+  border-radius: var(--radius-card-large);
 }
 
 .article-card__image img {
@@ -74,7 +75,7 @@
   inline-size: min(100%, 70rem);
   max-block-size: 42rem;
   margin-block-end: var(--space-7);
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-container);
   object-fit: cover;
 }
 
@@ -94,9 +95,9 @@
 
 .article-comment {
   padding: var(--space-5);
-  border: var(--border-default);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
+  border: 0;
+  border-radius: var(--radius-card-large);
+  background: var(--color-surface-low);
 }
 
 .secondary-pagination {
@@ -126,9 +127,9 @@
   gap: var(--space-5);
   max-inline-size: 38rem;
   padding: var(--space-7);
-  border: var(--border-default);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
+  border: 0;
+  border-radius: var(--radius-container);
+  background: var(--color-surface-low);
 }
 
 .password-page form {
@@ -150,9 +151,9 @@
 .collection-card {
   display: grid;
   overflow: hidden;
-  border: var(--border-default);
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
+  border: 0;
+  border-radius: var(--radius-card-large);
+  background: var(--color-surface-low);
   text-decoration: none;
 }
 
@@ -173,9 +174,12 @@
 }
 
 .collection-card:hover h2 {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+  color: var(--color-primary);
 }
+
+.secondary-page__header h1 { letter-spacing: -0.025em; }
+.secondary-pagination :is(.page, .next, .prev) { border-radius: var(--radius-pill); }
+.secondary-pagination .current { background: var(--color-primary-container); color: var(--color-on-primary-container); }
 
 @media (max-width: 35rem) {
   .empty-page__content,
@@ -189,5 +193,6 @@
   .collection-card {
     scroll-behavior: auto;
     transition: none;
+    transform: none;
   }
 }

@@ -86,7 +86,8 @@
     "decrease_quantity": "Minska antal",
     "increase_quantity": "Öka antal",
     "tax_included": "Moms ingår. Frakt beräknas i kassan.",
-    "information": "Produktinformation",
+    "information": "Mer information",
+    "adding_to_cart": "Lägger i varukorgen…",
     "material": "Material",
     "dimensions": "Mått",
     "length": "Längd",
@@ -148,7 +149,9 @@
     "cart_count": "Varukorg ({{ count }})",
     "view_category": "Visa alla: {{ category }}",
     "product_search": "Sök produkter",
-    "search_placeholder": "Sök produkter"
+    "search_placeholder": "Sök produkter",
+    "categories": "Kategorier",
+    "mobile_navigation": "Mobilnavigation"
   },
   "discovery": {
     "loading": "Laddar sökresultat",

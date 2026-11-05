@@ -2,16 +2,23 @@
   Shared storefront product card for collection-driven product grids.
 
   @param {product} product - Shopify product to render
-  @param {string} image_ratio - "square" or "portrait"
+  @param {string} image_ratio - "square", "portrait" or "landscape"
   @param {string} image_loading - "eager" for the first visible row, otherwise "lazy"
+  @param {boolean} [search_settings] - Respect search image and price visibility settings
 {% enddoc %}
 
 {% liquid
   assign card_product = product
   assign card_url = card_product.url
-  assign card_image = card_product.featured_media.preview_image
+  assign card_image = card_product.featured_media.preview_image | default: card_product.featured_image
   assign ratio_class = image_ratio | default: 'portrait'
   assign loading_value = image_loading | default: 'lazy'
+  assign show_card_image = true
+  assign show_card_price = true
+  if search_settings
+    assign show_card_image = settings.search_show_images
+    assign show_card_price = settings.search_show_prices
+  endif
   assign card_on_sale = false
   if card_product.compare_at_price > card_product.price
     assign card_on_sale = true
@@ -20,6 +27,7 @@
 
 <article class="product-card home-product-card">
   <a class="home-product-card__link" href="{{ card_url }}">
+    {% if show_card_image %}
     <span class="home-product-card__media home-product-card__media--{{ ratio_class }}">
       {% if card_image %}
         {{ card_image | image_url: width: 900 | image_tag: loading: loading_value, widths: '240, 360, 480, 720, 900', sizes: '(min-width: 80rem) 22vw, (min-width: 48rem) 30vw, 50vw', alt: card_image.alt | default: card_product.title | escape }}
@@ -33,9 +41,15 @@
         </span>
       {% endif %}
     </span>
+    {% endif %}
 
     <span class="product-card__content home-product-card__content">
+      {% unless show_card_image %}
+        {% if card_on_sale %}<span class="badge badge--accent">{{ 'product.sale' | t }}</span>{% endif %}
+        {% unless card_product.available %}<span class="badge">{{ 'product.sold_out' | t }}</span>{% endunless %}
+      {% endunless %}
       <span class="home-product-card__title">{{ card_product.title | escape }}</span>
+      {% if show_card_price %}
       <span class="price home-product-card__price">
         <span class="header-visually-hidden">{{ 'discovery.price' | t }} </span>
         {% if card_product.price_varies %}{{ 'discovery.from_price' | t }} {% endif %}
@@ -44,6 +58,7 @@
           <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ card_product.compare_at_price | money_with_currency }}</s>
         {% endif %}
       </span>
+      {% endif %}
     </span>
   </a>
 </article>

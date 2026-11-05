@@ -12,43 +12,98 @@
     "hero": {
       "type": "home-hero",
       "settings": {
-        "eyebrow": "SalamShop",
-        "heading": "Upptäck det vackra i vardagen",
-        "description": "<p>Omsorgsfullt utvalda produkter för tro, tradition och en personlig livsstil.</p>",
-        "primary_label": "Utforska sortimentet",
+        "eyebrow": "",
+        "heading": "Tidlös stil med islamisk inspiration",
+        "description": "<p>Upptäck vårt sortiment för vardag och bön.</p>",
+        "primary_label": "Utforska kollektionen",
         "primary_link": "shopify://collections/all",
         "text_alignment": "left",
         "content_position": "center",
         "height_mobile": 70,
         "height_desktop": 75,
         "overlay_opacity": 25,
-        "text_color": "#FFFEFB"
+        "text_color": "#FFFEFB",
+        "height_mode": "editorial"
       }
     },
     "categories": {
       "type": "home-categories",
       "blocks": {
-        "prayer_mats": { "type": "category", "settings": { "label": "Bönemattor" } },
-        "womenswear": { "type": "category", "settings": { "label": "Damkläder" } },
-        "menswear": { "type": "category", "settings": { "label": "Herrkläder" } },
-        "fragrance": { "type": "category", "settings": { "label": "Dofter och rökelse" } },
-        "quran_prayer": { "type": "category", "settings": { "label": "Koranen och bönetillbehör" } },
-        "home_decor": { "type": "category", "settings": { "label": "Hem och dekoration" } },
-        "personal_care": { "type": "category", "settings": { "label": "Personlig vård" } }
+        "prayer_mats": {
+          "type": "category",
+          "settings": {
+            "label": "Bönemattor",
+            "collection": "bonemattor"
+          }
+        },
+        "womenswear": {
+          "type": "category",
+          "settings": {
+            "label": "Damkläder",
+            "collection": "damklader"
+          }
+        },
+        "menswear": {
+          "type": "category",
+          "settings": {
+            "label": "Herrkläder",
+            "collection": "herrklader"
+          }
+        },
+        "fragrance": {
+          "type": "category",
+          "settings": {
+            "label": "Dofter och rökelse",
+            "collection": "dofter-och-rokelse"
+          }
+        },
+        "quran_prayer": {
+          "type": "category",
+          "settings": {
+            "label": "Koranen och bönetillbehör",
+            "collection": "koranen-och-bonetillbehor"
+          }
+        },
+        "home_decor": {
+          "type": "category",
+          "settings": {
+            "label": "Hem och dekoration",
+            "collection": "hem-och-dekoration"
+          }
+        },
+        "personal_care": {
+          "type": "category",
+          "settings": {
+            "label": "Personlig vård",
+            "collection": "personlig-vard"
+          }
+        }
       },
-      "block_order": ["prayer_mats", "womenswear", "menswear", "fragrance", "quran_prayer", "home_decor", "personal_care"],
-      "settings": { "eyebrow": "Utforska", "heading": "Handla efter kategori" }
+      "block_order": [
+        "prayer_mats",
+        "womenswear",
+        "menswear",
+        "fragrance",
+        "quran_prayer",
+        "home_decor",
+        "personal_care"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": ""
+      }
     },
     "featured": {
       "type": "home-featured-products",
       "settings": {
-        "eyebrow": "Utvalt",
-        "heading": "Omsorgsfullt utvalda favoriter",
+        "eyebrow": "",
+        "heading": "Utvalda produkter",
         "show_view_all": true,
         "product_limit": 4,
         "columns_mobile": "2",
         "columns_desktop": "4",
-        "image_ratio": "portrait"
+        "image_ratio": "landscape",
+        "collection": "all"
       }
     },
     "editorial": {
@@ -67,25 +122,47 @@
     "arrivals": {
       "type": "home-new-arrivals",
       "settings": {
-        "eyebrow": "Senast hos oss",
+        "eyebrow": "",
         "heading": "Nyheter",
         "show_view_all": true,
         "product_limit": 4,
         "columns_mobile": "2",
         "columns_desktop": "4",
-        "image_ratio": "portrait"
+        "image_ratio": "landscape",
+        "collection": "all"
       }
     },
     "values": {
       "type": "home-brand-values",
       "disabled": true,
       "blocks": {
-        "value_1": { "type": "value", "settings": { "icon": "check" } },
-        "value_2": { "type": "value", "settings": { "icon": "heart" } },
-        "value_3": { "type": "value", "settings": { "icon": "gift" } }
+        "value_1": {
+          "type": "value",
+          "settings": {
+            "icon": "check"
+          }
+        },
+        "value_2": {
+          "type": "value",
+          "settings": {
+            "icon": "heart"
+          }
+        },
+        "value_3": {
+          "type": "value",
+          "settings": {
+            "icon": "gift"
+          }
+        }
       },
-      "block_order": ["value_1", "value_2", "value_3"],
-      "settings": { "heading": "Det som formar vårt urval" }
+      "block_order": [
+        "value_1",
+        "value_2",
+        "value_3"
+      ],
+      "settings": {
+        "heading": ""
+      }
     },
     "newsletter": {
       "type": "home-newsletter",
@@ -97,5 +174,13 @@
       }
     }
   },
-  "order": ["hero", "categories", "featured", "editorial", "arrivals", "values", "newsletter"]
+  "order": [
+    "hero",
+    "categories",
+    "featured",
+    "values",
+    "editorial",
+    "arrivals",
+    "newsletter"
+  ]
 }

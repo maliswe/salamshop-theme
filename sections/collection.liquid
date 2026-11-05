@@ -47,9 +47,6 @@
       {% if section.settings.show_description and collection.description != blank %}
         <div class="collection-intro__description prose">{{ collection.description }}</div>
       {% endif %}
-      {% if section.settings.show_product_count %}
-        <p class="collection-intro__count">{{ 'collection_page.products_count' | t: count: collection.products_count }}</p>
-      {% endif %}
     </div>
 
     {% if has_banner_image %}

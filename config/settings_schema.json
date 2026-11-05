@@ -24,7 +24,7 @@
         "type": "font_picker",
         "id": "type_heading_font",
         "label": "t:design_system.heading_font",
-        "default": "serif"
+        "default": "work_sans_n4"
       },
       {
         "type": "range",
@@ -90,26 +90,26 @@
       {
         "type": "color",
         "id": "background_color",
-        "default": "#F7F3EC",
+        "default": "#FFFCF7",
         "label": "t:labels.background"
       },
       {
         "type": "color",
         "id": "foreground_color",
-        "default": "#252B29",
+        "default": "#292720",
         "label": "t:labels.foreground"
       },
       {
         "type": "color",
         "id": "surface_color",
         "label": "t:design_system.surface",
-        "default": "#FFFEFB"
+        "default": "#F3E9DF"
       },
       {
         "type": "color",
         "id": "secondary_surface_color",
         "label": "t:design_system.secondary_surface",
-        "default": "#E7DECF"
+        "default": "#E6D5BC"
       },
       {
         "type": "color",
@@ -121,7 +121,55 @@
         "type": "color",
         "id": "border_color",
         "label": "t:design_system.border",
-        "default": "#DED8CD"
+        "default": "#DDD4C7"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "t:design_system.primary",
+        "default": "#9A6A22"
+      },
+      {
+        "type": "color",
+        "id": "on_primary_color",
+        "label": "t:design_system.on_primary",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "primary_container_color",
+        "label": "t:design_system.primary_container",
+        "default": "#F3E9DF"
+      },
+      {
+        "type": "color",
+        "id": "on_primary_container_color",
+        "label": "t:design_system.on_primary_container",
+        "default": "#49391E"
+      },
+      {
+        "type": "color",
+        "id": "surface_low_color",
+        "label": "t:design_system.surface_low",
+        "default": "#FAF5ED"
+      },
+      {
+        "type": "color",
+        "id": "surface_high_color",
+        "label": "t:design_system.surface_high",
+        "default": "#E6D5BC"
+      },
+      {
+        "type": "color",
+        "id": "on_surface_variant_color",
+        "label": "t:design_system.on_surface_variant",
+        "default": "#625C52"
+      },
+      {
+        "type": "color",
+        "id": "outline_color",
+        "label": "t:design_system.outline",
+        "default": "#81796B"
       },
       {
         "type": "paragraph",
@@ -136,35 +184,35 @@
         "type": "color",
         "id": "button_primary_background",
         "label": "t:design_system.button_primary_background",
-        "default": "#252B29"
+        "default": "#9A6A22"
       },
       {
         "type": "color",
         "id": "button_primary_text",
         "label": "t:design_system.button_primary_text",
-        "default": "#FFFEFB"
+        "default": "#FFFFFF"
       },
       {
         "type": "color",
         "id": "button_secondary_background",
         "label": "t:design_system.button_secondary_background",
-        "default": "#FFFEFB"
+        "default": "#F3E9DF"
       },
       {
         "type": "color",
         "id": "button_secondary_text",
         "label": "t:design_system.button_secondary_text",
-        "default": "#252B29"
+        "default": "#49391E"
       },
       {
         "type": "range",
         "id": "button_corner_radius",
         "label": "t:design_system.button_radius",
         "min": 0,
-        "max": 32,
+        "max": 50,
         "step": 1,
         "unit": "px",
-        "default": 4
+        "default": 50
       },
       {
         "type": "range",
@@ -174,17 +222,52 @@
         "max": 32,
         "step": 1,
         "unit": "px",
-        "default": 8
+        "default": 24
       },
       {
         "type": "range",
         "id": "input_corner_radius",
         "min": 0,
-        "max": 10,
+        "max": 32,
         "step": 1,
         "unit": "px",
         "label": "t:labels.input_corner_radius",
-        "default": 4
+        "default": 24
+      },
+      {
+        "type": "select",
+        "id": "shape_scale",
+        "label": "t:design_system.shape_scale",
+        "options": [
+          { "value": "compact", "label": "t:design_system.shape_compact" },
+          { "value": "soft", "label": "t:design_system.shape_soft" },
+          { "value": "expressive", "label": "t:design_system.shape_expressive" }
+        ],
+        "default": "expressive"
+      }
+    ]
+  },
+  {
+    "name": "t:navigation_settings.title",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_bottom_navigation",
+        "label": "t:navigation_settings.show_bottom_navigation",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tablet_navigation_rail",
+        "label": "t:navigation_settings.show_tablet_navigation_rail",
+        "default": false
+      },
+      {
+        "type": "link_list",
+        "id": "bottom_navigation_menu",
+        "label": "t:navigation_settings.bottom_navigation_menu",
+        "info": "t:navigation_settings.bottom_navigation_info",
+        "default": "main-menu"
       }
     ]
   },
@@ -264,6 +347,7 @@
       { "type": "checkbox", "id": "cart_show_notes", "label": "t:cart_settings.show_notes", "default": true },
       { "type": "checkbox", "id": "cart_show_thumbnails", "label": "t:cart_settings.show_thumbnails", "default": true },
       { "type": "checkbox", "id": "cart_show_variant_details", "label": "t:cart_settings.show_variant_details", "default": true },
+      { "type": "checkbox", "id": "show_floating_cart", "label": "t:cart_settings.show_floating_cart", "default": true },
       {
         "type": "select",
         "id": "cart_layout",

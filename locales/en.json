@@ -86,7 +86,8 @@
     "decrease_quantity": "Decrease quantity",
     "increase_quantity": "Increase quantity",
     "tax_included": "Tax included. Shipping calculated at checkout.",
-    "information": "Product information",
+    "information": "More information",
+    "adding_to_cart": "Adding to cart…",
     "material": "Material",
     "dimensions": "Dimensions",
     "length": "Length",
@@ -148,7 +149,9 @@
     "cart_count": "Cart ({{ count }})",
     "view_category": "View all: {{ category }}",
     "product_search": "Search products",
-    "search_placeholder": "Search products"
+    "search_placeholder": "Search products",
+    "categories": "Categories",
+    "mobile_navigation": "Mobile navigation"
   },
   "discovery": {
     "loading": "Loading search suggestions",

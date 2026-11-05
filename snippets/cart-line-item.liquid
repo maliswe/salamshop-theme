@@ -55,7 +55,7 @@
       <input id="{{ quantity_id }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" step="1" inputmode="numeric" data-cart-quantity-input data-line-key="{{ item.key | escape }}" aria-label="{{ 'cart.quantity' | t: product: item.product.title | escape }}">
       <button type="button" data-cart-quantity-change="1" aria-label="{{ 'cart.increase_quantity' | t: product: item.product.title | escape }}">+</button>
     </div>
-    <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key | escape }}">{{ 'cart.remove' | t }}</a>
+    <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key | escape }}" aria-label="{{ 'cart.remove' | t | escape }}: {{ item.product.title | escape }}">{{ 'cart.remove' | t }}</a>
   </div>
 
   <div class="cart-line__total price">

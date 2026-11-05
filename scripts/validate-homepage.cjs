@@ -44,6 +44,9 @@ for (const id of ['image', 'mobile_image', 'eyebrow', 'heading', 'description', 
 }
 assert.match(hero.source, /fetchpriority: 'high'/);
 assert.match(hero.source, /widths: '750, 1100, 1500, 2000, 2400'/);
+assert.ok(hero.schema.settings.some(setting => setting.id === 'height_mode' && setting.default === 'editorial'), 'Editorial geometry must be the default; custom height remains available');
+assert.match(hero.source, /presentation\.focal_point/, 'Hero must respect merchant focal points');
+assert.match(hero.source, /home-hero--empty/, 'Unconfigured hero needs a legible fallback');
 
 const categories = schemaFor('sections/home-categories.liquid');
 const categoryBlock = categories.schema.blocks.find(block => block.type === 'category');
@@ -69,6 +72,7 @@ const editorial = schemaFor('sections/home-editorial.liquid').schema;
 for (const id of ['image', 'image_position', 'background', 'button_label', 'button_link']) assert.ok(editorial.settings.some(setting => setting.id === id), `Editorial setting missing: ${id}`);
 
 const values = schemaFor('sections/home-brand-values.liquid').schema;
+assert.match(read('sections/home-brand-values.liquid'), /if block\.settings\.title == blank and block\.settings\.description == blank[\s\S]*?continue/, 'Empty service claims must not render');
 assert.ok(values.blocks.find(block => block.type === 'value'), 'Brand values need repeatable blocks');
 assert.ok(values.blocks[0].settings.some(setting => setting.id === 'image'), 'Value blocks need image overrides');
 

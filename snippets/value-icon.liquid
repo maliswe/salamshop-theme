@@ -3,6 +3,14 @@
   @param {string} icon - Icon identifier
 {% enddoc %}
 {% case icon %}
+  {% when 'truck' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 5h12v13H8m-4 0H2V5Zm12 4h4l3 5v4h-3m-4 0h-2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+  {% when 'shield' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 2 8 4v6c0 5-8 10-8 10S4 17 4 12V6l8-4Z"/><path d="m8 12 3 3 5-6"/></svg>
+  {% when 'return' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m8 3-5 5 5 5M3 8h12a6 6 0 0 1 0 12H7"/></svg>
+  {% when 'headset' %}
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 14v-3a8 8 0 0 1 16 0v3m0 4v2h-6M3 12h4v6H3zm14 0h4v6h-4z"/></svg>
   {% when 'heart' %}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.8 5.8a5.5 5.5 0 0 0-7.8 0L12 6.9l-1.1-1.1a5.5 5.5 0 0 0-7.7 7.8L12 22l8.8-8.4a5.5 5.5 0 0 0 0-7.8Z"/></svg>
   {% when 'gift' %}

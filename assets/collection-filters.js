@@ -14,12 +14,16 @@ class SalamCollectionFilterDrawer extends HTMLElement {
     this.details.addEventListener('toggle', () => this.onToggle(), options);
     this.closeButtons.forEach(button => button.addEventListener('click', () => this.close(), options));
     this.addEventListener('keydown', event => this.onKeydown(event), options);
+    window.matchMedia?.('(min-width: 64rem)').addEventListener('change', event => {
+      if (event.matches) this.close();
+    }, options);
   }
 
   disconnectedCallback() {
     this.controller?.abort();
     this.controller = null;
     this.panel?.setAttribute('aria-modal', 'false');
+    this.restoreBackground();
     document.body.removeAttribute('data-filter-drawer-open');
   }
 
@@ -28,13 +32,28 @@ class SalamCollectionFilterDrawer extends HTMLElement {
       this.previousFocus = document.activeElement;
       this.panel.setAttribute('aria-modal', 'true');
       document.body.setAttribute('data-filter-drawer-open', '');
+      this.restoreBackground();
+      this.background = [];
+      for (let branch = this; branch.parentElement && branch !== document.body; branch = branch.parentElement) {
+        for (const sibling of branch.parentElement.children) {
+          if (sibling === branch || sibling.inert) continue;
+          sibling.inert = true;
+          this.background.push(sibling);
+        }
+      }
       requestAnimationFrame(() => this.querySelector('[data-filter-close-button]')?.focus());
     } else {
       this.panel.setAttribute('aria-modal', 'false');
+      this.restoreBackground();
       document.body.removeAttribute('data-filter-drawer-open');
       if (this.previousFocus instanceof HTMLElement) this.previousFocus.focus();
       this.previousFocus = null;
     }
+  }
+
+  restoreBackground() {
+    for (const element of this.background || []) element.inert = false;
+    this.background = [];
   }
 
   close() {

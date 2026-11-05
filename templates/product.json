@@ -12,7 +12,7 @@
     "main": {
       "type": "product",
       "blocks": {
-        "description": { "type": "description", "settings": { "heading": "Produktinformation" } },
+        "description": { "type": "description", "settings": { "heading": "" } },
         "material": { "type": "material", "settings": { "heading": "Material" } },
         "dimensions": { "type": "dimensions", "settings": { "heading": "Mått" } },
         "care": { "type": "care", "settings": { "heading": "Tvättråd och skötsel" } },
@@ -21,7 +21,8 @@
       },
       "block_order": ["description", "material", "dimensions", "care", "head_circumference", "size_guide"],
       "settings": {
-        "image_ratio": "natural",
+        "image_ratio": "editorial",
+        "information_surface": "plain",
         "thumbnail_position": "side",
         "enable_zoom": true,
         "show_vendor": false,

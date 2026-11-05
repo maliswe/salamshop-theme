@@ -1,6 +1,6 @@
 {% if metafield != blank %}
   <details class="product-information__item" {{ block.shopify_attributes }}>
-    <summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ fallback_heading | t }}{% endif %}</summary>
+    <summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ fallback_heading | t }}{% endif %}{% render 'header-icon', icon: 'chevron' %}</summary>
     <div class="product-information__content prose">{{ metafield | metafield_tag }}</div>
   </details>
 {% endif %}

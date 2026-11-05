@@ -4,7 +4,6 @@
       this.abortController?.abort();
       this.abortController = new AbortController();
       const signal = this.abortController.signal;
-      this.track = this.querySelector('[data-media-track]');
       this.querySelectorAll('[data-media-thumbnail]').forEach(thumbnail => {
         thumbnail.addEventListener('click', event => {
           event.preventDefault();
@@ -38,7 +37,6 @@
         thumbnail.classList.toggle('is-active', active);
         if (active) thumbnail.setAttribute('aria-current', 'true'); else thumbnail.removeAttribute('aria-current');
       });
-      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest', inline: 'center' });
       if (moveFocus) this.querySelector(`[data-media-thumbnail="${CSS.escape(id)}"]`)?.focus();
     }
   }
@@ -48,7 +46,24 @@
       this.abortController?.abort();
       this.abortController = new AbortController();
       const signal = this.abortController.signal;
-      this.querySelectorAll('[data-option-value-id]').forEach(option => option.addEventListener('click', event => this.onOptionClick(event), { signal }));
+      this.querySelectorAll('[data-option-group]').forEach(group => {
+        const options = [...group.querySelectorAll('.product-option__value')];
+        const links = options.filter(option => option.hasAttribute('href'));
+        const tabStop = links.find(option => option.classList.contains('is-selected')) || links[0];
+        group.setAttribute('role', 'radiogroup');
+        for (const option of options) {
+          option.parentElement.setAttribute('role', 'presentation');
+          option.setAttribute('role', 'radio');
+          option.setAttribute('aria-checked', String(option.classList.contains('is-selected')));
+          option.removeAttribute('aria-current');
+        }
+        for (const link of links) {
+          link.tabIndex = link === tabStop ? 0 : -1;
+          link.addEventListener('click', event => this.onOptionClick(event), { signal });
+          link.addEventListener('keydown', event => this.onOptionKey(event, links), { signal });
+        }
+      });
+      this.addLabel = this.querySelector('[data-add-to-cart-text]')?.textContent;
       this.querySelectorAll('[data-quantity-change]').forEach(button => button.addEventListener('click', () => this.changeQuantity(button), { signal }));
       this.querySelector('form')?.addEventListener('submit', event => this.onSubmit(event), { signal });
       this.setupStickyBar();
@@ -58,16 +73,36 @@
       this.abortController?.abort();
       this.variantRequest?.abort();
       this.stickyObserver?.disconnect();
+      window.clearTimeout(this.addedTimeout);
+    }
+
+    onOptionKey(event, links) {
+      const option = event.currentTarget;
+      if (event.key === ' ') {
+        event.preventDefault();
+        option.click();
+        return;
+      }
+      const rtl = getComputedStyle(option).direction === 'rtl';
+      const steps = { ArrowLeft: rtl ? 1 : -1, ArrowRight: rtl ? -1 : 1, ArrowUp: -1, ArrowDown: 1 };
+      const step = steps[event.key];
+      if (!step) return;
+      event.preventDefault();
+      const next = links[(links.indexOf(option) + step + links.length) % links.length];
+      next.focus();
+      next.click();
     }
 
     async onOptionClick(event) {
       const option = event.currentTarget;
       if (!option.href) return;
       event.preventDefault();
+      if (this.adding) return;
       const selectors = option.closest('[data-option-selectors]');
-      const selected = [...selectors.querySelectorAll('[data-option-value-id][aria-current="true"]')];
-      const position = [...selectors.children].indexOf(option.closest('.product-option'));
-      selected[position] = option;
+      const currentGroup = option.closest('[data-option-group]');
+      const selected = [...selectors.querySelectorAll('[data-option-group]')].map(group =>
+        group === currentGroup ? option : group.querySelector('[data-option-value-id][aria-checked="true"]')
+      );
       const ids = selected.filter(Boolean).map(item => item.dataset.optionValueId);
       const baseUrl = option.dataset.productUrl || this.dataset.productUrl;
       const requestUrl = new URL(baseUrl, window.location.origin);
@@ -105,6 +140,10 @@
       if (!event.currentTarget.checkValidity()) return;
       const submitter = event.submitter;
       if (!submitter?.matches('[data-add-to-cart]')) return;
+      if (this.hasAttribute('aria-busy')) {
+        event.preventDefault();
+        return;
+      }
       const form = event.currentTarget;
       const buttons = this.querySelectorAll('[data-add-to-cart]');
       if (this.ajaxDisabled || !window.SalamCart?.isDrawerEnabled) {
@@ -117,7 +156,10 @@
       this.adding = true;
       const error = this.querySelector('[data-product-cart-error]');
       const status = this.querySelector('[data-product-cart-status]');
-      const originalText = this.querySelector('[data-add-to-cart-text]')?.textContent;
+      const text = this.querySelector('[data-add-to-cart-text]');
+      window.clearTimeout(this.addedTimeout);
+      const loadingLabel = this.querySelector('[data-loading-label]')?.dataset.loadingLabel;
+      if (text && loadingLabel) text.textContent = loadingLabel;
       if (error) { error.hidden = true; error.textContent = ''; }
       if (status) status.textContent = '';
       buttons.forEach(button => { button.disabled = true; });
@@ -125,11 +167,11 @@
       try {
         await window.SalamCart.addProduct(form);
         const label = submitter.dataset.addedLabel || this.querySelector('[data-add-to-cart]')?.dataset.addedLabel;
-        const text = this.querySelector('[data-add-to-cart-text]');
         if (text && label) text.textContent = label;
         if (status && label) status.textContent = label;
-        window.setTimeout(() => { if (text && originalText) text.textContent = originalText; }, 1800);
+        this.addedTimeout = window.setTimeout(() => { if (text) text.textContent = this.addLabel; }, 1800);
       } catch (requestError) {
+        if (text) text.textContent = this.addLabel;
         const fallback = submitter.dataset.errorLabel || this.querySelector('[data-add-to-cart]')?.dataset.errorLabel || requestError.message;
         if (error) { error.textContent = requestError.message || fallback; error.hidden = false; }
         if (!requestError.serverResponse) this.ajaxDisabled = true;
@@ -144,7 +186,9 @@
       const bar = this.querySelector('[data-sticky-buy]');
       const addButton = this.querySelector('[data-add-to-cart]');
       if (!bar || !addButton || !('IntersectionObserver' in window)) return;
-      this.stickyObserver = new IntersectionObserver(([entry]) => { bar.hidden = entry.isIntersecting; }, { threshold: 0.1 });
+      this.stickyObserver = new IntersectionObserver(([entry]) => {
+        bar.hidden = entry.isIntersecting || entry.boundingClientRect.bottom > (entry.rootBounds?.top ?? 0);
+      }, { threshold: 0.1 });
       this.stickyObserver.observe(addButton);
     }
   }

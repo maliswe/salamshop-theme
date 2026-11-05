@@ -19,10 +19,12 @@ for (const setting of settings) {
   if (setting.type === 'font_picker') assert.ok(setting.default, `${setting.id}: font default`);
 }
 assert.equal(defaults.type_primary_font, 'work_sans_n4');
-assert.equal(defaults.type_heading_font, 'serif');
+assert.equal(defaults.type_heading_font, 'work_sans_n4');
 const snippet = read('snippets/css-variables.liquid');
 for (const match of snippet.matchAll(/settings\.([\w]+)/g)) assert.ok(ids.includes(match[1]), `Missing setting: ${match[1]}`);
 const consumers = snippet
+  + read('layout/theme.liquid')
+  + read('snippets/bottom-navigation.liquid')
   + read('snippets/header-search.liquid')
   + read('snippets/search-product.liquid')
   + read('sections/predictive-search.liquid')
@@ -49,6 +51,11 @@ function contrast(label, a, b, minimum = 4.5) {
 for (const id of ['background_color', 'surface_color', 'secondary_surface_color', 'accent_color']) contrast(`Text on ${id}`, defaults.foreground_color, defaults[id]);
 contrast('Primary button', defaults.button_primary_text, defaults.button_primary_background);
 contrast('Secondary button', defaults.button_secondary_text, defaults.button_secondary_background);
+contrast('Primary role', defaults.on_primary_color, defaults.primary_color);
+contrast('Primary container', defaults.on_primary_container_color, defaults.primary_container_color);
+contrast('Supporting text', defaults.on_surface_variant_color, defaults.surface_low_color);
+contrast('Input outline', defaults.outline_color, defaults.background_color, 3);
+contrast('Option outline', defaults.outline_color, defaults.surface_low_color, 3);
 contrast('Error text', '#8a2c24', '#fff4f1');
 contrast('Input boundary and focus', defaults.foreground_color, defaults.surface_color, 3);
 

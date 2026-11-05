@@ -28,8 +28,10 @@
   .site-footer {
     margin-block-start: var(--section-space);
     padding-block: var(--space-7);
-    border-block-start: var(--border-default);
-    background: var(--color-surface);
+    border-block-start: 0;
+    border-start-start-radius: var(--radius-container);
+    border-start-end-radius: var(--radius-container);
+    background: var(--color-surface-high);
   }
   .site-footer__inner {
     display: grid;
@@ -40,6 +42,14 @@
     color: var(--color-foreground);
   }
   .site-footer a:hover { text-decoration: underline; }
+  .footer__links a {
+    display: inline-flex;
+    min-block-size: 2.75rem;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+  }
+  .footer__links a:hover { background: var(--color-primary-container); color: var(--color-on-primary-container); text-decoration: none; }
   .footer__links ul,
   .footer__payment ul {
     display: flex;

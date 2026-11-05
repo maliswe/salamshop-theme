@@ -1,0 +1,54 @@
+[
+  {
+    "categoryLinks": 7,
+    "clientWidth": 375,
+    "hero": {
+      "height": 448,
+      "width": 335
+    },
+    "openDialogs": 0,
+    "productColumns": "161.5px 161.5px",
+    "productImages": 8,
+    "scrollWidth": 375,
+    "viewport": 390
+  },
+  {
+    "categoryLinks": 7,
+    "clientWidth": 305,
+    "hero": {
+      "height": 448,
+      "width": 265
+    },
+    "openDialogs": 0,
+    "productColumns": "126.5px 126.5px",
+    "productImages": 8,
+    "scrollWidth": 305,
+    "viewport": 320
+  },
+  {
+    "categoryLinks": 7,
+    "clientWidth": 753,
+    "hero": {
+      "height": 352,
+      "width": 591.546875
+    },
+    "openDialogs": 0,
+    "productColumns": "138.875px 138.891px 138.891px 138.891px",
+    "productImages": 8,
+    "scrollWidth": 753,
+    "viewport": 768
+  },
+  {
+    "categoryLinks": 7,
+    "clientWidth": 1425,
+    "hero": {
+      "height": 579.703125,
+      "width": 1200
+    },
+    "openDialogs": 0,
+    "productColumns": "291px 291px 291px 291px",
+    "productImages": 8,
+    "scrollWidth": 1425,
+    "viewport": 1440
+  }
+]

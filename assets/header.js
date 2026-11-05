@@ -11,6 +11,20 @@ if (!customElements.get("salam-header")) {
         this.opener = this.querySelector("[data-drawer-open]");
         this.desktop = this.querySelector("[data-desktop-nav]");
         this.breakpoint = matchMedia("(min-width: 64rem)");
+        if (typeof ResizeObserver !== "undefined") {
+          const root = document.documentElement;
+          const section = this.closest(".site-header-section");
+          const dock = document.querySelector(".bottom-navigation");
+          this.navigationObserver = new ResizeObserver(() => {
+            const height = section && getComputedStyle(section).position === "sticky"
+              ? section.getBoundingClientRect().height : 0;
+            root.style.setProperty("--header-height", `${height}px`);
+            const dockHeight = dock?.getBoundingClientRect().height;
+            if (dockHeight) root.style.setProperty("--navigation-dock-height", `${dockHeight}px`);
+          });
+          if (section) this.navigationObserver.observe(section);
+          if (dock) this.navigationObserver.observe(dock);
+        }
         this.restoreFocus = true;
         this.opener?.setAttribute("aria-expanded", "false");
         this.searchToggle = this.querySelector('.header-search-mobile');
@@ -153,10 +167,13 @@ if (!customElements.get("salam-header")) {
             const drawerHadFocus = this.dialog?.contains(
               document.activeElement,
             );
+            const searchHadFocus = this.hasAttribute("data-mobile-search-open") &&
+              this.searchInput?.closest(".header-search-panel").contains(document.activeElement);
             this.closeDrawer(false);
             this.closeMobileSearch(false);
             this.closeBranches(this.desktop);
-            if (drawerHadFocus) this.querySelector(".header-brand").focus();
+            if (searchHadFocus && this.breakpoint.matches) this.searchInput.focus();
+            else if (drawerHadFocus) this.querySelector(".header-brand").focus();
           },
           { signal },
         );
@@ -192,6 +209,11 @@ if (!customElements.get("salam-header")) {
       }
 
       disconnectedCallback() {
+        if (this.navigationObserver) {
+          this.navigationObserver.disconnect();
+          document.documentElement.style.removeProperty("--header-height");
+          document.documentElement.style.removeProperty("--navigation-dock-height");
+        }
         this.closeDrawer(false);
         this.closeMobileSearch(false);
         this.events?.abort();

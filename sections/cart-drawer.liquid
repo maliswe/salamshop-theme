@@ -37,15 +37,6 @@
           </div>
           <div class="cart-drawer__footer">
             {% render 'cart-summary' %}
-            {% liquid
-              assign continue_url = settings.cart_continue_shopping_link
-              if continue_url == blank and settings.cart_empty_collection != blank
-                assign continue_url = settings.cart_empty_collection.url
-              endif
-              if continue_url == blank
-                assign continue_url = routes.all_products_collection_url
-              endif
-            %}
             <button class="button button--secondary" type="button" data-cart-drawer-close>{{ 'cart.continue_shopping' | t }}</button>
             <a class="cart-drawer__view-cart" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
             <noscript><button type="submit" name="update">{{ 'cart.update' | t }}</button></noscript>
@@ -53,6 +44,20 @@
         </form>
       {% endif %}
     </dialog>
+  {% endif %}
+
+  {% if settings.show_floating_cart and cart.empty? == false %}
+    <a class="floating-cart" href="{{ routes.cart_url }}"{% if settings.cart_behavior == 'drawer' %} data-cart-drawer-open aria-haspopup="dialog"{% endif %} aria-label="{{ 'header.cart_count' | t: count: cart.item_count | escape }}">
+      <span class="floating-cart__icon" aria-hidden="true">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+      {% if settings.cart_show_thumbnails %}
+      <span class="floating-cart__media" aria-hidden="true">
+        {% for item in cart.items limit: 3 %}
+          {% if item.image %}{{ item.image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '48, 64, 80', sizes: '32px', alt: '' }}{% endif %}
+        {% endfor %}
+      </span>
+      {% endif %}
+      <span class="floating-cart__count" data-cart-count aria-hidden="true">{{ cart.item_count }}</span>
+    </a>
   {% endif %}
 </cart-drawer>
 

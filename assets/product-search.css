@@ -3,28 +3,81 @@
   position: relative;
   min-inline-size: 0;
 }
-.product-search [hidden] {
-  display: none !important;
-}
+
+/* Approved SalamShop search foundations */
 .product-search .header-search-form {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
+  padding: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+}
+
+.product-search .header-search-form input[type='search'] {
+  border: 0;
+  background: transparent;
+}
+
+.product-search .header-search-form input[type='search']:focus-visible {
+  outline-offset: -0.15rem;
+}
+
+.product-search .header-search-form button {
+  min-block-size: 2.75rem;
+  border-radius: var(--radius-pill);
+}
+
+.product-search .header-search-submit {
+  order: -1;
+  display: grid;
+  place-items: center;
+  flex: 0 0 var(--control-min-height);
+  padding: var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--color-foreground);
+}
+
+.header-search-submit svg { inline-size: 1.25rem; block-size: 1.25rem; }
+
+.product-search .search-popup {
+  margin-block-start: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-card-large);
+  background: var(--color-background);
+  box-shadow: var(--elevation-2);
+}
+
+.search-suggestions-list a,
+.search-view-all {
+  border-radius: var(--radius-card);
+}
+
+.product-search :is(a:hover, [aria-selected='true'], a:focus-visible) {
+  background: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+.product-search [hidden] {
+  display: none !important;
 }
 .product-search input[type='search'] {
-  flex: 1 1 8rem;
+  flex: 1 1 6rem;
   inline-size: 0;
+  min-inline-size: 0;
 }
+.product-search .search-clear { padding-inline: var(--space-2); font-size: var(--font-size-small); }
 .search-feedback {
   font-size: var(--font-size-small);
   margin-block-start: var(--space-2);
 }
+.search-feedback:empty { display: none; }
 .search-popup {
   position: absolute;
   inset-inline: 0;
   inset-block-start: 100%;
   z-index: 45;
-  padding: var(--space-4);
+  padding: var(--space-3);
   background: var(--color-surface);
   color: var(--color-foreground);
   border: var(--border-default);
@@ -75,6 +128,8 @@
 }
 .search-product-media {
   display: block;
+  border-radius: var(--radius-input);
+  background: var(--color-surface-high);
 }
 .search-product-media img {
   inline-size: 100%;
@@ -109,14 +164,18 @@
   display: grid;
   gap: var(--space-5);
 }
+.search-page__intro { display: grid; gap: var(--space-2); }
+.search-page__intro h1 { overflow-wrap: anywhere; }
+.search-page__intro p { color: var(--color-on-surface-variant); }
+.search-page__empty { padding: var(--space-5); border-radius: var(--radius-container); background: var(--color-surface-low); }
 .search-page > .product-search {
   max-inline-size: 42rem;
   inline-size: 100%;
 }
 .search-results {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-item-min)), 1fr));
-  gap: var(--grid-gap);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-3);
 }
 .search-result-link {
   display: grid;
@@ -130,21 +189,22 @@
   text-decoration: underline;
 }
 .search-pagination {
-  grid-column: 1 / -1;
+  text-align: center;
 }
-.search-pagination a {
+.search-pagination :is(a, .page.current) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-block-size: var(--control-min-height);
   min-inline-size: var(--control-min-height);
   padding: var(--space-2);
+  border-radius: var(--radius-pill);
+}
+.search-pagination .page.current { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+@media (min-width: 48rem) {
+  .search-results { grid-template-columns: repeat(4, minmax(0, 1fr)); gap-inline: var(--space-5); }
 }
 @media (max-width: 63.999rem) {
-  .product-search input[type='search'] {
-    flex-basis: 100%;
-    inline-size: 100%;
-  }
   .search-popup {
     position: relative;
     inset: auto;
@@ -158,5 +218,9 @@
     overflow-y: auto;
     overscroll-behavior: contain;
     padding: var(--space-2);
+  }
+  .header-search-panel .product-search input[type='search'] {
+    flex-basis: 6rem;
+    inline-size: 0;
   }
 }

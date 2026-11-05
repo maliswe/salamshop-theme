@@ -1,0 +1,52 @@
+[
+  {
+    "client": 375,
+    "columns": "335.429px",
+    "gallery": [
+      335,
+      235
+    ],
+    "scroll": 375,
+    "viewport": 390
+  },
+  {
+    "client": 305,
+    "columns": "265.143px",
+    "gallery": [
+      265,
+      186
+    ],
+    "scroll": 305,
+    "viewport": 320
+  },
+  {
+    "client": 753,
+    "columns": "380.062px 280.92px",
+    "gallery": [
+      380,
+      266
+    ],
+    "scroll": 753,
+    "viewport": 768
+  },
+  {
+    "client": 1009,
+    "columns": "536.188px 352px",
+    "gallery": [
+      448,
+      314
+    ],
+    "scroll": 1009,
+    "viewport": 1024
+  },
+  {
+    "client": 1425,
+    "columns": "714px 428.402px",
+    "gallery": [
+      626,
+      438
+    ],
+    "scroll": 1425,
+    "viewport": 1440
+  }
+]

@@ -1,15 +1,27 @@
-<section class="home-section home-values" aria-labelledby="HomeValues-{{ section.id }}">
+{% liquid
+  assign has_values = false
+  for block in section.blocks
+    if block.settings.title != blank or block.settings.description != blank
+      assign has_values = true
+    endif
+  endfor
+%}
+{% if has_values %}
+<section class="home-section home-values"{% if section.settings.heading != blank %} aria-labelledby="HomeValues-{{ section.id }}"{% endif %}>
   <div class="home-section__inner">
+    {% if section.settings.heading != blank or section.settings.eyebrow != blank or section.settings.description != blank %}
     <div class="home-section__header">
       <div class="home-section__heading-group">
         {% if section.settings.eyebrow != blank %}<p class="home-section__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
-        <h2 id="HomeValues-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        {% if section.settings.heading != blank %}<h2 id="HomeValues-{{ section.id }}">{{ section.settings.heading | escape }}</h2>{% endif %}
         {% if section.settings.description != blank %}<div class="prose">{{ section.settings.description }}</div>{% endif %}
       </div>
     </div>
+    {% endif %}
 
     <div class="home-values__grid">
       {% for block in section.blocks %}
+        {% if block.settings.title == blank and block.settings.description == blank %}{% continue %}{% endif %}
         <article class="home-value" {{ block.shopify_attributes }}>
           <div class="home-value__icon">
             {% if block.settings.image != blank %}
@@ -27,6 +39,9 @@
     </div>
   </div>
 </section>
+{% else %}
+  {% style %}#shopify-section-{{ section.id }} { display: none; }{% endstyle %}
+{% endif %}
 
 {% schema %}
 {
@@ -47,6 +62,10 @@
         {
           "type": "select", "id": "icon", "label": "t:homepage.values.icon",
           "options": [
+            { "value": "truck", "label": "t:homepage.options.icon_truck" },
+            { "value": "shield", "label": "t:homepage.options.icon_shield" },
+            { "value": "return", "label": "t:homepage.options.icon_return" },
+            { "value": "headset", "label": "t:homepage.options.icon_headset" },
             { "value": "check", "label": "t:homepage.options.icon_check" },
             { "value": "heart", "label": "t:homepage.options.icon_heart" },
             { "value": "gift", "label": "t:homepage.options.icon_gift" },
