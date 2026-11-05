@@ -119,5 +119,16 @@
     "announcement_default": "Welcome to SalamShop",
     "announcement_link": "Announcement link",
     "mobile_announcement": "Show announcement on mobile"
+  },
+  "search_settings": {
+    "title": "Product search",
+    "enabled": "Enable predictive search",
+    "images": "Show product images",
+    "prices": "Show product prices",
+    "collections": "Suggest collections",
+    "queries": "Suggest searches",
+    "limit": "Maximum suggestions",
+    "limit_info": "Total across products, collections and searches. Also applies to search on the results page.",
+    "predictive_section": "Predictive search"
   }
 }

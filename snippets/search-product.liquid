@@ -1,0 +1,26 @@
+{% doc %}
+  Shared product details for suggestions and full results. Never crops branding.
+  @param {product} product - Product returned by Shopify search
+  @param {boolean} compact - Compact suggestion row versus full product card
+{% enddoc %}
+{% if settings.search_show_images %}
+  {% if product.featured_media.preview_image %}
+    <span class="search-product-media{% unless compact %} product-card__media{% endunless %}">
+      {{ product.featured_media.preview_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '96, 160, 320, 480', sizes: '(min-width: 64rem) 240px, 96px', alt: '' }}
+    </span>
+  {% else %}
+    <span class="search-product-media search-product-media--empty" aria-hidden="true"></span>
+  {% endif %}
+{% endif %}
+<span class="search-product-info">
+  <span class="search-product-title">{{ product.title | escape }}</span>
+  {% if settings.search_show_prices %}
+    <span class="price">
+      <span class="header-visually-hidden">{{ 'discovery.price' | t }} </span>{% if product.price_varies %}{{ 'discovery.from_price' | t }} {% endif %}{{ product.price | money_with_currency }}
+      {% if product.compare_at_price > product.price and product.price_varies == false and product.compare_at_price_varies == false %}
+        <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ product.compare_at_price | money_with_currency }}</s>
+      {% endif %}
+    </span>
+  {% endif %}
+  {% unless product.available %}<span class="badge">{{ 'product.sold_out' | t }}</span>{% endunless %}
+</span>

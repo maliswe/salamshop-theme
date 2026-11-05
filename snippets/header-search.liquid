@@ -1,10 +1,29 @@
 {% doc %}
-  Standard Shopify product search, without predictive search.
+  Reusable native product search with optional progressive suggestions.
   @param {string} id - Unique section ID
 {% enddoc %}
-<form class="header-search-form" action="{{ routes.search_url }}" method="get" role="search" aria-label="{{ 'header.product_search' | t | escape }}">
-  <label class="header-visually-hidden" for="HeaderSearch-{{ id }}">{{ 'header.product_search' | t }}</label>
-  <input id="HeaderSearch-{{ id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'header.search_placeholder' | t | escape }}">
-  <input type="hidden" name="type" value="product">
-  <button type="submit">{{ 'search.submit' | t }}</button>
-</form>
+{{ 'product-search.css' | asset_url | stylesheet_tag }}
+<salam-search
+  class="product-search"
+  data-enabled="{{ settings.predictive_search_enabled }}"
+  data-endpoint="{{ routes.predictive_search_url }}"
+  data-types="product{% if settings.search_show_collections %},collection{% endif %}{% if settings.search_show_queries %},query{% endif %}"
+  data-limit="{{ settings.search_suggestion_limit }}"
+  data-loading="{{ 'discovery.loading' | t | escape }}"
+  data-error="{{ 'discovery.error' | t | escape }}"
+  data-empty="{{ 'discovery.no_suggestions' | t | escape }}"
+>
+  <form class="header-search-form" action="{{ routes.search_url }}" method="get" role="search" aria-label="{{ 'header.product_search' | t | escape }}">
+    <label class="header-visually-hidden" for="HeaderSearch-{{ id }}">{{ 'header.product_search' | t }}</label>
+    <input id="HeaderSearch-{{ id }}" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'header.search_placeholder' | t | escape }}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+    <input type="hidden" name="type" value="product">
+    <button class="search-clear button--secondary" type="button" data-search-clear hidden>{{ 'discovery.clear' | t }}</button>
+    <button type="submit">{{ 'search.submit' | t }}</button>
+  </form>
+  <p class="search-feedback" role="status" aria-live="polite" aria-atomic="true" data-search-status></p>
+  <div class="search-popup" id="SearchSuggestions-{{ id }}" role="dialog" aria-label="{{ 'discovery.suggestions' | t | escape }}" data-search-popup hidden>
+    <div class="search-popup-heading"><span>{{ 'discovery.suggestions' | t }}</span><button type="button" class="button--secondary" aria-label="{{ 'discovery.close_suggestions' | t | escape }}" data-search-close>{{ 'header.close' | t }}</button></div>
+    <div data-search-results></div>
+  </div>
+</salam-search>
+<script src="{{ 'product-search.js' | asset_url }}" defer></script>

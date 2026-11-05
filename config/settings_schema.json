@@ -198,5 +198,50 @@
         "info": "t:design_system.logo_info"
       }
     ]
+  },
+  {
+    "name": "t:search_settings.title",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "predictive_search_enabled",
+        "label": "t:search_settings.enabled",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_images",
+        "label": "t:search_settings.images",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_prices",
+        "label": "t:search_settings.prices",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_collections",
+        "label": "t:search_settings.collections",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_queries",
+        "label": "t:search_settings.queries",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "search_suggestion_limit",
+        "label": "t:search_settings.limit",
+        "info": "t:search_settings.limit_info",
+        "min": 4,
+        "max": 10,
+        "step": 1,
+        "default": 8
+      }
+    ]
   }
 ]

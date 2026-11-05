@@ -51,7 +51,10 @@
         {% endif %}
       </a>
       {% if section.settings.show_search %}
-        <div class="header-search-desktop">{% render 'header-search', id: section.id %}</div>
+        <div class="header-search-desktop header-search-panel" id="HeaderSearchPanel-{{ section.id }}">
+          <button class="header-search-panel-close button--secondary" type="button" aria-label="{{ 'discovery.close_search' | t | escape }}" data-mobile-search-close hidden>{{ 'header.close' | t }}</button>
+          {% render 'header-search', id: section.id %}
+        </div>
       {% endif %}
       <div class="header-actions">
         {% if section.settings.show_search %}

@@ -62,6 +62,8 @@ class Node extends EventTarget {
   getAttribute(name) {
     return this.attributes.get(name);
   }
+  hasAttribute(name) { return this.attributes.has(name); }
+  removeAttribute(name) { this.attributes.delete(name); }
   querySelector(selector) {
     return this.selectors.get(selector) || null;
   }
@@ -79,6 +81,7 @@ class Node extends EventTarget {
   focus() {
     activeElement = this;
   }
+  click() { this.dispatchEvent(new Event('click', { cancelable: true })); }
 }
 const document = new Node();
 Object.defineProperty(document, "activeElement", { get: () => activeElement });
@@ -88,6 +91,7 @@ const registry = new Map();
 const context = vm.createContext({
   HTMLElement: Node,
   AbortController,
+  Event,
   document,
   matchMedia: () => breakpoint,
   customElements: {
@@ -249,6 +253,32 @@ assert.equal(activeElement, parentLink);
 document.dispatchEvent(new Event("click"));
 assert.equal(branch.open, false, "Outside clicks close desktop disclosures");
 fixtureB.header.disconnectedCallback();
+
+const fixtureC = fixture();
+const searchToggle = new Node();
+const searchInput = new Node();
+const searchClose = new Node();
+const searchPanel = new Node(); searchPanel.id = 'HeaderSearchPanel-test';
+const searchComponent = new Node();
+searchInput.closest = () => searchPanel;
+fixtureC.header.selectors.set('.header-search-mobile', searchToggle);
+fixtureC.header.selectors.set('input[type="search"]', searchInput);
+fixtureC.header.selectors.set('[data-mobile-search-close]', searchClose);
+fixtureC.header.selectors.set('salam-search', searchComponent);
+fixtureC.header.connectedCallback();
+searchToggle.dispatchEvent(new Event('click', { cancelable: true }));
+assert.equal(fixtureC.header.hasAttribute('data-mobile-search-open'), true);
+assert.equal(activeElement, searchInput, 'Mobile search opens the existing field and focuses it');
+assert.equal(searchToggle.getAttribute('aria-expanded'), 'true');
+assert.equal(searchToggle.getAttribute('role'), 'button');
+fixtureC.opener.dispatchEvent(new Event('click'));
+assert.equal(fixtureC.header.hasAttribute('data-mobile-search-open'), false, 'Opening navigation closes mobile search');
+assert.equal(fixtureC.dialog.open, true);
+searchToggle.dispatchEvent(new Event('click', { cancelable: true }));
+assert.equal(fixtureC.dialog.open, false, 'Opening search closes navigation');
+searchClose.dispatchEvent(new Event('click'));
+assert.equal(activeElement, searchToggle);
+fixtureC.header.disconnectedCallback();
 console.log(
   `Header passed: ${settings.length} settings, native search contract, registration, lifecycle cleanup, drawer/cancel/backdrop/resize/focus and disclosure keyboard behavior`,
 );

@@ -101,5 +101,24 @@
     "view_category": "View all: {{ category }}",
     "product_search": "Search products",
     "search_placeholder": "Search products"
+  },
+  "discovery": {
+    "loading": "Loading search suggestions",
+    "error": "Search suggestions could not be loaded. Use Search to see all results.",
+    "no_suggestions": "No suggestions found. Try another search term or use Search.",
+    "clear": "Clear search",
+    "suggestions": "Search suggestions",
+    "suggestion_count": "Suggestions: {{ count }}",
+    "products": "Products",
+    "queries": "Suggested searches",
+    "view_all": "View all results",
+    "price": "Price",
+    "compare_price": "Regular price",
+    "from_price": "From",
+    "results_heading": "Search results for “{{ terms }}”",
+    "try_another": "Try another search term.",
+    "pagination": "Search results pages",
+    "close_suggestions": "Close suggestions",
+    "close_search": "Close search"
   }
 }

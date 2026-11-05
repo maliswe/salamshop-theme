@@ -13,6 +13,28 @@ if (!customElements.get("salam-header")) {
         this.breakpoint = matchMedia("(min-width: 64rem)");
         this.restoreFocus = true;
         this.opener?.setAttribute("aria-expanded", "false");
+        this.searchToggle = this.querySelector('.header-search-mobile');
+        this.searchInput = this.querySelector('input[type="search"]');
+        if (this.searchToggle && this.searchInput) {
+          this.searchToggle.setAttribute('role', 'button');
+          this.searchToggle.setAttribute('aria-controls', this.searchInput.closest('.header-search-panel').id);
+          this.searchToggle.setAttribute('aria-expanded', 'false');
+          this.searchToggle.addEventListener('click', event => {
+            event.preventDefault();
+            if (this.hasAttribute('data-mobile-search-open')) this.closeMobileSearch();
+            else {
+              this.closeDrawer(false);
+              this.setAttribute('data-mobile-search-open', '');
+              this.searchToggle.setAttribute('aria-expanded', 'true');
+              this.querySelector('[data-mobile-search-close]').hidden = false;
+              this.searchInput.focus();
+            }
+          }, { signal });
+          this.searchToggle.addEventListener('keydown', event => {
+            if (event.key === ' ') { event.preventDefault(); this.searchToggle.click(); }
+          }, { signal });
+          this.querySelector('[data-mobile-search-close]').addEventListener('click', () => this.closeMobileSearch(), { signal });
+        }
 
         if (this.dialog && typeof this.dialog.showModal === "function") {
           this.setAttribute("data-enhanced", "");
@@ -81,6 +103,11 @@ if (!customElements.get("salam-header")) {
         this.addEventListener(
           "keydown",
           (event) => {
+            if (event.key === 'Escape' && !event.defaultPrevented && this.hasAttribute('data-mobile-search-open')) {
+              event.preventDefault();
+              this.closeMobileSearch();
+              return;
+            }
             const branch = event.target.closest(".header-menu-branch[open]");
             if (event.key === "Escape" && branch) {
               event.preventDefault();
@@ -127,6 +154,7 @@ if (!customElements.get("salam-header")) {
               document.activeElement,
             );
             this.closeDrawer(false);
+            this.closeMobileSearch(false);
             this.closeBranches(this.desktop);
             if (drawerHadFocus) this.querySelector(".header-brand").focus();
           },
@@ -137,6 +165,7 @@ if (!customElements.get("salam-header")) {
       openDrawer() {
         if (this.breakpoint.matches || this.dialog.open) return;
         this.restoreFocus = true;
+        this.closeMobileSearch(false);
         this.closeBranches(this.desktop);
         this.dialog.showModal();
         this.opener.setAttribute("aria-expanded", "true");
@@ -148,6 +177,14 @@ if (!customElements.get("salam-header")) {
         if (this.dialog?.open) this.dialog.close();
       }
 
+      closeMobileSearch(restoreFocus = true) {
+        if (!this.searchToggle) return;
+        this.removeAttribute('data-mobile-search-open');
+        this.searchToggle.setAttribute('aria-expanded', 'false');
+        this.querySelector('salam-search')?.dispatchEvent(new Event('salam:search-dismiss'));
+        if (restoreFocus) this.searchToggle.focus();
+      }
+
       closeBranches(container) {
         container?.querySelectorAll("details[open]").forEach((branch) => {
           branch.open = false;
@@ -156,6 +193,7 @@ if (!customElements.get("salam-header")) {
 
       disconnectedCallback() {
         this.closeDrawer(false);
+        this.closeMobileSearch(false);
         this.events?.abort();
         this.events = null;
       }

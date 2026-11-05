@@ -119,5 +119,16 @@
     "announcement_default": "Välkommen till SalamShop",
     "announcement_link": "Länk för meddelande",
     "mobile_announcement": "Visa meddelande på mobil"
+  },
+  "search_settings": {
+    "title": "Produktsökning",
+    "enabled": "Aktivera sökförslag",
+    "images": "Visa produktbilder",
+    "prices": "Visa produktpriser",
+    "collections": "Visa kollektionsförslag",
+    "queries": "Visa sökordsförslag",
+    "limit": "Högsta antal sökförslag",
+    "limit_info": "Sammanlagt för produkter, kollektioner och sökningar. Gäller även sökfältet på resultatsidan.",
+    "predictive_section": "Sökförslag"
   }
 }

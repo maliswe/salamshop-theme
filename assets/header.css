@@ -127,6 +127,14 @@
   flex-shrink: 0;
 }
 
+.site-header[data-mobile-search-open] .header-search-panel {
+  display: block;
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+.header-search-panel-close { margin-block-end: var(--space-3); }
+
 .header-visually-hidden {
   position: absolute;
   inline-size: 1px;
@@ -275,6 +283,7 @@
 }
 
 @media (min-width: 64rem) {
+  .site-header .header-search-panel-close { display: none; }
   .header-shell {
     padding-inline: var(--page-margin);
   }

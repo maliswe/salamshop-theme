@@ -1,0 +1,44 @@
+{% if predictive_search.performed %}
+  {% liquid
+    assign result_count = predictive_search.resources.products.size
+    if settings.search_show_collections
+      assign result_count = result_count | plus: predictive_search.resources.collections.size
+    endif
+    if settings.search_show_queries
+      assign result_count = result_count | plus: predictive_search.resources.queries.size
+    endif
+    assign encoded_terms = predictive_search.terms | url_encode
+  %}
+  <div data-predictive-fragment data-count="{{ result_count }}" data-status="{{ 'discovery.suggestion_count' | t: count: result_count | escape }}">
+    {% if predictive_search.resources.products.size > 0 %}
+      <section aria-label="{{ 'discovery.products' | t | escape }}">
+        <h3 class="search-group-title">{{ 'discovery.products' | t }}</h3>
+        <ul class="search-suggestions-list">
+          {% for product in predictive_search.resources.products %}
+            <li><a class="search-product-row" href="{{ product.url | escape }}" data-result-link>{% render 'search-product', product: product, compact: true %}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    {% if settings.search_show_collections and predictive_search.resources.collections.size > 0 %}
+      <section aria-label="{{ 'collections.title' | t | escape }}">
+        <h3 class="search-group-title">{{ 'collections.title' | t }}</h3>
+        <ul class="search-suggestions-list">
+          {% for collection in predictive_search.resources.collections %}<li><a href="{{ collection.url | escape }}" data-result-link>{{ collection.title | escape }}</a></li>{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    {% if settings.search_show_queries and predictive_search.resources.queries.size > 0 %}
+      <section aria-label="{{ 'discovery.queries' | t | escape }}">
+        <h3 class="search-group-title">{{ 'discovery.queries' | t }}</h3>
+        <ul class="search-suggestions-list">
+          {% for query in predictive_search.resources.queries %}<li><a href="{{ query.url | escape }}" data-result-link>{{ query.text | escape }}</a></li>{% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+    <a class="search-view-all" href="{{ routes.search_url }}?q={{ encoded_terms }}&amp;type=product" data-result-link>{{ 'discovery.view_all' | t }}</a>
+  </div>
+{% endif %}
+{% schema %}
+{ "name": "t:search_settings.predictive_section", "settings": [] }
+{% endschema %}
