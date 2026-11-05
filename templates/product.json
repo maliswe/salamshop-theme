@@ -11,10 +11,31 @@
   "sections": {
     "main": {
       "type": "product",
-      "settings": {}
+      "blocks": {
+        "description": { "type": "description", "settings": { "heading": "Produktinformation" } },
+        "material": { "type": "material", "settings": { "heading": "Material" } },
+        "dimensions": { "type": "dimensions", "settings": { "heading": "Mått" } },
+        "care": { "type": "care", "settings": { "heading": "Tvättråd och skötsel" } },
+        "head_circumference": { "type": "head_circumference", "settings": { "heading": "Huvudomkrets" } },
+        "size_guide": { "type": "size_guide", "settings": { "option_name": "Storlek", "heading": "Storleksguide" } }
+      },
+      "block_order": ["description", "material", "dimensions", "care", "head_circumference", "size_guide"],
+      "settings": {
+        "image_ratio": "natural",
+        "thumbnail_position": "side",
+        "enable_zoom": true,
+        "show_vendor": false,
+        "show_tax_note": true,
+        "show_quantity": true,
+        "show_dynamic_checkout": true,
+        "sticky_information": true,
+        "show_sticky_buy_bar": true
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": { "enabled": true, "heading": "Du kanske också gillar", "products_to_show": 4, "columns_desktop": 4, "image_ratio": "portrait" }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main", "recommendations"]
 }

@@ -1,0 +1,33 @@
+{{ 'product-card.css' | asset_url | stylesheet_tag }}
+{{ 'product-recommendations.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
+
+{% if section.settings.enabled %}
+  <product-recommendations class="product-recommendations section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related"{% unless recommendations.performed? and recommendations.products_count > 0 %} hidden{% endunless %}>
+    {% if recommendations.performed? and recommendations.products_count > 0 %}
+      <div class="container">
+        <h2>{{ section.settings.heading | escape }}</h2>
+        <div class="product-recommendations__grid" style="--recommendation-columns: {{ section.settings.columns_desktop }};">
+          {% for recommended_product in recommendations.products %}
+            {% render 'product-card', product: recommended_product, image_ratio: section.settings.image_ratio, image_loading: 'lazy' %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </product-recommendations>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:product_recommendations.name",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "t:product_recommendations.enabled", "default": true },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Du kanske också gillar" },
+    { "type": "range", "id": "products_to_show", "label": "t:homepage.products.product_limit", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_desktop", "label": "t:homepage.products.columns_desktop", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "select", "id": "image_ratio", "label": "t:homepage.products.image_ratio", "options": [{ "value": "portrait", "label": "t:homepage.options.portrait" }, { "value": "square", "label": "t:homepage.options.square" }], "default": "portrait" }
+  ],
+  "presets": [{ "name": "t:product_recommendations.name" }],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}

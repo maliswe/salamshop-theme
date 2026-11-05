@@ -249,5 +249,39 @@
     "product_grid": "Product grid",
     "columns_desktop": "Desktop columns",
     "products_per_page": "Products per page"
+  },
+  "product_page": {
+    "name": "Premium product page",
+    "gallery": "Product media",
+    "image_ratio": "Image ratio",
+    "natural": "Natural",
+    "thumbnail_position": "Thumbnail position",
+    "side": "Beside the image",
+    "bottom": "Below the image",
+    "enable_zoom": "Enable image zoom",
+    "purchase": "Purchase experience",
+    "show_vendor": "Show vendor",
+    "show_tax_note": "Show tax and shipping note",
+    "show_quantity": "Show quantity selector",
+    "show_dynamic_checkout": "Show dynamic checkout button",
+    "sticky_information": "Keep product information visible on desktop",
+    "show_sticky_buy_bar": "Show sticky buy button on mobile",
+    "option_name": "Option name",
+    "option_name_info": "Must exactly match the product option name, for example Size.",
+    "custom_liquid": "Custom Liquid",
+    "blocks": {
+      "description": "Product description",
+      "material": "Material",
+      "dimensions": "Dimensions",
+      "care": "Care instructions",
+      "head_circumference": "Head circumference",
+      "size_guide": "Size guide",
+      "collapsible": "Collapsible information",
+      "custom_liquid": "Custom Liquid"
+    }
+  },
+  "product_recommendations": {
+    "name": "Product recommendations",
+    "enabled": "Show product recommendations"
   }
 }

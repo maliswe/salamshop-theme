@@ -58,7 +58,23 @@
     "sold_out": "Slutsåld",
     "sale": "Rea",
     "variant": "Variant",
-    "quantity": "Antal"
+    "quantity": "Antal",
+    "unavailable": "Ej tillgänglig",
+    "decrease_quantity": "Minska antal",
+    "increase_quantity": "Öka antal",
+    "tax_included": "Moms ingår. Frakt beräknas i kassan.",
+    "information": "Produktinformation",
+    "material": "Material",
+    "dimensions": "Mått",
+    "length": "Längd",
+    "width": "Bredd",
+    "care": "Tvättråd och skötsel",
+    "head_circumference": "Huvudomkrets",
+    "size_guide": "Storleksguide",
+    "zoom_image": "Förstora produktbild",
+    "zoomed_image": "Förstorad produktbild",
+    "media_gallery": "Produktmedia",
+    "view_media": "Visa media {{ index }}"
   },
   "collection": {
     "empty": "Det finns inga produkter i den här kollektionen."

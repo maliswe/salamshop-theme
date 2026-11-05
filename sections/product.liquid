@@ -1,56 +1,144 @@
-{% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
+{{ 'product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product.js' | asset_url }}" defer></script>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
-{% endcomment %}
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_media = current_variant.featured_media | default: product.featured_media
+  assign form_id = 'ProductForm-' | append: section.id
+  assign on_sale = false
+  if current_variant and current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+  endif
+%}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
+<product-details class="product-page section" data-product-root data-section-id="{{ section.id }}" data-product-url="{{ product.url }}">
+  <div class="product-page__layout container">
+    {% render 'product-media-gallery', product: product, featured_media: featured_media, section: section %}
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
-
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
-
-    <select name="id" aria-label="{{ 'product.variant' | t | escape }}">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
+    <div class="product-page__information{% if section.settings.sticky_information %} product-page__information--sticky{% endif %}">
+      {% if section.settings.show_vendor and product.vendor != blank %}<p class="product-page__vendor">{{ product.vendor | escape }}</p>{% endif %}
+      <h1 class="product-page__title">{{ product.title | escape }}</h1>
+      <div class="product-page__price price" data-product-price aria-live="polite">
+        {% if current_variant %}
+          <span>{{ current_variant.price | money_with_currency }}</span>
+          {% if on_sale %}
+            <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ current_variant.compare_at_price | money_with_currency }}</s>
+            <span class="badge badge--accent">{{ 'product.sale' | t }}</span>
           {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
-      {% endfor %}
-    </select>
+        {% else %}<span>{{ product.price | money_with_currency }}</span>{% endif %}
+      </div>
+      {% if section.settings.show_tax_note %}<p class="product-page__tax-note text-small">{{ 'product.tax_included' | t }}</p>{% endif %}
 
-    <input type="text" name="quantity" min="1" value="1" aria-label="{{ 'product.quantity' | t | escape }}">
+      {% form 'product', product, id: form_id, class: 'product-page__form' %}
+        {% if form.errors %}<div class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+        {% unless product.has_only_default_variant %}
+          <div class="product-options" data-option-selectors>
+            {% for product_option in product.options_with_values %}
+              <fieldset class="product-option">
+                <legend>{{ product_option.name | escape }}: <strong>{{ product_option.selected_value | escape }}</strong></legend>
+                <div class="product-option__values" role="list">
+                  {% for option_value in product_option.values %}
+                    {% liquid
+                      assign option_href = blank
+                      if option_value.product_url != blank
+                        assign option_href = option_value.product_url
+                      elsif option_value.variant
+                        assign option_href = option_value.variant.url
+                      endif
+                    %}
+                    <span role="listitem">
+                      {% if option_href != blank %}
+                        <a class="product-option__value{% if option_value.selected %} is-selected{% endif %}{% unless option_value.available %} is-unavailable{% endunless %}" href="{{ option_href }}" data-option-value-id="{{ option_value.id }}" data-product-url="{{ option_value.product_url | default: product.url }}"{% if option_value.selected %} aria-current="true"{% endif %}{% unless option_value.available %} aria-label="{{ option_value.name | escape }} – {{ 'product.unavailable' | t | escape }}"{% endunless %}>
+                          {% if option_value.swatch %}<span class="product-option__swatch" style="{% if option_value.swatch.color %}--swatch: {{ option_value.swatch.color }};{% elsif option_value.swatch.image %}--swatch-image: url({{ option_value.swatch.image | image_url: width: 64 }});{% endif %}" aria-hidden="true"></span>{% endif %}
+                          <span>{{ option_value.name | escape }}</span>
+                        </a>
+                      {% else %}<span class="product-option__value is-unavailable" aria-disabled="true">{{ option_value.name | escape }}</span>{% endif %}
+                    </span>
+                  {% endfor %}
+                </div>
+                {% for block in section.blocks %}
+                  {% if block.type == 'size_guide' %}
+                    {% assign configured_size_option = block.settings.option_name | downcase %}
+                    {% assign current_option_name = product_option.name | downcase %}
+                    {% if configured_size_option == current_option_name %}{% render 'product-size-guide', block: block, product: product %}{% endif %}
+                  {% endif %}
+                {% endfor %}
+              </fieldset>
+            {% endfor %}
+          </div>
+        {% endunless %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}"{% unless current_variant %} disabled{% endunless %}>
 
-    {% if current_variant.available %}
-      <input type="submit" value="{{ 'product.add_to_cart' | t | escape }}">
-    {% else %}
-      <input type="submit" value="{{ 'product.sold_out' | t | escape }}" disabled>
-    {% endif %}
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+        {% if section.settings.show_quantity %}
+          <div class="product-quantity">
+            <label for="Quantity-{{ section.id }}">{{ 'product.quantity' | t }}</label>
+            <div class="product-quantity__control">
+              <button type="button" data-quantity-change="-1" aria-label="{{ 'product.decrease_quantity' | t | escape }}">−</button>
+              <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" step="1" value="1" inputmode="numeric">
+              <button type="button" data-quantity-change="1" aria-label="{{ 'product.increase_quantity' | t | escape }}">+</button>
+            </div>
+          </div>
+        {% else %}<input type="hidden" name="quantity" value="1">{% endif %}
+
+        <button class="product-page__add" type="submit" name="add" data-add-to-cart{% unless current_variant and current_variant.available %} disabled{% endunless %}>
+          <span data-add-to-cart-text>{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</span>
+        </button>
+        {% if section.settings.show_dynamic_checkout and current_variant and current_variant.available %}<div class="product-page__dynamic-checkout">{{ form | payment_button }}</div>{% endif %}
+      {% endform %}
+
+      <div class="product-information">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'description' %}
+              {% if product.description != blank %}<details class="product-information__item" open {{ block.shopify_attributes }}><summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.information' | t }}{% endif %}</summary><div class="product-information__content prose">{{ product.description }}</div></details>{% endif %}
+            {% when 'material' %}{% render 'product-metafield-block', block: block, metafield: product.metafields.custom.material, fallback_heading: 'product.material' %}
+            {% when 'dimensions' %}
+              {% assign product_length = product.metafields.custom.langd %}{% assign product_width = product.metafields.custom.bredd %}
+              {% if product_length != blank or product_width != blank %}<details class="product-information__item" {{ block.shopify_attributes }}><summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.dimensions' | t }}{% endif %}</summary><dl class="product-information__dimensions">{% if product_length != blank %}<div><dt>{{ 'product.length' | t }}</dt><dd>{{ product_length | metafield_tag }}</dd></div>{% endif %}{% if product_width != blank %}<div><dt>{{ 'product.width' | t }}</dt><dd>{{ product_width | metafield_tag }}</dd></div>{% endif %}</dl></details>{% endif %}
+            {% when 'care' %}{% render 'product-metafield-block', block: block, metafield: product.metafields.custom.tvattrad, fallback_heading: 'product.care' %}
+            {% when 'head_circumference' %}{% render 'product-metafield-block', block: block, metafield: product.metafields.custom.huvudomkrets, fallback_heading: 'product.head_circumference' %}
+            {% when 'collapsible' %}
+              {% if block.settings.content != blank %}<details class="product-information__item" {{ block.shopify_attributes }}><summary>{{ block.settings.heading | escape }}</summary><div class="product-information__content prose">{{ block.settings.content }}</div></details>{% endif %}
+            {% when 'custom_liquid' %}{% if block.settings.custom_liquid != blank %}<div class="product-information__custom prose" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>{% endif %}
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {% if section.settings.show_sticky_buy_bar %}
+    <div class="product-sticky-buy" data-sticky-buy hidden>
+      <div class="product-sticky-buy__inner"><div><strong>{{ product.title | escape }}</strong><span class="price">{% if current_variant %}{{ current_variant.price | money_with_currency }}{% else %}{{ product.price | money_with_currency }}{% endif %}</span></div><button type="submit" form="{{ form_id }}"{% unless current_variant and current_variant.available %} disabled{% endunless %}>{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</button></div>
+    </div>
+  {% endif %}
+</product-details>
 
 {% schema %}
 {
-  "name": "t:general.product",
-  "settings": [],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+  "name": "t:product_page.name",
+  "settings": [
+    { "type": "header", "content": "t:product_page.gallery" },
+    { "type": "select", "id": "image_ratio", "label": "t:product_page.image_ratio", "options": [{ "value": "natural", "label": "t:product_page.natural" }, { "value": "square", "label": "t:homepage.options.square" }, { "value": "portrait", "label": "t:homepage.options.portrait" }], "default": "natural" },
+    { "type": "select", "id": "thumbnail_position", "label": "t:product_page.thumbnail_position", "options": [{ "value": "side", "label": "t:product_page.side" }, { "value": "bottom", "label": "t:product_page.bottom" }], "default": "side" },
+    { "type": "checkbox", "id": "enable_zoom", "label": "t:product_page.enable_zoom", "default": true },
+    { "type": "header", "content": "t:product_page.purchase" },
+    { "type": "checkbox", "id": "show_vendor", "label": "t:product_page.show_vendor", "default": false },
+    { "type": "checkbox", "id": "show_tax_note", "label": "t:product_page.show_tax_note", "default": true },
+    { "type": "checkbox", "id": "show_quantity", "label": "t:product_page.show_quantity", "default": true },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "t:product_page.show_dynamic_checkout", "default": true },
+    { "type": "checkbox", "id": "sticky_information", "label": "t:product_page.sticky_information", "default": true },
+    { "type": "checkbox", "id": "show_sticky_buy_bar", "label": "t:product_page.show_sticky_buy_bar", "default": true }
+  ],
+  "blocks": [
+    { "type": "description", "name": "t:product_page.blocks.description", "limit": 1, "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Produktinformation" }] },
+    { "type": "material", "name": "t:product_page.blocks.material", "limit": 1, "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Material" }] },
+    { "type": "dimensions", "name": "t:product_page.blocks.dimensions", "limit": 1, "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Mått" }] },
+    { "type": "care", "name": "t:product_page.blocks.care", "limit": 1, "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Tvättråd och skötsel" }] },
+    { "type": "head_circumference", "name": "t:product_page.blocks.head_circumference", "limit": 1, "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Huvudomkrets" }] },
+    { "type": "size_guide", "name": "t:product_page.blocks.size_guide", "limit": 1, "settings": [{ "type": "text", "id": "option_name", "label": "t:product_page.option_name", "info": "t:product_page.option_name_info", "default": "Storlek" }, { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Storleksguide" }, { "type": "page", "id": "page", "label": "t:general.page" }] },
+    { "type": "collapsible", "name": "t:product_page.blocks.collapsible", "settings": [{ "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Mer information" }, { "type": "richtext", "id": "content", "label": "t:general.content" }] },
+    { "type": "custom_liquid", "name": "t:product_page.blocks.custom_liquid", "settings": [{ "type": "liquid", "id": "custom_liquid", "label": "t:product_page.custom_liquid" }] }
+  ],
+  "disabled_on": { "groups": ["header", "footer"] }
 }
 {% endschema %}

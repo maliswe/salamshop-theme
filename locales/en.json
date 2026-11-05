@@ -58,7 +58,23 @@
     "sold_out": "Sold out",
     "sale": "Sale",
     "variant": "Variant",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "unavailable": "Unavailable",
+    "decrease_quantity": "Decrease quantity",
+    "increase_quantity": "Increase quantity",
+    "tax_included": "Tax included. Shipping calculated at checkout.",
+    "information": "Product information",
+    "material": "Material",
+    "dimensions": "Dimensions",
+    "length": "Length",
+    "width": "Width",
+    "care": "Care instructions",
+    "head_circumference": "Head circumference",
+    "size_guide": "Size guide",
+    "zoom_image": "Enlarge product image",
+    "zoomed_image": "Enlarged product image",
+    "media_gallery": "Product media",
+    "view_media": "View media {{ index }}"
   },
   "collection": {
     "empty": "No products found in this collection."

@@ -1,0 +1,41 @@
+{% if product.media.size > 0 %}
+  <product-media class="product-media product-media--thumbs-{{ section.settings.thumbnail_position }} product-media--{{ section.settings.image_ratio }}">
+    <div class="product-media__viewport" data-media-track>
+      {% for media in product.media %}
+        {% assign is_active = false %}
+        {% if media.id == featured_media.id or featured_media == blank and forloop.first %}{% assign is_active = true %}{% endif %}
+        <div class="product-media__item{% if is_active %} is-active{% endif %}" id="ProductMedia-{{ section.id }}-{{ media.id }}" data-media-id="{{ media.id }}"{% unless is_active %} aria-hidden="true"{% endunless %}>
+          {% case media.media_type %}
+            {% when 'image' %}
+              {% if section.settings.enable_zoom %}<button class="product-media__zoom" type="button" data-media-zoom="ProductZoom-{{ section.id }}-{{ media.id }}" aria-label="{{ 'product.zoom_image' | t | escape }}">{% endif %}
+              {{ media.preview_image | image_url: width: 1800 | image_tag: loading: 'lazy', widths: '480, 750, 960, 1200, 1500, 1800', sizes: '(min-width: 64rem) 58vw, 100vw', alt: media.alt | default: product.title | escape }}
+              {% if section.settings.enable_zoom %}<span class="product-media__zoom-label" aria-hidden="true">＋</span></button>
+                <dialog class="product-media__dialog" id="ProductZoom-{{ section.id }}-{{ media.id }}" aria-label="{{ 'product.zoomed_image' | t | escape }}">
+                  <button type="button" data-dialog-close>{{ 'header.close' | t }}</button>
+                  {{ media.preview_image | image_url: width: 2400 | image_tag: loading: 'lazy', widths: '1200, 1800, 2400', sizes: '95vw', alt: media.alt | default: product.title | escape }}
+                </dialog>
+              {% endif %}
+            {% when 'video' %}{{ media | video_tag: controls: true, preload: 'metadata', image_size: '1200x' }}
+            {% when 'external_video' %}{{ media | external_video_tag }}
+            {% when 'model' %}{{ media | model_viewer_tag: image_size: '1200x', reveal: 'interaction', toggleable: true }}
+            {% else %}{{ media | media_tag }}
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if product.media.size > 1 %}
+      <div class="product-media__thumbnails" aria-label="{{ 'product.media_gallery' | t | escape }}">
+        {% for media in product.media %}
+          {% assign is_active = false %}{% if media.id == featured_media.id or featured_media == blank and forloop.first %}{% assign is_active = true %}{% endif %}
+          <a class="product-media__thumbnail{% if is_active %} is-active{% endif %}" href="#ProductMedia-{{ section.id }}-{{ media.id }}" data-media-thumbnail="{{ media.id }}"{% if is_active %} aria-current="true"{% endif %} aria-label="{{ 'product.view_media' | t: index: forloop.index | escape }}">
+            {{ media.preview_image | image_url: width: 160 | image_tag: loading: 'lazy', widths: '80, 120, 160', sizes: '72px', alt: '' }}
+            {% unless media.media_type == 'image' %}<span class="product-media__type">{{ media.media_type | replace: '_', ' ' }}</span>{% endunless %}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </product-media>
+{% else %}
+  <div class="product-media product-media--empty">{{ 'product-1' | placeholder_svg_tag: 'home-placeholder-svg' }}</div>
+{% endif %}

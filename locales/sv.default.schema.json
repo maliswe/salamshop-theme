@@ -249,5 +249,39 @@
     "product_grid": "Produktrutnät",
     "columns_desktop": "Kolumner på dator",
     "products_per_page": "Produkter per sida"
+  },
+  "product_page": {
+    "name": "Premiumproduktsida",
+    "gallery": "Produktmedia",
+    "image_ratio": "Bildformat",
+    "natural": "Naturligt",
+    "thumbnail_position": "Miniatyrernas placering",
+    "side": "Vid sidan",
+    "bottom": "Under bilden",
+    "enable_zoom": "Aktivera bildförstoring",
+    "purchase": "Köpupplevelse",
+    "show_vendor": "Visa leverantör",
+    "show_tax_note": "Visa information om moms och frakt",
+    "show_quantity": "Visa antalväljare",
+    "show_dynamic_checkout": "Visa dynamisk kassaknapp",
+    "sticky_information": "Fäst produktinformationen på dator",
+    "show_sticky_buy_bar": "Visa fast köpknapp på mobil",
+    "option_name": "Alternativets namn",
+    "option_name_info": "Måste exakt motsvara namnet på produktalternativet, till exempel Storlek.",
+    "custom_liquid": "Anpassad Liquid",
+    "blocks": {
+      "description": "Produktbeskrivning",
+      "material": "Material",
+      "dimensions": "Mått",
+      "care": "Tvättråd och skötsel",
+      "head_circumference": "Huvudomkrets",
+      "size_guide": "Storleksguide",
+      "collapsible": "Utfällbar information",
+      "custom_liquid": "Anpassad Liquid"
+    }
+  },
+  "product_recommendations": {
+    "name": "Produktrekommendationer",
+    "enabled": "Visa produktrekommendationer"
   }
 }
