@@ -3,6 +3,7 @@
 
   @param {product} product - Shopify product to render
   @param {string} image_ratio - "square" or "portrait"
+  @param {string} image_loading - "eager" for the first visible row, otherwise "lazy"
 {% enddoc %}
 
 {% liquid
@@ -10,20 +11,27 @@
   assign card_url = card_product.url
   assign card_image = card_product.featured_media.preview_image
   assign ratio_class = image_ratio | default: 'portrait'
-  assign image_loading = 'lazy'
+  assign loading_value = image_loading | default: 'lazy'
+  assign card_on_sale = false
+  if card_product.compare_at_price > card_product.price
+    assign card_on_sale = true
+  endif
 %}
 
 <article class="product-card home-product-card">
   <a class="home-product-card__link" href="{{ card_url }}">
     <span class="home-product-card__media home-product-card__media--{{ ratio_class }}">
       {% if card_image %}
-        {{ card_image | image_url: width: 900 | image_tag: loading: image_loading, widths: '240, 360, 480, 720, 900', sizes: '(min-width: 80rem) 22vw, (min-width: 48rem) 30vw, 50vw', alt: card_image.alt | default: card_product.title | escape }}
+        {{ card_image | image_url: width: 900 | image_tag: loading: loading_value, widths: '240, 360, 480, 720, 900', sizes: '(min-width: 80rem) 22vw, (min-width: 48rem) 30vw, 50vw', alt: card_image.alt | default: card_product.title | escape }}
       {% else %}
         {{ 'product-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
       {% endif %}
-      {% unless card_product.available %}
-        <span class="badge home-product-card__badge">{{ 'product.sold_out' | t }}</span>
-      {% endunless %}
+      {% if card_on_sale or card_product.available == false %}
+        <span class="home-product-card__badges">
+          {% if card_on_sale %}<span class="badge badge--accent">{{ 'product.sale' | t }}</span>{% endif %}
+          {% unless card_product.available %}<span class="badge">{{ 'product.sold_out' | t }}</span>{% endunless %}
+        </span>
+      {% endif %}
     </span>
 
     <span class="product-card__content home-product-card__content">

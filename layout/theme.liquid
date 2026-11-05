@@ -7,6 +7,7 @@
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     {% if template.name == 'index' %}
+      {{ 'product-card.css' | asset_url | stylesheet_tag }}
       {{ 'homepage.css' | asset_url | stylesheet_tag }}
     {% endif %}
 

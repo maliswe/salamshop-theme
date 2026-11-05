@@ -56,6 +56,7 @@
   "product": {
     "add_to_cart": "Lägg i varukorgen",
     "sold_out": "Slutsåld",
+    "sale": "Rea",
     "variant": "Variant",
     "quantity": "Antal"
   },
@@ -129,5 +130,35 @@
       "submit": "Prenumerera",
       "success": "Tack! Du är nu anmäld till vårt nyhetsbrev."
     }
+  },
+  "collection_page": {
+    "breadcrumbs": "Brödsmulor",
+    "home": "Hem",
+    "products_count": {
+      "one": "{{ count }} produkt",
+      "other": "{{ count }} produkter"
+    },
+    "active_count": {
+      "one": "{{ count }} aktivt filter",
+      "other": "{{ count }} aktiva filter"
+    },
+    "filter": "Filtrera",
+    "close_filters": "Stäng filter",
+    "active_filters": "Aktiva filter",
+    "remove_filter": "Ta bort filter",
+    "apply_filters": "Visa resultat",
+    "clear_all": "Rensa alla",
+    "clear_filters": "Rensa filter",
+    "highest_price": "Högsta pris är {{ price }}",
+    "price_from": "Från",
+    "price_to": "Till",
+    "sort_by": "Sortera efter",
+    "apply_sort": "Sortera",
+    "no_filter_results": "Inga produkter matchar dina val",
+    "no_filter_results_text": "Rensa ett eller flera filter för att se fler produkter.",
+    "empty": "Kollektionen är tom",
+    "empty_text": "Det finns inga produkter i den här kollektionen just nu.",
+    "discover_products": "Utforska alla produkter",
+    "pagination": "Sidor i kollektionen"
   }
 }

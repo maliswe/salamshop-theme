@@ -224,5 +224,30 @@
       "newsletter_description": "<p>Ta del av nyheter, inspiration och utvalda berättelser från SalamShop.</p>",
       "newsletter_button": "Prenumerera"
     }
+  },
+  "collection_page": {
+    "name": "Premiumkollektion",
+    "introduction": "Introduktion",
+    "show_banner": "Visa kollektionsbild",
+    "show_collection_image": "Använd kollektionens bild",
+    "banner_image": "Alternativ bannerbild",
+    "banner_image_info": "Ersätter kollektionens bild när den är vald.",
+    "mobile_banner_image": "Bannerbild för mobil",
+    "mobile_banner_image_info": "Valfri. Bilden för dator används om fältet lämnas tomt.",
+    "banner_layout": "Bannerlayout",
+    "layout_split": "Delad bild och text",
+    "layout_overlay": "Text ovanpå bild",
+    "layout_text": "Endast text",
+    "show_description": "Visa kollektionsbeskrivning",
+    "show_product_count": "Visa produktantal",
+    "discovery": "Filtrering och sortering",
+    "show_filters": "Visa filter",
+    "show_sort": "Visa sortering",
+    "desktop_filter_layout": "Filterlayout på dator",
+    "layout_sidebar": "Sidofält",
+    "layout_toolbar": "Verktygsfält",
+    "product_grid": "Produktrutnät",
+    "columns_desktop": "Kolumner på dator",
+    "products_per_page": "Produkter per sida"
   }
 }

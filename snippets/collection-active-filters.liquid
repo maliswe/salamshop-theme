@@ -1,0 +1,43 @@
+{% doc %}
+  Active collection filters with individual removal links.
+
+  @param {collection} collection - Current Shopify collection
+  @param {number} active_filter_count - Number of active selections
+{% enddoc %}
+
+{% if active_filter_count > 0 %}
+  <div class="collection-active-filters" aria-label="{{ 'collection_page.active_filters' | t | escape }}">
+    <span class="collection-active-filters__label">{{ 'collection_page.active_filters' | t }}</span>
+    <ul role="list">
+      {% for filter in collection.filters %}
+        {% for value in filter.active_values %}
+          <li>
+            <a href="{{ value.url_to_remove }}">
+              {{ filter.label | escape }}: {{ value.label | escape }}
+              <span aria-hidden="true">×</span>
+              <span class="header-visually-hidden">{{ 'collection_page.remove_filter' | t }}</span>
+            </a>
+          </li>
+        {% endfor %}
+        {% if filter.type == 'price_range' %}
+          {% if filter.min_value.value != nil or filter.max_value.value != nil %}
+            <li>
+              <a href="{{ filter.url_to_remove }}">
+                {{ filter.label | escape }}:
+                {% if filter.min_value.value != nil %}{{ filter.min_value.value | money_with_currency }}{% else %}0{% endif %}
+                –
+                {% if filter.max_value.value != nil %}{{ filter.max_value.value | money_with_currency }}{% else %}{{ filter.range_max | money_with_currency }}{% endif %}
+                <span aria-hidden="true">×</span>
+                <span class="header-visually-hidden">{{ 'collection_page.remove_filter' | t }}</span>
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <li class="collection-active-filters__clear">
+        {% capture clear_url %}{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by | url_encode }}{% endif %}{% endcapture %}
+        <a href="{{ clear_url }}">{{ 'collection_page.clear_all' | t }}</a>
+      </li>
+    </ul>
+  </div>
+{% endif %}

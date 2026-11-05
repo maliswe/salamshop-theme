@@ -11,7 +11,19 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "show_banner": true,
+        "show_collection_image": true,
+        "banner_layout": "split",
+        "show_description": true,
+        "show_product_count": true,
+        "show_filters": true,
+        "show_sort": true,
+        "desktop_filter_layout": "sidebar",
+        "columns_desktop": 4,
+        "products_per_page": 24,
+        "image_ratio": "portrait"
+      }
     }
   },
   "order": [

@@ -56,6 +56,7 @@
   "product": {
     "add_to_cart": "Add to cart",
     "sold_out": "Sold out",
+    "sale": "Sale",
     "variant": "Variant",
     "quantity": "Quantity"
   },
@@ -129,5 +130,35 @@
       "submit": "Subscribe",
       "success": "Thank you! You are now subscribed to our newsletter."
     }
+  },
+  "collection_page": {
+    "breadcrumbs": "Breadcrumbs",
+    "home": "Home",
+    "products_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    },
+    "active_count": {
+      "one": "{{ count }} active filter",
+      "other": "{{ count }} active filters"
+    },
+    "filter": "Filter",
+    "close_filters": "Close filters",
+    "active_filters": "Active filters",
+    "remove_filter": "Remove filter",
+    "apply_filters": "Show results",
+    "clear_all": "Clear all",
+    "clear_filters": "Clear filters",
+    "highest_price": "The highest price is {{ price }}",
+    "price_from": "From",
+    "price_to": "To",
+    "sort_by": "Sort by",
+    "apply_sort": "Sort",
+    "no_filter_results": "No products match your selections",
+    "no_filter_results_text": "Clear one or more filters to see more products.",
+    "empty": "This collection is empty",
+    "empty_text": "There are no products in this collection right now.",
+    "discover_products": "Explore all products",
+    "pagination": "Collection pages"
   }
 }

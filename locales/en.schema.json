@@ -224,5 +224,30 @@
       "newsletter_description": "<p>Receive news, inspiration and selected stories from SalamShop.</p>",
       "newsletter_button": "Subscribe"
     }
+  },
+  "collection_page": {
+    "name": "Premium collection",
+    "introduction": "Introduction",
+    "show_banner": "Show collection image",
+    "show_collection_image": "Use collection image",
+    "banner_image": "Banner image override",
+    "banner_image_info": "Replaces the collection image when selected.",
+    "mobile_banner_image": "Mobile banner image",
+    "mobile_banner_image_info": "Optional. The desktop image is used when left blank.",
+    "banner_layout": "Banner layout",
+    "layout_split": "Split image and text",
+    "layout_overlay": "Text over image",
+    "layout_text": "Text only",
+    "show_description": "Show collection description",
+    "show_product_count": "Show product count",
+    "discovery": "Filtering and sorting",
+    "show_filters": "Show filters",
+    "show_sort": "Show sorting",
+    "desktop_filter_layout": "Desktop filter layout",
+    "layout_sidebar": "Sidebar",
+    "layout_toolbar": "Toolbar",
+    "product_grid": "Product grid",
+    "columns_desktop": "Desktop columns",
+    "products_per_page": "Products per page"
   }
 }

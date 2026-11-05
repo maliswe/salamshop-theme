@@ -34,13 +34,6 @@
   font-weight: 700;
 }
 
-.home-placeholder-svg {
-  inline-size: 100%;
-  block-size: 100%;
-  color: color-mix(in srgb, var(--color-foreground) 35%, transparent);
-  background: var(--color-surface-secondary);
-}
-
 /* Hero */
 .home-hero {
   position: relative;
@@ -184,88 +177,12 @@
   cursor: default;
 }
 
-/* Shared product grids */
+/* Shared product-grid layout */
 .home-product-grid {
   display: grid;
   grid-template-columns: repeat(var(--home-columns-mobile), minmax(0, 1fr));
   gap: var(--space-5) var(--space-3);
 }
-
-.home-product-card {
-  overflow: hidden;
-  border: 0;
-  background: transparent;
-}
-
-.home-product-card__link {
-  display: flex;
-  flex-direction: column;
-  block-size: 100%;
-  color: inherit;
-  text-decoration: none;
-}
-
-.home-product-card__media {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-card);
-  background: var(--color-surface);
-}
-
-.home-product-card__media--square { aspect-ratio: 1; }
-.home-product-card__media--portrait { aspect-ratio: 4 / 5; }
-
-.home-product-card__media img,
-.home-product-card__media svg {
-  inline-size: 100%;
-  block-size: 100%;
-  object-fit: contain;
-  transition: transform 240ms ease;
-}
-
-.home-product-card__link:hover .home-product-card__media img {
-  transform: scale(1.025);
-}
-
-.home-product-card__badge {
-  position: absolute;
-  inset-block-start: var(--space-3);
-  inset-inline-start: var(--space-3);
-}
-
-.home-product-card__content {
-  align-content: start;
-  padding: var(--space-4) var(--space-1) 0;
-}
-
-.home-product-card__title {
-  font-weight: 700;
-}
-
-.home-product-card__price s {
-  margin-inline-start: var(--space-2);
-  opacity: 0.7;
-}
-
-.home-product-card__link:hover .home-product-card__title {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-}
-
-.home-product-card--placeholder {
-  pointer-events: none;
-}
-
-.home-placeholder-line {
-  display: block;
-  inline-size: 75%;
-  block-size: 0.75rem;
-  border-radius: var(--radius-pill);
-  background: var(--color-surface-secondary);
-}
-
-.home-placeholder-line--short { inline-size: 40%; }
 
 /* Editorial */
 .home-editorial {
@@ -419,8 +336,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-category-card__media img,
-  .home-product-card__media img {
+  .home-category-card__media img {
     transition: none;
   }
 }

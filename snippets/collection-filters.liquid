@@ -1,0 +1,88 @@
+{% doc %}
+  Native Shopify collection filters. Rendered in desktop and mobile contexts.
+
+  @param {collection} collection - Current Shopify collection
+  @param {string} context - Unique "desktop" or "mobile" ID prefix
+  @param {number} active_filter_count - Number of active filter selections
+{% enddoc %}
+
+<form class="collection-filters__form" action="{{ collection.url }}" method="get">
+  {% if collection.sort_by != blank %}<input type="hidden" name="sort_by" value="{{ collection.sort_by | escape }}">{% endif %}
+
+  <div class="collection-filter-groups">
+    {% for filter in collection.filters %}
+      {% liquid
+        assign group_id = 'CollectionFilter-' | append: context | append: '-' | append: forloop.index
+        assign group_active_count = filter.active_values.size
+        if filter.type == 'price_range'
+          if filter.min_value.value != nil or filter.max_value.value != nil
+            assign group_active_count = 1
+          endif
+        endif
+      %}
+      <details class="collection-filter-group"{% if group_active_count > 0 %} open{% endif %}>
+        <summary>
+          <span>{{ filter.label | escape }}</span>
+          {% if group_active_count > 0 %}<span class="collection-filter-count" aria-label="{{ 'collection_page.active_count' | t: count: group_active_count | escape }}">{{ group_active_count }}</span>{% endif %}
+          <span aria-hidden="true">+</span>
+        </summary>
+
+        <div class="collection-filter-group__content" id="{{ group_id }}">
+          {% case filter.type %}
+            {% when 'boolean', 'list' %}
+              <ul class="collection-filter-values" role="list">
+                {% for value in filter.values %}
+                  {% assign input_id = group_id | append: '-' | append: forloop.index %}
+                  <li>
+                    <label for="{{ input_id }}"{% if value.count == 0 and value.active == false %} class="is-disabled"{% endif %}>
+                      <input
+                        id="{{ input_id }}"
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value | escape }}"
+                        {% if value.active %}checked{% endif %}
+                        {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                      >
+                      <span>{{ value.label | escape }}</span>
+                      <span class="collection-filter-value-count" aria-label="{{ 'collection_page.products_count' | t: count: value.count | escape }}">{{ value.count }}</span>
+                    </label>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% when 'price_range' %}
+              {% liquid
+                assign range_max = filter.range_max | divided_by: 100.0
+                assign min_value = filter.min_value.value | divided_by: 100.0
+                assign max_value = filter.max_value.value | divided_by: 100.0
+              %}
+              <p class="collection-price-caption">{{ 'collection_page.highest_price' | t: price: filter.range_max | money_with_currency }}</p>
+              <div class="collection-price-range">
+                <div>
+                  <label for="{{ group_id }}-min">{{ 'collection_page.price_from' | t }}</label>
+                  <span class="collection-price-field">
+                    <span aria-hidden="true">{{ cart.currency.symbol }}</span>
+                    <input id="{{ group_id }}-min" type="number" name="{{ filter.min_value.param_name }}" value="{% if filter.min_value.value != nil %}{{ min_value }}{% endif %}" min="0" max="{{ range_max }}" step="0.01" inputmode="decimal">
+                  </span>
+                </div>
+                <div>
+                  <label for="{{ group_id }}-max">{{ 'collection_page.price_to' | t }}</label>
+                  <span class="collection-price-field">
+                    <span aria-hidden="true">{{ cart.currency.symbol }}</span>
+                    <input id="{{ group_id }}-max" type="number" name="{{ filter.max_value.param_name }}" value="{% if filter.max_value.value != nil %}{{ max_value }}{% endif %}" min="0" max="{{ range_max }}" step="0.01" inputmode="decimal">
+                  </span>
+                </div>
+              </div>
+          {% endcase %}
+        </div>
+      </details>
+    {% endfor %}
+  </div>
+
+  <div class="collection-filter-actions">
+    <button type="submit">{{ 'collection_page.apply_filters' | t }}</button>
+    {% if active_filter_count > 0 %}
+      {% capture clear_url %}{{ collection.url }}{% if collection.sort_by != blank %}?sort_by={{ collection.sort_by | url_encode }}{% endif %}{% endcapture %}
+      <a href="{{ clear_url }}">{{ 'collection_page.clear_all' | t }}</a>
+    {% endif %}
+  </div>
+</form>

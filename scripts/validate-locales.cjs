@@ -19,7 +19,8 @@ const flatten = (value, prefix = '', result = {}) => {
 const tokens = value => (value.match(/{{[\s\S]*?}}|{%[\s\S]*?%}|<\/?[a-zA-Z][^>]*>/g) || []).map(token => token.trim()).sort();
 const files = fs.readdirSync(path.join(root, 'locales')).sort();
 assert.deepEqual(files, ['en.json', 'en.schema.json', 'sv.default.json', 'sv.default.schema.json']);
-const locales = Object.fromEntries(files.map(file => [file, flatten(JSON.parse(read(`locales/${file}`)))]));
+const parsedLocales = Object.fromEntries(files.map(file => [file, JSON.parse(read(`locales/${file}`))]));
+const locales = Object.fromEntries(files.map(file => [file, flatten(parsedLocales[file])]));
 for (const [swedish, english] of [['sv.default.json', 'en.json'], ['sv.default.schema.json', 'en.schema.json']]) {
   assert.deepEqual(Object.keys(locales[swedish]).sort(), Object.keys(locales[english]).sort(), `${swedish}: key parity`);
   for (const key of Object.keys(locales[english])) {
@@ -30,7 +31,10 @@ for (const [swedish, english] of [['sv.default.json', 'en.json'], ['sv.default.s
 
 const references = { storefront: new Map(), schema: new Map() };
 function register(type, key, file) {
-  assert.ok(Object.hasOwn(locales[type === 'schema' ? 'sv.default.schema.json' : 'sv.default.json'], key), `${file}: missing ${type} translation ${key}`);
+  const localeFile = type === 'schema' ? 'sv.default.schema.json' : 'sv.default.json';
+  const value = key.split('.').reduce((entry, part) => entry && entry[part], parsedLocales[localeFile]);
+  const resolved = typeof value === 'string' || (value && typeof value === 'object' && ['one', 'other'].every(form => typeof value[form] === 'string'));
+  assert.ok(resolved, `${file}: missing ${type} translation ${key}`);
   if (!references[type].has(key)) references[type].set(key, new Set());
   references[type].get(key).add(file);
 }
