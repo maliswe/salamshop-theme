@@ -1,42 +1,55 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+{{ 'cart.css' | asset_url | stylesheet_tag }}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+<cart-page class="cart-page cart-page--{{ settings.cart_layout }} section" data-cart-section data-section-id="{{ section.id }}">
+  <div class="container">
+    <header class="cart-page__header">
+      <div>
+        <p class="cart-page__eyebrow">SalamShop</p>
+        <h1>{{ 'cart.title' | t }}</h1>
+      </div>
+      {% unless cart.empty? %}<p>{{ 'cart.item_count' | t: count: cart.item_count }}</p>{% endunless %}
+    </header>
 
-<h1>{{ 'cart.title' | t }}</h1>
+    <div class="cart-status" data-cart-status role="status" aria-live="polite"></div>
+    <div class="form-message form-message--error cart-error" data-cart-error role="alert" hidden></div>
 
-{% if cart.empty? %}
-  <p>{{ 'cart.empty' | t }}</p>
-  <a href="{{ routes.all_products_collection_url }}">{{ 'cart.continue_shopping' | t }}</a>
-{% else %}
-  <form action="{{ routes.cart_url }}" method="post">
-    <table>
-      {% for item in cart.items %}
-        <tr>
-          <td>
-            {% render 'image', image: item.image, url: item.url %}
-          </td>
-          <td>
-            <p>{{ item.product.title }}</p>
-            {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-          </td>
-          <td>
-            <input type="text" name="updates[]" value="{{ item.quantity }}" aria-label="{{ 'cart.quantity' | t: product: item.product.title | escape }}">
-            <input type="submit" value="{{ 'cart.update' | t }}">
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
+    {% if cart.empty? %}
+      {% render 'cart-empty' %}
+    {% else %}
+      <form class="cart-page__form" action="{{ routes.cart_url }}" method="post" id="CartForm-{{ section.id }}">
+        <div class="cart-page__items">
+          {% for item in cart.items %}{% render 'cart-line-item', item: item, index: forloop.index, context: 'page' %}{% endfor %}
+          <button class="button button--secondary cart-page__update" type="submit" name="update">{{ 'cart.update' | t }}</button>
+        </div>
 
-    <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-  </form>
-{% endif %}
+        <aside class="cart-page__aside" aria-label="{{ 'cart.summary' | t | escape }}">
+          {% if settings.cart_show_notes %}
+            <div class="cart-note">
+              <label for="CartNote-{{ section.id }}">{{ 'cart.note' | t }}</label>
+              <textarea id="CartNote-{{ section.id }}" name="note" rows="4" placeholder="{{ 'cart.note_placeholder' | t | escape }}">{{ cart.note | escape }}</textarea>
+            </div>
+          {% endif %}
+          {% render 'cart-summary' %}
+          {% liquid
+            assign continue_url = settings.cart_continue_shopping_link
+            if continue_url == blank and settings.cart_empty_collection != blank
+              assign continue_url = settings.cart_empty_collection.url
+            endif
+            if continue_url == blank
+              assign continue_url = routes.all_products_collection_url
+            endif
+          %}
+          <a class="cart-continue" href="{{ continue_url }}">{{ 'cart.continue_shopping' | t }}</a>
+        </aside>
+      </form>
+    {% endif %}
+  </div>
+</cart-page>
 
 {% schema %}
 {
-  "name": "t:general.cart",
-  "settings": []
+  "name": "t:cart_page.name",
+  "settings": [],
+  "disabled_on": { "groups": ["header", "footer"] }
 }
 {% endschema %}

@@ -1,0 +1,14 @@
+{% liquid
+  assign continue_url = settings.cart_continue_shopping_link
+  if continue_url == blank and settings.cart_empty_collection != blank
+    assign continue_url = settings.cart_empty_collection.url
+  endif
+  if continue_url == blank
+    assign continue_url = routes.all_products_collection_url
+  endif
+%}
+<div class="cart-empty">
+  <h2>{{ 'cart.empty' | t }}</h2>
+  <p>{% if settings.cart_empty_text != blank %}{{ settings.cart_empty_text | escape }}{% else %}{{ 'cart.empty_text' | t }}{% endif %}</p>
+  <a class="button" href="{{ continue_url }}">{% if settings.cart_empty_button_label != blank %}{{ settings.cart_empty_button_label | escape }}{% else %}{{ 'cart.continue_shopping' | t }}{% endif %}</a>
+</div>

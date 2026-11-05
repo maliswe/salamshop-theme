@@ -1,0 +1,66 @@
+{% liquid
+  assign line_id = 'CartLine-' | append: context | append: '-' | append: index
+  assign quantity_id = 'CartQuantity-' | append: context | append: '-' | append: index
+%}
+<article class="cart-line{% unless settings.cart_show_thumbnails and item.image %} cart-line--no-image{% endunless %}" data-cart-line data-line-key="{{ item.key | escape }}" id="{{ line_id }}">
+  {% if settings.cart_show_thumbnails and item.image %}
+    <a class="cart-line__media" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+      {{ item.image | image_url: width: 320 | image_tag: loading: 'lazy', widths: '96, 160, 240, 320', sizes: '(min-width: 48rem) 9rem, 6rem', alt: '' }}
+    </a>
+  {% endif %}
+
+  <div class="cart-line__details">
+    <a class="cart-line__title" href="{{ item.url }}">{{ item.product.title | escape }}</a>
+    {% if settings.cart_show_variant_details %}
+      {% unless item.product.has_only_default_variant %}
+        <dl class="cart-line__options">
+          {% for option in item.options_with_values %}<div><dt>{{ option.name | escape }}:</dt><dd>{{ option.value | escape }}</dd></div>{% endfor %}
+        </dl>
+      {% endunless %}
+      {% if item.selling_plan_allocation %}<p class="cart-line__plan">{{ item.selling_plan_allocation.selling_plan.name | escape }}</p>{% endif %}
+    {% endif %}
+
+    {% assign visible_properties = false %}
+    {% for property in item.properties %}
+      {% assign property_first = property.first | slice: 0 %}
+      {% if property.last != blank and property_first != '_' %}{% assign visible_properties = true %}{% endif %}
+    {% endfor %}
+    {% if visible_properties %}
+      <dl class="cart-line__properties">
+        {% for property in item.properties %}
+          {% assign property_first = property.first | slice: 0 %}
+          {% if property.last != blank and property_first != '_' %}
+            <div><dt>{{ property.first | escape }}:</dt><dd>{% if property.last contains '/uploads/' %}<a href="{{ property.last }}">{{ property.last | split: '/' | last | escape }}</a>{% else %}{{ property.last | escape }}{% endif %}</dd></div>
+          {% endif %}
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    <div class="cart-line__unit price">
+      <span class="header-visually-hidden">{{ 'cart.unit_price' | t }} </span>
+      {% if item.original_price > item.final_price %}<s>{{ item.original_price | money_with_currency }}</s>{% endif %}
+      <span>{{ item.final_price | money_with_currency }}</span>
+    </div>
+    {% if item.line_level_discount_allocations.size > 0 %}
+      <ul class="cart-line__discounts" aria-label="{{ 'cart.discounts' | t | escape }}">
+        {% for allocation in item.line_level_discount_allocations %}<li>{{ allocation.discount_application.title | escape }} (−{{ allocation.amount | money_with_currency }})</li>{% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="cart-line__actions">
+    <label for="{{ quantity_id }}">{{ 'cart.quantity_short' | t }}</label>
+    <div class="cart-quantity">
+      <button type="button" data-cart-quantity-change="-1" aria-label="{{ 'cart.decrease_quantity' | t: product: item.product.title | escape }}">−</button>
+      <input id="{{ quantity_id }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" step="1" inputmode="numeric" data-cart-quantity-input data-line-key="{{ item.key | escape }}" aria-label="{{ 'cart.quantity' | t: product: item.product.title | escape }}">
+      <button type="button" data-cart-quantity-change="1" aria-label="{{ 'cart.increase_quantity' | t: product: item.product.title | escape }}">+</button>
+    </div>
+    <a class="cart-line__remove" href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key | escape }}">{{ 'cart.remove' | t }}</a>
+  </div>
+
+  <div class="cart-line__total price">
+    <span class="header-visually-hidden">{{ 'cart.line_total' | t }} </span>
+    {% if item.original_line_price > item.final_line_price %}<s>{{ item.original_line_price | money_with_currency }}</s>{% endif %}
+    <strong>{{ item.final_line_price | money_with_currency }}</strong>
+  </div>
+</article>

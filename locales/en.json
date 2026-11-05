@@ -16,11 +16,33 @@
   "cart": {
     "checkout": "Checkout",
     "title": "Cart",
-    "update": "Update",
+    "update": "Update cart",
     "remove": "Remove",
     "quantity": "Quantity for {{ product }}",
     "empty": "Your cart is empty.",
-    "continue_shopping": "Continue shopping"
+    "empty_text": "Explore our products and find something that suits you.",
+    "continue_shopping": "Continue shopping",
+    "view_cart": "View cart",
+    "close": "Close cart",
+    "quantity_short": "Quantity",
+    "decrease_quantity": "Decrease quantity for {{ product }}",
+    "increase_quantity": "Increase quantity for {{ product }}",
+    "unit_price": "Unit price",
+    "line_total": "Line total",
+    "subtotal": "Subtotal",
+    "discounts": "Discounts",
+    "summary": "Cart summary",
+    "shipping_at_checkout": "Shipping and the final total are calculated at checkout.",
+    "note": "Add a note",
+    "note_placeholder": "Write a message about your order",
+    "added": "The product has been added to the cart.",
+    "updated": "The cart has been updated.",
+    "removed": "The product has been removed from the cart.",
+    "update_error": "The cart could not be updated. Please try again.",
+    "item_count": {
+      "one": "{{ count }} product",
+      "other": "{{ count }} products"
+    }
   },
   "customers": {
     "login": {
@@ -74,7 +96,9 @@
     "zoom_image": "Enlarge product image",
     "zoomed_image": "Enlarged product image",
     "media_gallery": "Product media",
-    "view_media": "View media {{ index }}"
+    "view_media": "View media {{ index }}",
+    "added_to_cart": "Added to cart",
+    "add_error": "The product could not be added. Please try again."
   },
   "collection": {
     "empty": "No products found in this collection."

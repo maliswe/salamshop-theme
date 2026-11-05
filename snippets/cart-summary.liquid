@@ -1,0 +1,12 @@
+<div class="cart-summary">
+  {% if cart.cart_level_discount_applications.size > 0 %}
+    <ul class="cart-summary__discounts" aria-label="{{ 'cart.discounts' | t | escape }}">
+      {% for discount in cart.cart_level_discount_applications %}
+        <li><span>{{ discount.title | escape }}</span><span>−{{ discount.total_allocated_amount | money_with_currency }}</span></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="cart-summary__total"><span>{{ 'cart.subtotal' | t }}</span><strong class="price">{{ cart.total_price | money_with_currency }}</strong></div>
+  <p class="cart-summary__tax text-small">{{ 'cart.shipping_at_checkout' | t }}</p>
+  <button class="cart-summary__checkout" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+</div>

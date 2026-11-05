@@ -283,5 +283,25 @@
   "product_recommendations": {
     "name": "Product recommendations",
     "enabled": "Show product recommendations"
-  }
+  },
+  "cart_settings": {
+    "title": "Cart",
+    "behavior": "Cart behavior",
+    "behavior_drawer": "Open cart drawer",
+    "behavior_page": "Go to cart page",
+    "continue_link": "Continue shopping link",
+    "empty_collection": "Empty-cart collection",
+    "empty_text": "Empty-cart text",
+    "empty_text_default": "Explore our products and find something that suits you.",
+    "empty_button": "Empty-cart button label",
+    "empty_button_default": "Continue shopping",
+    "show_notes": "Show order note",
+    "show_thumbnails": "Show product thumbnails",
+    "show_variant_details": "Show variant details and properties",
+    "layout": "Cart page layout",
+    "layout_comfortable": "Comfortable",
+    "layout_compact": "Compact"
+  },
+  "cart_page": { "name": "Premium cart" },
+  "cart_drawer": { "name": "Cart drawer" }
 }

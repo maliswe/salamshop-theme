@@ -31,6 +31,8 @@
 
       {% form 'product', product, id: form_id, class: 'product-page__form' %}
         {% if form.errors %}<div class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+        <div class="form-message form-message--error" data-product-cart-error role="alert" hidden></div>
+        <div class="product-page__cart-status" data-product-cart-status role="status" aria-live="polite"></div>
         {% unless product.has_only_default_variant %}
           <div class="product-options" data-option-selectors>
             {% for product_option in product.options_with_values %}
@@ -80,7 +82,7 @@
           </div>
         {% else %}<input type="hidden" name="quantity" value="1">{% endif %}
 
-        <button class="product-page__add" type="submit" name="add" data-add-to-cart{% unless current_variant and current_variant.available %} disabled{% endunless %}>
+        <button class="product-page__add" type="submit" name="add" data-add-to-cart data-added-label="{{ 'product.added_to_cart' | t | escape }}" data-error-label="{{ 'product.add_error' | t | escape }}"{% unless current_variant and current_variant.available %} disabled{% endunless %}>
           <span data-add-to-cart-text>{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</span>
         </button>
         {% if section.settings.show_dynamic_checkout and current_variant and current_variant.available %}<div class="product-page__dynamic-checkout">{{ form | payment_button }}</div>{% endif %}
@@ -108,7 +110,7 @@
 
   {% if section.settings.show_sticky_buy_bar %}
     <div class="product-sticky-buy" data-sticky-buy hidden>
-      <div class="product-sticky-buy__inner"><div><strong>{{ product.title | escape }}</strong><span class="price">{% if current_variant %}{{ current_variant.price | money_with_currency }}{% else %}{{ product.price | money_with_currency }}{% endif %}</span></div><button type="submit" form="{{ form_id }}"{% unless current_variant and current_variant.available %} disabled{% endunless %}>{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</button></div>
+      <div class="product-sticky-buy__inner"><div><strong>{{ product.title | escape }}</strong><span class="price">{% if current_variant %}{{ current_variant.price | money_with_currency }}{% else %}{{ product.price | money_with_currency }}{% endif %}</span></div><button type="submit" form="{{ form_id }}" data-add-to-cart{% unless current_variant and current_variant.available %} disabled{% endunless %}>{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</button></div>
     </div>
   {% endif %}
 </product-details>

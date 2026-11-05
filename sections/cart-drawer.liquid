@@ -1,0 +1,66 @@
+{{ 'cart.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cart.js' | asset_url }}" defer></script>
+
+<cart-drawer
+  data-cart-section
+  data-section-id="{{ section.id }}"
+  data-cart-behavior="{{ settings.cart_behavior }}"
+  data-cart-add-url="{{ routes.cart_add_url }}.js"
+  data-cart-change-url="{{ routes.cart_change_url }}.js"
+  data-cart-url="{{ routes.cart_url }}"
+  data-cart-json-url="{{ routes.cart_url }}.js"
+  data-cart-count-label="{{ 'header.cart_count' | t: count: '__COUNT__' | escape }}"
+  data-error-message="{{ 'cart.update_error' | t | escape }}"
+  data-added-message="{{ 'cart.added' | t | escape }}"
+  data-updated-message="{{ 'cart.updated' | t | escape }}"
+  data-removed-message="{{ 'cart.removed' | t | escape }}"
+>
+  {% if settings.cart_behavior == 'drawer' %}
+    <dialog class="cart-drawer" data-cart-drawer-dialog scroll-lock aria-labelledby="CartDrawerTitle-{{ section.id }}">
+      <div class="cart-drawer__header">
+        <div>
+          <h2 id="CartDrawerTitle-{{ section.id }}">{{ 'cart.title' | t }}</h2>
+          <p>{{ 'cart.item_count' | t: count: cart.item_count }}</p>
+        </div>
+        <button class="cart-drawer__close" type="button" data-cart-drawer-close aria-label="{{ 'cart.close' | t | escape }}">×</button>
+      </div>
+
+      <div class="cart-status" data-cart-status role="status" aria-live="polite"></div>
+      <div class="form-message form-message--error cart-error" data-cart-error role="alert" hidden></div>
+
+      {% if cart.empty? %}
+        {% render 'cart-empty' %}
+      {% else %}
+        <form class="cart-drawer__form" action="{{ routes.cart_url }}" method="post" id="CartDrawerForm-{{ section.id }}">
+          <div class="cart-drawer__items">
+            {% for item in cart.items %}{% render 'cart-line-item', item: item, index: forloop.index, context: 'drawer' %}{% endfor %}
+          </div>
+          <div class="cart-drawer__footer">
+            {% render 'cart-summary' %}
+            {% liquid
+              assign continue_url = settings.cart_continue_shopping_link
+              if continue_url == blank and settings.cart_empty_collection != blank
+                assign continue_url = settings.cart_empty_collection.url
+              endif
+              if continue_url == blank
+                assign continue_url = routes.all_products_collection_url
+              endif
+            %}
+            <button class="button button--secondary" type="button" data-cart-drawer-close>{{ 'cart.continue_shopping' | t }}</button>
+            <a class="cart-drawer__view-cart" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+            <noscript><button type="submit" name="update">{{ 'cart.update' | t }}</button></noscript>
+          </div>
+        </form>
+      {% endif %}
+    </dialog>
+  {% endif %}
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "t:cart_drawer.name",
+  "settings": [],
+  "limit": 1,
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

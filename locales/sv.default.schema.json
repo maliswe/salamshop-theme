@@ -283,5 +283,25 @@
   "product_recommendations": {
     "name": "Produktrekommendationer",
     "enabled": "Visa produktrekommendationer"
-  }
+  },
+  "cart_settings": {
+    "title": "Varukorg",
+    "behavior": "Varukorgens beteende",
+    "behavior_drawer": "Öppna sidopanel",
+    "behavior_page": "Gå till varukorgssidan",
+    "continue_link": "Länk för Fortsätt handla",
+    "empty_collection": "Kollektion för tom varukorg",
+    "empty_text": "Text för tom varukorg",
+    "empty_text_default": "Upptäck våra produkter och hitta något som passar dig.",
+    "empty_button": "Knapptext för tom varukorg",
+    "empty_button_default": "Fortsätt handla",
+    "show_notes": "Visa orderkommentar",
+    "show_thumbnails": "Visa produktbilder",
+    "show_variant_details": "Visa variantdetaljer och egenskaper",
+    "layout": "Layout på varukorgssidan",
+    "layout_comfortable": "Luftig",
+    "layout_compact": "Kompakt"
+  },
+  "cart_page": { "name": "Premiumvarukorg" },
+  "cart_drawer": { "name": "Varukorgspanel" }
 }

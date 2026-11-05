@@ -16,11 +16,33 @@
   "cart": {
     "checkout": "Till kassan",
     "title": "Varukorg",
-    "update": "Uppdatera",
+    "update": "Uppdatera varukorg",
     "remove": "Ta bort",
     "quantity": "Antal för {{ product }}",
     "empty": "Din varukorg är tom.",
-    "continue_shopping": "Fortsätt handla"
+    "empty_text": "Upptäck våra produkter och hitta något som passar dig.",
+    "continue_shopping": "Fortsätt handla",
+    "view_cart": "Visa varukorgen",
+    "close": "Stäng varukorgen",
+    "quantity_short": "Antal",
+    "decrease_quantity": "Minska antal för {{ product }}",
+    "increase_quantity": "Öka antal för {{ product }}",
+    "unit_price": "Styckpris",
+    "line_total": "Radbelopp",
+    "subtotal": "Delsumma",
+    "discounts": "Rabatter",
+    "summary": "Sammanfattning av varukorgen",
+    "shipping_at_checkout": "Frakt och slutligt totalbelopp beräknas i kassan.",
+    "note": "Lägg till en kommentar",
+    "note_placeholder": "Skriv ett meddelande om din beställning",
+    "added": "Produkten har lagts i varukorgen.",
+    "updated": "Varukorgen har uppdaterats.",
+    "removed": "Produkten har tagits bort från varukorgen.",
+    "update_error": "Det gick inte att uppdatera varukorgen. Försök igen.",
+    "item_count": {
+      "one": "{{ count }} produkt",
+      "other": "{{ count }} produkter"
+    }
   },
   "customers": {
     "login": {
@@ -74,7 +96,9 @@
     "zoom_image": "Förstora produktbild",
     "zoomed_image": "Förstorad produktbild",
     "media_gallery": "Produktmedia",
-    "view_media": "Visa media {{ index }}"
+    "view_media": "Visa media {{ index }}",
+    "added_to_cart": "Tillagd i varukorgen",
+    "add_error": "Produkten kunde inte läggas till. Försök igen."
   },
   "collection": {
     "empty": "Det finns inga produkter i den här kollektionen."

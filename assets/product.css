@@ -28,6 +28,8 @@
 .product-media__dialog img { max-block-size: calc(96vh - 6rem); margin: auto; object-fit: contain; }
 
 .product-page__form { display: grid; gap: var(--space-5); margin-block-start: var(--space-5); }
+.product-page__form [data-product-cart-error][hidden],
+.product-page__cart-status:empty { display: none; }
 .product-option { min-inline-size: 0; padding: 0; border: 0; }
 .product-option + .product-option { margin-block-start: var(--space-5); }
 .product-option legend { margin-block-end: var(--space-3); }

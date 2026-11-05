@@ -243,5 +243,37 @@
         "default": 8
       }
     ]
+  },
+  {
+    "name": "t:cart_settings.title",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_behavior",
+        "label": "t:cart_settings.behavior",
+        "options": [
+          { "value": "drawer", "label": "t:cart_settings.behavior_drawer" },
+          { "value": "page", "label": "t:cart_settings.behavior_page" }
+        ],
+        "default": "drawer"
+      },
+      { "type": "url", "id": "cart_continue_shopping_link", "label": "t:cart_settings.continue_link" },
+      { "type": "collection", "id": "cart_empty_collection", "label": "t:cart_settings.empty_collection" },
+      { "type": "textarea", "id": "cart_empty_text", "label": "t:cart_settings.empty_text", "default": "t:cart_settings.empty_text_default" },
+      { "type": "text", "id": "cart_empty_button_label", "label": "t:cart_settings.empty_button", "default": "t:cart_settings.empty_button_default" },
+      { "type": "checkbox", "id": "cart_show_notes", "label": "t:cart_settings.show_notes", "default": true },
+      { "type": "checkbox", "id": "cart_show_thumbnails", "label": "t:cart_settings.show_thumbnails", "default": true },
+      { "type": "checkbox", "id": "cart_show_variant_details", "label": "t:cart_settings.show_variant_details", "default": true },
+      {
+        "type": "select",
+        "id": "cart_layout",
+        "label": "t:cart_settings.layout",
+        "options": [
+          { "value": "comfortable", "label": "t:cart_settings.layout_comfortable" },
+          { "value": "compact", "label": "t:cart_settings.layout_compact" }
+        ],
+        "default": "comfortable"
+      }
+    ]
   }
 ]

@@ -22,7 +22,15 @@ assert.equal(defaults.type_primary_font, 'work_sans_n4');
 assert.equal(defaults.type_heading_font, 'serif');
 const snippet = read('snippets/css-variables.liquid');
 for (const match of snippet.matchAll(/settings\.([\w]+)/g)) assert.ok(ids.includes(match[1]), `Missing setting: ${match[1]}`);
-const consumers = snippet + read('snippets/header-search.liquid') + read('snippets/search-product.liquid') + read('sections/predictive-search.liquid');
+const consumers = snippet
+  + read('snippets/header-search.liquid')
+  + read('snippets/search-product.liquid')
+  + read('sections/predictive-search.liquid')
+  + read('sections/header.liquid')
+  + read('sections/cart.liquid')
+  + read('sections/cart-drawer.liquid')
+  + read('snippets/cart-line-item.liquid')
+  + read('snippets/cart-empty.liquid');
 for (const setting of settings.filter(s => s.type !== 'image_picker')) assert.ok(consumers.includes(`settings.${setting.id}`), `Unused global setting: ${setting.id}`);
 assert.ok(settings.some(s => s.id === 'logo' && s.type === 'image_picker' && !s.default), 'Logo must require an original merchant asset');
 const css = read('assets/critical.css');

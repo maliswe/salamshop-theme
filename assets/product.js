@@ -101,10 +101,43 @@
       input.dispatchEvent(new Event('change', { bubbles: true }));
     }
 
-    onSubmit(event) {
+    async onSubmit(event) {
       if (!event.currentTarget.checkValidity()) return;
-      this.querySelectorAll('button[type="submit"]').forEach(button => { button.disabled = true; });
+      const submitter = event.submitter;
+      if (!submitter?.matches('[data-add-to-cart]')) return;
+      const form = event.currentTarget;
+      const buttons = this.querySelectorAll('[data-add-to-cart]');
+      if (this.ajaxDisabled || !window.SalamCart?.isDrawerEnabled) {
+        buttons.forEach(button => { button.disabled = true; });
+        this.setAttribute('aria-busy', 'true');
+        return;
+      }
+      event.preventDefault();
+      if (this.adding) return;
+      this.adding = true;
+      const error = this.querySelector('[data-product-cart-error]');
+      const status = this.querySelector('[data-product-cart-status]');
+      const originalText = this.querySelector('[data-add-to-cart-text]')?.textContent;
+      if (error) { error.hidden = true; error.textContent = ''; }
+      if (status) status.textContent = '';
+      buttons.forEach(button => { button.disabled = true; });
       this.setAttribute('aria-busy', 'true');
+      try {
+        await window.SalamCart.addProduct(form);
+        const label = submitter.dataset.addedLabel || this.querySelector('[data-add-to-cart]')?.dataset.addedLabel;
+        const text = this.querySelector('[data-add-to-cart-text]');
+        if (text && label) text.textContent = label;
+        if (status && label) status.textContent = label;
+        window.setTimeout(() => { if (text && originalText) text.textContent = originalText; }, 1800);
+      } catch (requestError) {
+        const fallback = submitter.dataset.errorLabel || this.querySelector('[data-add-to-cart]')?.dataset.errorLabel || requestError.message;
+        if (error) { error.textContent = requestError.message || fallback; error.hidden = false; }
+        if (!requestError.serverResponse) this.ajaxDisabled = true;
+      } finally {
+        this.adding = false;
+        buttons.forEach(button => { button.disabled = false; });
+        this.removeAttribute('aria-busy');
+      }
     }
 
     setupStickyBar() {
