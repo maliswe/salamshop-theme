@@ -31,7 +31,10 @@
     "sidebar": "Sidebar",
     "text": "Text",
     "theme": "Theme",
-    "typography": "Typography"
+    "typography": "Typography",
+    "hello_world": "Hello World",
+    "hello_world_template": "Hello World Template",
+    "demo": "Demo"
   },
   "labels": {
     "alignment": "Alignment",
@@ -71,6 +74,6 @@
       "title": "Title",
       "subtitle": "Subtitle",
       "normal": "Normal text"
-    },
+    }
   }
 }

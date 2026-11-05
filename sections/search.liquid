@@ -10,6 +10,7 @@
 <form action="{{ routes.search_url }}" method="get" role="search">
   <input
     type="search"
+    aria-label="{{ 'accessibility.search' | t | escape }}"
     size="50"
     name="q"
     value="{{ search.terms | escape }}"
@@ -44,7 +45,11 @@
           </div>
         {% endfor %}
 
-        {{ paginate | default_pagination }}
+        {% assign previous_label = 'pagination.previous' | t %}
+
+        {% assign next_label = 'pagination.next' | t %}
+
+        {{ paginate | default_pagination: previous: previous_label, next: next_label }}
       {% endpaginate %}
     </div>
   {% endif %}

@@ -1,0 +1,79 @@
+{
+  "general": {
+    "404": "Sidan hittades inte",
+    "article": "Artikel",
+    "block": "Block",
+    "blog": "Blogg",
+    "cart": "Varukorg",
+    "collection": "Kollektion",
+    "collections": "Kollektioner",
+    "collection_card": "Kollektionskort",
+    "collections_grid": "Kollektionsrutnät",
+    "colors": "Färger",
+    "column": "Kolumn",
+    "content": "Innehåll",
+    "custom_section": "Anpassad sektion",
+    "fonts": "Typsnitt",
+    "footer": "Sidfot",
+    "group": "Grupp",
+    "header": "Sidhuvud",
+    "layout": "Layout",
+    "main": "Huvudinnehåll",
+    "page": "Sida",
+    "password": "Lösenord",
+    "primary": "Primär",
+    "product": "Produkt",
+    "row": "Rad",
+    "search": "Sök",
+    "secondary": "Sekundär",
+    "section": "Sektion",
+    "settings": "Inställningar",
+    "sidebar": "Sidofält",
+    "text": "Text",
+    "theme": "Tema",
+    "typography": "Typografi",
+    "hello_world": "Hej världen",
+    "hello_world_template": "Mall för Hej världen",
+    "demo": "Demonstration"
+  },
+  "labels": {
+    "alignment": "Justering",
+    "background": "Bakgrund",
+    "foreground": "Förgrund",
+    "grid_gap": "Avstånd i rutnät",
+    "grid_item_width": "Bredd på rutnätsobjekt",
+    "input_corner_radius": "Hörnradie för inmatningsfält",
+    "layout_direction": "Layoutriktning",
+    "menu": "Meny",
+    "padding": "Inre marginal",
+    "page_margin": "Sidmarginal",
+    "page_width": "Sidbredd",
+    "show_payment_icons": "Visa betalningsikoner",
+    "text_style": "Textstil",
+    "text": "Text"
+  },
+  "options": {
+    "alignment": {
+      "left": "Vänster",
+      "center": "Centrerad",
+      "right": "Höger"
+    },
+    "direction": {
+      "horizontal": "Horisontell",
+      "vertical": "Vertikal"
+    },
+    "page_width": {
+      "narrow": "Smal",
+      "wide": "Bred"
+    },
+    "size": {
+      "large": "Stor",
+      "small": "Liten"
+    },
+    "text_style": {
+      "title": "Rubrik",
+      "subtitle": "Underrubrik",
+      "normal": "Brödtext"
+    }
+  }
+}

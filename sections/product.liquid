@@ -21,7 +21,7 @@
   {% form 'product', product %}
     {% assign current_variant = product.selected_or_first_available_variant %}
 
-    <select name="id">
+    <select name="id" aria-label="{{ 'product.variant' | t | escape }}">
       {% for variant in product.variants %}
         <option
           value="{{ variant.id }}"
@@ -34,9 +34,13 @@
       {% endfor %}
     </select>
 
-    <input type="text" name="quantity" min="1" value="1">
+    <input type="text" name="quantity" min="1" value="1" aria-label="{{ 'product.quantity' | t | escape }}">
 
-    <input type="submit" value="Add to cart">
+    {% if current_variant.available %}
+      <input type="submit" value="{{ 'product.add_to_cart' | t | escape }}">
+    {% else %}
+      <input type="submit" value="{{ 'product.sold_out' | t | escape }}" disabled>
+    {% endif %}
     {{ form | payment_button }}
   {% endform %}
 </div>

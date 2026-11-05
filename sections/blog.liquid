@@ -23,7 +23,9 @@
   {% endfor %}
 
   {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
+    {% assign previous_label = 'pagination.previous' | t %}
+    {% assign next_label = 'pagination.next' | t %}
+    {{- paginate | default_pagination: previous: previous_label, next: next_label -}}
   {%- endif -%}
 {% endpaginate %}
 

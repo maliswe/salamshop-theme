@@ -1,0 +1,95 @@
+{
+  "404": {
+    "title": "404",
+    "not_found": "Sidan kunde inte hittas.",
+    "back_to_shopping": "Fortsätt handla"
+  },
+  "blog": {
+    "article_comments": "Kommentarer",
+    "article_metadata_html": "{{ date }} av {{ author }}",
+    "comment_form_body": "Kommentar",
+    "comment_form_email": "E-post",
+    "comment_form_name": "Namn",
+    "comment_form_submit": "Publicera kommentar",
+    "comment_form_title": "Skriv en kommentar"
+  },
+  "cart": {
+    "checkout": "Till kassan",
+    "title": "Varukorg",
+    "update": "Uppdatera",
+    "remove": "Ta bort",
+    "quantity": "Antal för {{ product }}",
+    "empty": "Din varukorg är tom.",
+    "continue_shopping": "Fortsätt handla"
+  },
+  "customers": {
+    "login": {
+      "email": "E-post",
+      "password": "Lösenord",
+      "submit": "Logga in",
+      "title": "Inloggning"
+    }
+  },
+  "collections": {
+    "title": "Kollektioner",
+    "empty": "Det finns inga kollektioner att visa."
+  },
+  "gift_card": {
+    "add_to_apple_wallet": "Lägg till i Apple Wallet",
+    "card": "Presentkort",
+    "expired": "Det här presentkortet har gått ut",
+    "expires_on": "Giltigt till {{ expires_on }}",
+    "use_at_checkout": "Använd det här presentkortet i kassan"
+  },
+  "password": {
+    "title": "Den här butiken är lösenordsskyddad",
+    "password": "Lösenord",
+    "enter": "Gå in"
+  },
+  "search": {
+    "title": "Sök",
+    "placeholder": "Sök bland artiklar, sidor och produkter",
+    "submit": "Sök",
+    "no_results_html": "Inga resultat hittades för {{ terms }}",
+    "results_for_html": "{{ count }} resultat hittades för {{ terms }}"
+  },
+  "product": {
+    "add_to_cart": "Lägg i varukorgen",
+    "sold_out": "Slutsåld",
+    "variant": "Variant",
+    "quantity": "Antal"
+  },
+  "collection": {
+    "empty": "Det finns inga produkter i den här kollektionen."
+  },
+  "accessibility": {
+    "account": "Mitt konto",
+    "cart": "Varukorg",
+    "search": "Sök"
+  },
+  "pagination": {
+    "previous": "Föregående",
+    "next": "Nästa"
+  },
+  "meta": {
+    "tags": "taggad med \"{{ tags }}\"",
+    "page": "Sida {{ page }}"
+  },
+  "date_formats": {
+    "date": "%e %B %Y"
+  },
+  "welcome": {
+    "title": "Hej världen!",
+    "description": "Skeleton är ett avskalat och genomtänkt Shopify-tema som hjälper dig att komma igång snabbt. Temat är modulärt, lätt att underhålla och följer Shopifys rekommendationer.",
+    "about_themes": "Teman formar upplevelsen av webbutiken för både handlare och kunder. Skapa snabba och flexibla teman med Liquid, Shopifys mallspråk, tillsammans med HTML, CSS, JavaScript och JSON.",
+    "concepts_title": "Grundläggande begrepp",
+    "concepts_description": "Shopify-teman består av mallfiler, byggblock och tillhörande resurser. Använd byggblocken för att skapa modulära teman som går att anpassa.",
+    "concepts_link": "Läs mer om grundläggande begrepp",
+    "liquid_title": "Liquid",
+    "liquid_description": "Mallspråket Liquid är grunden i Shopify-teman och används för att visa dynamiskt innehåll i webbutiker. Utöka Liquid-objekt med metafält för att lagra och visa anpassade data.",
+    "liquid_link": "Visa referensdokumentationen för Liquid",
+    "practices_title": "Rekommenderade arbetssätt",
+    "practices_description": "Shopify har tagit fram rekommenderade arbetssätt för att underlätta temautvecklingen. Följ dem när du utvecklar ditt tema och väljer verktyg och arbetsprocesser.",
+    "practices_link": "Följ rekommenderade arbetssätt"
+  }
+}

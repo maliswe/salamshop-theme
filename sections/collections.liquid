@@ -31,6 +31,8 @@
         {% endif %}
       </div>
     </a>
+  {% else %}
+    <p>{{ 'collections.empty' | t }}</p>
   {% endfor %}
 </div>
 

@@ -5,50 +5,45 @@
 <div class="welcome full-width">
   <div class="welcome-content">
     <div>
-      <h1>Hello, World!</h1>
+      <h1>{{ 'welcome.title' | t }}</h1>
 
       <p class="welcome-description">
-        The Skeleton theme is a minimal, carefully structured Shopify theme designed to help you quickly get started.
-        Designed with modularity, maintainability, and Shopify's best practices in mind.
+        {{ 'welcome.description' | t }}
       </p>
 
       <p class="welcome-description">
-        Themes shape the online store experience for merchants and their customers. Build fast, flexible themes at scale
-        using Liquid, Shopify's theme templating language, along with HTML, CSS, JavaScript, and JSON.
+        {{ 'welcome.about_themes' | t }}
       </p>
     </div>
     <div class="icon">
-      <img src="{{ 'shoppy-x-ray.svg' | asset_url }}" width="300" height="300">
+      <img src="{{ 'shoppy-x-ray.svg' | asset_url }}" width="300" height="300" alt="">
     </div>
   </div>
 </div>
 
 <div class="highlights">
   <div class="highlight">
-    <h3>Key Concepts</h3>
+    <h3>{{ 'welcome.concepts_title' | t }}</h3>
     <p class="highlight-description">
-      Shopify themes are a package of template files, building blocks, and supporting assets. Use these building blocks
-      to create modular, customizable themes.
+      {{ 'welcome.concepts_description' | t }}
     </p>
-    <p>{{ 'Learn more about key concepts' | link_to: 'https://shopify.dev/docs/storefronts/themes/architecture' }}</p>
+    <p>{{ 'welcome.concepts_link' | t | link_to: 'https://shopify.dev/docs/storefronts/themes/architecture' }}</p>
   </div>
 
   <div class="highlight">
-    <h3>Liquid</h3>
+    <h3>{{ 'welcome.liquid_title' | t }}</h3>
     <p class="highlight-description">
-      The Liquid templating language is the backbone of Shopify themes, and is used to load dynamic content on
-      storefronts. Extend Liquid objects to store and present custom data using metafields.
+      {{ 'welcome.liquid_description' | t }}
     </p>
-    <p>{{ 'View the Liquid reference' | link_to: 'https://shopify.dev/docs/api/liquid' }}</p>
+    <p>{{ 'welcome.liquid_link' | t | link_to: 'https://shopify.dev/docs/api/liquid' }}</p>
   </div>
 
   <div class="highlight">
-    <h3>Best Practices</h3>
+    <h3>{{ 'welcome.practices_title' | t }}</h3>
     <p class="highlight-description">
-      To optimize your theme development experience, Shopify has established a set of best practices that you can refer
-      to when developing your theme and setting up your toolchains and processes.
+      {{ 'welcome.practices_description' | t }}
     </p>
-    <p>{{ 'Follow best practices' | link_to: 'https://shopify.dev/docs/storefronts/themes/best-practices' }}</p>
+    <p>{{ 'welcome.practices_link' | t | link_to: 'https://shopify.dev/docs/storefronts/themes/best-practices' }}</p>
   </div>
 </div>
 
@@ -132,12 +127,12 @@
 
 {% schema %}
 {
-  "name": "Hello World",
+  "name": "t:general.hello_world",
   "settings": [],
   "presets": [
     {
-      "name": "Hello World Template",
-      "category": "Demo"
+      "name": "t:general.hello_world_template",
+      "category": "t:general.demo"
     }
   ]
 }
