@@ -65,6 +65,7 @@ class MockFormData {
   set(key, value) { this.values.set(key, value); }
 }
 const config = new MockElement();
+config.open = trigger => { config.openedWith = trigger; };
 Object.assign(config.dataset, {
   cartBehavior: 'drawer', cartAddUrl: '/sv/cart/add.js', cartChangeUrl: '/sv/cart/change.js',
   cartJsonUrl: '/sv/cart.js', cartCountLabel: 'Varukorg (__COUNT__)', errorMessage: 'Fel',
@@ -105,12 +106,14 @@ assert.deepEqual([...controller.sectionIds()], ['header-id', 'drawer-id']);
 (async () => {
   let applied = null;
   controller.applyResponse = async (response, options) => { applied = { response, options }; };
-  await controller.addProduct({ id: 'product-form' });
+  const quickAddTrigger = new MockElement();
+  await controller.addProduct({ id: 'product-form' }, { trigger: quickAddTrigger });
   assert.equal(fetchCalls[0].url, '/sv/cart/add.js');
   assert.equal(fetchCalls[0].options.method, 'POST');
   assert.equal(fetchCalls[0].options.body.values.get('sections'), 'header-id,drawer-id');
   assert.equal(fetchCalls[0].options.body.values.get('sections_url'), '/sv/products/test');
   assert.equal(applied.options.openDrawer, true);
+  assert.equal(applied.options.trigger, quickAddTrigger, 'Quick add can restore focus to its initiating button');
 
   fetchCalls = [];
   await controller.changeLine('123:properties-hash', 3);
@@ -126,6 +129,12 @@ assert.deepEqual([...controller.sectionIds()], ['header-id', 'drawer-id']);
   controller.refreshCount = async () => { countFallbacks += 1; };
   await sandbox.window.SalamCartController.prototype.applyResponse.call(controller, { sections: { 'header-id': null } });
   assert.equal(countFallbacks, 1, 'Null bundled sections trigger one safe count fallback without repeating the mutation');
+
+  fetchCalls = [];
+  controller.applyResponse = sandbox.window.SalamCartController.prototype.applyResponse.bind(controller);
+  await controller.addProduct({ id: 'quick-add-form' }, { trigger: quickAddTrigger });
+  assert.equal(fetchCalls.filter(call => call.options.method === 'POST').length, 1, 'A successful add followed by failed section rendering must not replay the mutation');
+  assert.equal(config.openedWith, quickAddTrigger);
 
   sandbox.fetch = async () => ({ ok: false, status: 422, json: async () => ({ description: 'Slutsåld' }) });
   await assert.rejects(() => controller.request('/sv/cart/change.js', {}), error => error.serverResponse && error.status === 422 && error.message === 'Slutsåld');

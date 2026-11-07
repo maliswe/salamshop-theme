@@ -67,12 +67,14 @@
       this.querySelectorAll('[data-quantity-change]').forEach(button => button.addEventListener('click', () => this.changeQuantity(button), { signal }));
       this.querySelector('form')?.addEventListener('submit', event => this.onSubmit(event), { signal });
       this.setupStickyBar();
+      this.setupStickyInformation();
     }
 
     disconnectedCallback() {
       this.abortController?.abort();
       this.variantRequest?.abort();
       this.stickyObserver?.disconnect();
+      this.informationObserver?.disconnect();
       window.clearTimeout(this.addedTimeout);
     }
 
@@ -180,6 +182,23 @@
         buttons.forEach(button => { button.disabled = false; });
         this.removeAttribute('aria-busy');
       }
+    }
+
+    setupStickyInformation() {
+      const information = this.querySelector('.product-page__information--sticky');
+      if (!information || !('ResizeObserver' in window)) return;
+      const update = () => {
+        const header = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 0;
+        const spacing = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        const fits = window.matchMedia('(min-width: 64rem)').matches && information.getBoundingClientRect().height <= window.innerHeight - header - spacing * 2;
+        information.toggleAttribute('data-sticky-fit', fits);
+      };
+      this.informationObserver = new ResizeObserver(update);
+      this.informationObserver.observe(information);
+      const header = document.querySelector('.shopify-section-group-header-group');
+      if (header) this.informationObserver.observe(header);
+      window.addEventListener('resize', update, { signal: this.abortController.signal });
+      update();
     }
 
     setupStickyBar() {

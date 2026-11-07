@@ -10,7 +10,7 @@
     </div>
     {% endif %}
 
-    <div class="home-categories__grid" style="--category-count: {{ section.blocks.size | at_least: 1 }};">
+    <salam-category-track class="home-categories__grid" role="region" aria-label="{{ 'homepage.categories_navigation' | t | escape }}" tabindex="0" style="--category-count: {{ section.blocks.size | at_least: 1 }};">
       {% for block in section.blocks %}
         {% liquid
           assign card_collection = block.settings.collection
@@ -20,7 +20,7 @@
         {% if card_collection != blank %}<a class="home-category-card" href="{{ card_collection.url }}" {{ block.shopify_attributes }}>{% else %}<div class="home-category-card" {{ block.shopify_attributes }}>{% endif %}
           <span class="home-category-card__media" aria-hidden="true">
             {% if card_image != blank %}
-              {{ card_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '120, 180, 240, 360, 480', sizes: '(min-width: 64rem) 12vw, (min-width: 48rem) 18vw, 28vw', alt: '' }}
+              {{ card_image | image_url: width: 480 | image_tag: loading: 'lazy', widths: '120, 180, 240, 360, 480', sizes: '(min-width: 80rem) 12vw, (min-width: 48rem) 144px, 120px', alt: '' }}
             {% else %}
               {{ 'collection-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
             {% endif %}
@@ -28,9 +28,10 @@
           {% if card_label != blank %}<span class="home-category-card__label">{{ card_label | escape }}</span>{% endif %}
         {% if card_collection != blank %}</a>{% else %}</div>{% endif %}
       {% endfor %}
-    </div>
+    </salam-category-track>
   </div>
 </section>
+<script src="{{ 'home-categories.js' | asset_url }}" defer></script>
 
 {% schema %}
 {

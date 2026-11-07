@@ -7,22 +7,26 @@
   @param {number} columns_mobile - Mobile column count
   @param {string} image_ratio - Product media ratio
   @param {boolean} sort_recent - Show most recently published products in the selected collection
+  @param {string} [image_fit] - "cover" or "contain" homepage photography
+  @param {boolean} [show_description] - Show a brief real product description
+  @param {string} [button_style] - "filled" or "tonal" purchase link
+  @param {string} [card_density] - "comfortable" or "compact" content spacing
 {% enddoc %}
 
 <div
-  class="home-product-grid"
-  style="--home-columns-mobile: {{ columns_mobile }}; --home-columns-desktop: {{ columns_desktop }};"
+  class="home-product-grid home-product-grid--homepage home-product-grid--{{ card_density | default: 'comfortable' }}"
+  style="--home-columns-mobile: {{ columns_mobile }}; --home-columns-desktop: {{ columns_desktop }}; --home-card-image-fit: {{ image_fit | default: 'cover' }};"
 >
   {% if collection != blank and collection.products_count > 0 %}
     {% assign grid_products = collection.products %}
     {% if sort_recent %}{% assign grid_products = grid_products | sort: 'published_at' | reverse %}{% endif %}
     {% for product in grid_products limit: limit %}
-      {% render 'product-card', product: product, image_ratio: image_ratio %}
+      {% render 'product-card', product: product, image_ratio: image_ratio, homepage_card: true, show_description: show_description, button_style: button_style %}
     {% endfor %}
   {% else %}
     {% for index in (1..limit) %}
       {% capture placeholder_name %}{% cycle 'product-1', 'product-2', 'product-3', 'product-4' %}{% endcapture %}
-      <article class="product-card home-product-card home-product-card--placeholder" aria-hidden="true">
+      <article class="product-card home-product-card home-product-card--homepage home-product-card--placeholder" aria-hidden="true">
         <div class="home-product-card__media home-product-card__media--{{ image_ratio | default: 'portrait' }}">
           {{ placeholder_name | placeholder_svg_tag: 'home-placeholder-svg' }}
         </div>

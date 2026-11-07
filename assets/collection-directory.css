@@ -1,0 +1,22 @@
+.collections-directory { inline-size: 100%; }
+.collections-directory__header { display: grid; gap: var(--space-4); max-inline-size: var(--content-width-prose); margin-block-end: clamp(var(--space-5), 4vw, var(--space-7)); }
+.collections-directory__header h1 { letter-spacing: -0.035em; }
+.collections-directory__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--directory-gap, var(--space-5)); }
+.directory-card { display: flex; flex-direction: column; min-inline-size: 0; border-radius: var(--radius-card-large); background: var(--color-surface-low); color: var(--color-foreground); text-decoration: none; box-shadow: var(--elevation-1); transition: box-shadow 180ms ease; }
+.directory-card:hover { box-shadow: var(--elevation-2); }
+.directory-card__media { aspect-ratio: var(--directory-ratio, 4 / 3); overflow: hidden; border-radius: var(--radius-card-large); background: var(--color-surface); }
+.directory-card__media img { inline-size: 100%; block-size: 100%; object-fit: var(--directory-fit, cover); }
+.directory-card__content { display: flex; flex-direction: column; flex: 1; gap: var(--space-3); padding: clamp(var(--space-4), 2vw, var(--space-5)); overflow-wrap: anywhere; }
+.directory-card__content h2 { font-size: var(--font-size-h3); line-height: 1.25; }
+.directory-card__count, .directory-card__description { color: var(--color-on-surface-variant); font-size: var(--font-size-small); }
+.directory-card__action { display: inline-flex; align-items: center; justify-content: space-between; gap: var(--space-3); margin-block-start: auto; min-block-size: 2.75rem; color: var(--color-primary); font-weight: 600; }
+.directory-card:hover h2 { color: var(--color-primary); }
+.directory-card--text { min-block-size: 16rem; background: var(--color-primary-container); }
+.directory-card--text .directory-card__content { justify-content: center; }
+.directory-pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-block-start: var(--space-7); }
+.directory-pagination :is(a, .current) { display: inline-grid; place-items: center; min-inline-size: var(--control-min-height); min-block-size: var(--control-min-height); padding: var(--space-2); border-radius: var(--radius-pill); }
+.directory-pagination .current { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+@media (min-width: 30rem) { .collections-directory__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 64rem) { .collections-directory__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 75rem) { .collections-directory__grid.collections--compact { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .directory-card { transition: none; } }

@@ -1,16 +1,43 @@
 /* Header styles use the global SalamShop tokens; all selectors are scoped. */
+.site-header-section,
+.site-header {
+  inline-size: 100%;
+  max-inline-size: none;
+  margin-inline: 0;
+  border-radius: 0;
+}
+
 .site-header-section {
   display: block;
-  background: var(--header-background, var(--color-surface));
+  background: transparent;
 }
 
 .site-header {
   --icon-stroke-width: 1.5;
-  --focus-halo: var(--header-background);
+  --header-inline-padding: var(--space-4);
+  --focus-halo: var(--color-surface);
+  --header-glass-surface: var(--color-background);
   display: block;
-  background: var(--header-background);
+  background: var(--header-glass-surface);
   color: var(--color-foreground);
-  border-block-end: 0;
+  border-block-start: 0;
+  border-block-end: var(--border-width) solid color-mix(in srgb, var(--color-border) 35%, transparent);
+  box-shadow: var(--header-sticky-shadow, none);
+}
+
+@supports (background: color-mix(in srgb, transparent, transparent)) {
+  .site-header {
+    --header-glass-surface: color-mix(in srgb, var(--color-background) 80%, var(--color-surface));
+  }
+}
+
+/* Keep an opaque surface unless both mixing and backdrop filtering are supported. */
+@supports (background: color-mix(in srgb, transparent, transparent)) and ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header {
+    background: color-mix(in srgb, var(--header-glass-surface) 74%, transparent);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    backdrop-filter: blur(18px) saturate(130%);
+  }
 }
 
 .site-header [hidden] {
@@ -18,8 +45,10 @@
 }
 
 .header-shell {
-  inline-size: min(calc(100% - var(--page-margin) * 2), calc(var(--page-width) - var(--page-margin) * 2));
-  margin-inline: auto;
+  inline-size: 100%;
+  max-inline-size: none;
+  margin-inline: 0;
+  padding-inline: var(--header-inline-padding);
 }
 
 .header-top {
@@ -36,7 +65,7 @@
 
 .header-brand {
   display: block;
-  justify-self: center;
+  justify-self: start;
   inline-size: min(100%, var(--header-logo-width-mobile));
   text-decoration: none;
 }
@@ -51,7 +80,7 @@
   font-size: clamp(0.6875rem, 1.8vw, 0.8125rem);
   font-weight: 700;
   line-height: 1.25;
-  text-align: center;
+  text-align: start;
   overflow-wrap: anywhere;
 }
 
@@ -101,15 +130,19 @@
 
 .header-cart-count {
   position: absolute;
-  inset-block-start: 0;
-  inset-inline-end: 0;
+  inset-block-start: 0.125rem;
+  inset-inline-end: 0.125rem;
+  display: grid;
+  place-items: center;
   padding-inline: var(--space-1);
-  min-inline-size: 1.125rem;
+  min-inline-size: 1.25rem;
+  min-block-size: 1.25rem;
   border-radius: var(--radius-pill);
   background: var(--color-primary);
   color: var(--color-on-primary);
   font-size: 0.6875rem;
-  line-height: 1.5;
+  line-height: 1;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
 
@@ -132,6 +165,20 @@
 
 .header-search-form button {
   flex-shrink: 0;
+}
+
+/* Scope the tonal treatment to the header; search-page forms keep their styles. */
+.site-header .product-search .header-search-form {
+  padding: 0.125rem;
+  background: var(--color-surface);
+  color: var(--color-foreground);
+  box-shadow: inset 0 0 0 var(--border-width) color-mix(in srgb, var(--color-border) 35%, transparent);
+}
+
+.site-header input[type='search']::placeholder,
+.site-header .search-feedback {
+  color: var(--color-on-surface-variant);
+  opacity: 1;
 }
 
 .site-header[data-mobile-search-open] .header-search-panel {
@@ -230,7 +277,7 @@
   inset-block-start: 100%;
   z-index: 20;
   padding: var(--space-4);
-  background: var(--header-background);
+  background: var(--color-surface);
   border: var(--border-default);
   max-block-size: 70svh;
   overflow-y: auto;
@@ -272,7 +319,7 @@
 }
 
 .header-drawer::backdrop {
-  background: rgb(41 39 32 / 42%);
+  background: color-mix(in srgb, var(--color-foreground) 42%, transparent);
   backdrop-filter: blur(0.25rem);
 }
 
@@ -295,16 +342,21 @@
   border-block-start: var(--border-default);
 }
 
+@media (min-width: 48rem) {
+  .site-header { --header-inline-padding: var(--space-5); }
+}
+
 @media (min-width: 64rem) {
+  .site-header { --header-inline-padding: clamp(var(--space-6), 3vw, var(--space-7)); }
   .site-header .header-search-panel-close { display: none; }
   .header-top {
-    grid-template-columns: minmax(0, var(--header-logo-width)) minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
     gap: var(--space-5);
-    padding-block: var(--space-2);
+    padding-block: var(--space-1);
   }
 
   .header-brand {
-    inline-size: 100%;
+    inline-size: min(100%, var(--header-logo-width));
     justify-self: start;
   }
 
@@ -327,6 +379,7 @@
   .site-header .header-nav-desktop {
     display: block;
     position: relative;
+    padding-block: var(--space-1) var(--space-2);
   }
 
   .site-header .header-menu-toggle,
@@ -337,6 +390,7 @@
 
   .header-actions {
     grid-column: 3;
+    justify-self: end;
     gap: var(--space-3);
   }
 
@@ -344,15 +398,46 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    column-gap: var(--space-2);
-    padding-block: var(--space-1);
+    gap: var(--space-1);
+    inline-size: fit-content;
+    max-inline-size: 100%;
+    margin-inline: auto;
+    padding: var(--space-1);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-secondary);
+    color: var(--color-foreground);
+    box-shadow: 0 0.125rem 0.5rem color-mix(in srgb, var(--color-foreground) 4%, transparent);
+  }
+
+  @supports (background: color-mix(in srgb, transparent, transparent)) and ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .header-menu-root {
+      background: color-mix(in srgb, var(--color-surface-secondary) 70%, transparent);
+      -webkit-backdrop-filter: blur(12px) saturate(110%);
+      backdrop-filter: blur(12px) saturate(110%);
+    }
   }
 
   .header-menu-root > li > a,
   .header-menu-root > li > details > summary {
     min-block-size: 2.75rem;
-    padding-block: var(--space-2);
+    padding-block: var(--space-1);
+    padding-inline: var(--space-4);
     font-size: var(--font-size-small);
+    font-weight: 500;
+  }
+
+  .header-menu-root > li > a:hover,
+  .header-menu-root > li > details > summary:hover {
+    background: var(--color-primary-container);
+    color: var(--color-on-primary-container);
+    text-decoration: none;
+  }
+
+  .header-menu-root > li > a[aria-current='page'],
+  .header-menu-root > li > details > summary.header-menu-active {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
   }
 
   .header-menu-root>li>details>.header-submenu {
@@ -376,6 +461,25 @@
 }
 
 @media (max-width: 63.999rem) {
-  .site-header { background: color-mix(in srgb, var(--header-background) 94%, transparent); backdrop-filter: blur(1rem); }
   .header-top { min-block-size: 4rem; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .header-nav-desktop .header-menu-root {
+    background: var(--color-surface-secondary);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .site-header {
+    background: var(--color-background);
+    background: var(--header-glass-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .header-drawer::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }

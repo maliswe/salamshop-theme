@@ -11,7 +11,7 @@
   #shopify-section-{{ section.id }} .home-editorial { --home-editorial-background: {{ background }}; }
 {% endstyle %}
 
-<section class="home-section home-editorial home-editorial--image-{{ section.settings.image_position }}" aria-labelledby="HomeEditorial-{{ section.id }}">
+<section class="home-section home-editorial home-editorial--image-{{ section.settings.image_position }}{% unless section.settings.full_width == false %} home-editorial--full-width full-width{% endunless %}" aria-labelledby="HomeEditorial-{{ section.id }}">
   <div class="home-section__inner home-editorial__inner">
     <div class="home-editorial__media" aria-hidden="true">
       {% if section.settings.image != blank %}
@@ -46,6 +46,7 @@
       "options": [{ "value": "primary", "label": "t:general.primary" }, { "value": "secondary", "label": "t:general.secondary" }], "default": "primary"
     },
     { "type": "header", "content": "t:homepage.common.layout" },
+    { "type": "checkbox", "id": "full_width", "label": "t:homepage.editorial.full_width", "default": true },
     {
       "type": "select", "id": "image_position", "label": "t:homepage.editorial.image_position",
       "options": [{ "value": "left", "label": "t:options.alignment.left" }, { "value": "right", "label": "t:options.alignment.right" }], "default": "left"

@@ -102,7 +102,7 @@
         "product_limit": 4,
         "columns_mobile": "2",
         "columns_desktop": "4",
-        "image_ratio": "landscape",
+        "image_ratio": "portrait",
         "collection": "all"
       }
     },
@@ -120,16 +120,15 @@
       }
     },
     "arrivals": {
-      "type": "home-new-arrivals",
+      "type": "home-news",
       "settings": {
-        "eyebrow": "",
+        "selected_blog": "news",
         "heading": "Nyheter",
         "show_view_all": true,
-        "product_limit": 4,
-        "columns_mobile": "2",
+        "article_limit": 4,
         "columns_desktop": "4",
-        "image_ratio": "landscape",
-        "collection": "all"
+        "show_date": true,
+        "show_excerpt": true
       }
     },
     "values": {

@@ -51,7 +51,7 @@
       return data;
     }
 
-    async addProduct(form) {
+    async addProduct(form, { trigger = null } = {}) {
       const config = this.config;
       if (!config) throw new CartRequestError(this.errorMessage());
       const body = this.sectionFields(new FormData(form));
@@ -60,7 +60,7 @@
         headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
         body,
       });
-      await this.applyResponse(response, { openDrawer: true, announcement: config.dataset.addedMessage });
+      await this.applyResponse(response, { openDrawer: true, announcement: config.dataset.addedMessage, trigger });
       return response;
     }
 
@@ -120,7 +120,7 @@
       } catch (_) { /* A count refresh must never repeat a cart mutation. */ }
     }
 
-    async applyResponse(response, { openDrawer = false, announcement = '' } = {}) {
+    async applyResponse(response, { openDrawer = false, announcement = '', trigger: requestedTrigger = null } = {}) {
       const drawerWasOpen = Boolean(document.querySelector('[data-cart-drawer-dialog][open]'));
       const previousTrigger = document.querySelector('cart-drawer')?.restoreTarget;
       const floatingTrigger = previousTrigger?.matches('.floating-cart');
@@ -136,7 +136,7 @@
       }
       this.announce(announcement);
       if (openDrawer || drawerWasOpen) {
-        const trigger = previousTrigger?.isConnected ? previousTrigger
+        const trigger = requestedTrigger?.isConnected ? requestedTrigger : previousTrigger?.isConnected ? previousTrigger
           : floatingTrigger ? document.querySelector('.floating-cart[data-cart-drawer-open]') : null;
         document.querySelector('cart-drawer')?.open(trigger);
       }

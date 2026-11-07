@@ -33,9 +33,11 @@ const media = read('snippets/product-media-gallery.liquid');
 assert.match(media, /assign media_loading = 'eager'/);
 assert.match(media, /fetchpriority: media_priority/);
 
-for (const section of ['page', 'blog', 'article', '404', 'password', 'collections']) {
+for (const section of ['page', 'blog', 'article', '404', 'password']) {
   assert.match(read(`sections/${section}.liquid`), /secondary\.css/);
 }
+assert.match(read('sections/collections.liquid'), /'collection-directory\.css' \| asset_url \| stylesheet_tag/);
+assert.ok(fs.existsSync(path.join(root, 'assets/collection-directory.css')), 'Directory styles must ship with the theme');
 
 const footer = read('sections/footer.liquid');
 assert.match(footer, /<nav[^>]*aria-label=/);

@@ -26,6 +26,7 @@
     {% render 'product-media-gallery', product: product, featured_media: featured_media, section: section %}
 
     <div class="product-page__information{% if section.settings.sticky_information %} product-page__information--sticky{% endif %}">
+      {% if section.settings.show_collection_label and breadcrumb_collection != blank %}<a class="product-page__category" href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title | escape }}</a>{% endif %}
       {% if section.settings.show_vendor and product.vendor != blank %}<p class="product-page__vendor">{{ product.vendor | escape }}</p>{% endif %}
       <h1 class="product-page__title">{{ product.title | escape }}</h1>
       <div class="product-page__price price" data-product-price aria-live="polite">
@@ -38,6 +39,8 @@
         {% else %}<span>{{ product.price | money_with_currency }}</span>{% endif %}
       </div>
       {% if section.settings.show_tax_note %}<p class="product-page__tax-note text-small">{{ 'product.tax_included' | t }}</p>{% endif %}
+      {% if section.settings.show_short_description and product.description != blank %}<p class="product-page__summary">{{ product.description | strip_html | strip | truncatewords: 35 | escape }}</p>{% endif %}
+      <p class="product-page__availability">{% if current_variant == nil %}{{ 'product.unavailable' | t }}{% elsif current_variant.available %}{{ 'product.in_stock' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</p>
 
       {% form 'product', product, id: form_id, class: 'product-page__form' %}
         {% if form.errors %}<div class="form-message form-message--error" role="alert">{{ form.errors | default_errors }}</div>{% endif %}
@@ -74,6 +77,19 @@
         {% endunless %}
         <input type="hidden" name="id" value="{{ current_variant.id }}"{% unless current_variant %} disabled{% endunless %}>
 
+        {% for block in section.blocks %}
+          {% if block.type == 'size_guide' %}
+            {% assign configured_size_option = block.settings.option_name | downcase %}
+            {% for product_option in product.options_with_values %}
+              {% assign current_option_name = product_option.name | downcase %}
+              {% if configured_size_option == current_option_name %}
+                {% render 'product-size-guide', block: block, product: product %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+
         {% if section.settings.show_quantity %}
           <div class="product-quantity">
             <label for="Quantity-{{ section.id }}">{{ 'product.quantity' | t }}</label>
@@ -103,15 +119,6 @@
               {% if product_length != blank or product_width != blank %}<details class="product-information__item" {{ block.shopify_attributes }}><summary>{% if block.settings.heading != blank %}{{ block.settings.heading | escape }}{% else %}{{ 'product.dimensions' | t }}{% endif %}{% render 'header-icon', icon: 'chevron' %}</summary><dl class="product-information__dimensions">{% if product_length != blank %}<div><dt>{{ 'product.length' | t }}</dt><dd>{{ product_length | metafield_tag }}</dd></div>{% endif %}{% if product_width != blank %}<div><dt>{{ 'product.width' | t }}</dt><dd>{{ product_width | metafield_tag }}</dd></div>{% endif %}</dl></details>{% endif %}
             {% when 'care' %}{% render 'product-metafield-block', block: block, metafield: product.metafields.custom.tvattrad, fallback_heading: 'product.care' %}
             {% when 'head_circumference' %}{% render 'product-metafield-block', block: block, metafield: product.metafields.custom.huvudomkrets, fallback_heading: 'product.head_circumference' %}
-            {% when 'size_guide' %}
-              {% assign configured_size_option = block.settings.option_name | downcase %}
-              {% for product_option in product.options_with_values %}
-                {% assign current_option_name = product_option.name | downcase %}
-                {% if configured_size_option == current_option_name %}
-                  {% render 'product-size-guide', block: block, product: product %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
             {% when 'collapsible' %}
               {% if block.settings.content != blank %}<details class="product-information__item" {{ block.shopify_attributes }}><summary>{{ block.settings.heading | escape }}{% render 'header-icon', icon: 'chevron' %}</summary><div class="product-information__content prose">{{ block.settings.content }}</div></details>{% endif %}
             {% when 'custom_liquid' %}{% if block.settings.custom_liquid != blank %}<div class="product-information__custom prose" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>{% endif %}
@@ -134,12 +141,15 @@
   "settings": [
     { "type": "header", "content": "t:product_page.gallery" },
     { "type": "select", "id": "image_ratio", "label": "t:product_page.image_ratio", "options": [{ "value": "editorial", "label": "t:product_page.editorial_ratio" }, { "value": "natural", "label": "t:product_page.natural" }, { "value": "square", "label": "t:homepage.options.square" }, { "value": "portrait", "label": "t:homepage.options.portrait" }], "default": "natural" },
-    { "type": "select", "id": "thumbnail_position", "label": "t:product_page.thumbnail_position", "options": [{ "value": "side", "label": "t:product_page.side" }, { "value": "bottom", "label": "t:product_page.bottom" }], "default": "side" },
+    { "type": "select", "id": "thumbnail_position", "label": "t:product_page.thumbnail_position", "options": [{ "value": "side", "label": "t:product_page.side" }, { "value": "bottom", "label": "t:product_page.bottom" }], "default": "bottom" },
+    { "type": "select", "id": "image_fit", "label": "t:product_page.image_fit", "options": [{ "value": "contain", "label": "t:homepage.products.fit_contain" }, { "value": "cover", "label": "t:homepage.products.fit_cover" }], "default": "contain" },
     { "type": "checkbox", "id": "enable_zoom", "label": "t:product_page.enable_zoom", "default": true },
     { "type": "checkbox", "id": "show_breadcrumbs", "label": "t:product_page.show_breadcrumbs", "default": true },
     { "type": "select", "id": "desktop_layout", "label": "t:product_page.desktop_layout", "options": [{ "value": "balanced", "label": "t:product_page.layout_balanced" }, { "value": "gallery-wide", "label": "t:product_page.layout_gallery_wide" }], "default": "gallery-wide" },
     { "type": "select", "id": "information_surface", "label": "t:product_page.information_surface", "options": [{ "value": "plain", "label": "t:product_page.surface_plain" }, { "value": "tonal", "label": "t:product_page.surface_tonal" }], "default": "tonal" },
     { "type": "header", "content": "t:product_page.purchase" },
+    { "type": "checkbox", "id": "show_collection_label", "label": "t:product_page.show_collection_label", "default": true },
+    { "type": "checkbox", "id": "show_short_description", "label": "t:product_page.show_short_description", "default": true },
     { "type": "checkbox", "id": "show_vendor", "label": "t:product_page.show_vendor", "default": false },
     { "type": "checkbox", "id": "show_tax_note", "label": "t:product_page.show_tax_note", "default": true },
     { "type": "checkbox", "id": "show_quantity", "label": "t:product_page.show_quantity", "default": true },

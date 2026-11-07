@@ -10,11 +10,47 @@
 
 `snippets/header-icon.liquid` contains only decorative utility icons. The existing account/cart SVG assets are reused with an explicit stroke-width token. No branding asset was generated or changed.
 
-`assets/header.css` scopes presentation to the header and consumes the existing design tokens. Local header variables carry merchant widths/background. The section wrapper is sticky when enabled. Desktop navigation wraps rather than scrolling horizontally; its dropdown panels are anchored within the navigation width to avoid viewport-edge overflow. Nested disclosures remain in-flow within the panel. The mobile layout applies below 64rem, including tablets, with bounded logo width and 44px control targets. Logical CSS properties prepare the component for future RTL layouts; an Arabic rollout must also set the document direction and test translated content.
+`assets/header.css` scopes presentation to the header and consumes the existing design tokens. Local header variables carry merchant logo widths. The header background follows `--color-surface`; frosted glass mixes that surface with transparency over a transparent section wrapper at all widths. The drawer backdrop derives from `--color-foreground`. Primary/secondary text, borders and focus states use the global tokens; the cart badge uses `--color-primary` / `--color-on-primary`, and active navigation uses `--color-primary-container` / `--color-on-primary-container`. There is no independent header color override, so global Theme Editor color changes flow through automatically. The section wrapper is sticky when enabled. Desktop navigation wraps rather than scrolling horizontally; its dropdown panels are anchored within the navigation width to avoid viewport-edge overflow. Nested disclosures remain in-flow within the panel. The mobile layout applies below 64rem, including tablets, with bounded logo width and 44px control targets. Logical CSS properties prepare the component for future RTL layouts; an Arabic rollout must also set the document direction and test translated content.
+
+## Header refinement — Step 01
+
+The badge previously relied on inline text flow, a minimum width and `line-height: 1.5`. It now uses grid centering, `line-height: 1`, equal 1.25rem minimum dimensions and nowrap text. One digit forms a circle; longer counts expand into a pill. Its absolute position remains anchored to `.header-cart`, and Shopify count rendering, AJAX updates and screen-reader labels are unchanged.
+
+Glass uses 88% of the configured surface color with 18px blur and 120% saturation, including the WebKit property. Browsers without backdrop-filter retain the solid surface. Reduced-transparency preferences restore an opaque header and disable header/drawer backdrop blur. The bottom border uses the global border token; a restrained foreground-derived shadow is enabled only by the existing sticky setting. Existing rounded search, tonal active navigation, spacing and logo picker are preserved.
+
+Local Shopify preview screenshots are in `design/header-refinement-step-01/`: 390px mobile, 768px tablet and 1440px desktop, each at the top and after scrolling. No horizontal overflow was observed at those widths. The real empty-cart badge measured 20 × 20px with grid centering. The sticky wrapper remained at top 0 after scrolling; the existing ResizeObserver continued to supply header-height scroll clearance. Desktop content visibly diffused behind the header.
+
+Theme Check, existing header/cart/design-system validators, syntax checks for all asset JavaScript files and `git diff --check` passed. The temporary `badge-values.html` fixture contains 0, 1, 9, 10, 99+ and 1000 without changing cart/catalog data. Browser security rejected its data-URL navigation, so larger-value visual verification remains pending. Reduced-transparency and unsupported-filter paths were inspected in CSS but were not browser-emulated. No commit, push, publication or production/catalog changes were made.
 
 `assets/header.js` registers one `salam-header` custom element. Its lifecycle attaches listeners once and aborts them on disconnection. Newly inserted Theme Editor header markup upgrades automatically after registration. Native menu/search/cart navigation remains independent of JavaScript. No production settings, product data, collections or homepage layout are changed.
 
 ## Theme Editor options
+
+### Floating desktop navigation pill
+
+At the existing 64rem breakpoint, `.header-menu-root` now sizes to its links and centers inside the navigation row. A fully rounded tonal surface derives from `--color-surface-secondary`, with 70% translucency, 12px backdrop blur and a restrained token-derived shadow where supported. The opaque fallback and reduced-transparency mode retain the configured tonal surface. No motion is introduced.
+
+Top-level current-page links and active branch summaries use `--color-primary` / `--color-on-primary`, with 700 weight. Hover uses the existing primary-container pair; global keyboard focus rings remain visible. Menu data, the existing picker, `link.current` / `link.child_active`, `aria-current="page"` and disclosure behavior are unchanged. Items retain 44px minimum height; the outer pill adds 16px to the desktop navigation row overall. Wrapping and the existing drawer/dock breakpoint remain intact.
+
+Before/after screenshots at 390, 768, 1440 and 1920px are in `design/navigation-pill/`, with geometry in `comparison-metrics.json`. The top header row measured identically before and after at every size; mobile/tablet header heights were unchanged and the desktop menu stayed hidden there. No horizontal overflow was observed. Keyboard focus was verified, and navigating from Home to Catalog moved the gold active pill and `aria-current` to Catalog. The original configured gold logo rendered unchanged. Theme Check, header/locale/design-system validation, all asset JavaScript syntax checks and whitespace checks passed. This redesign changes desktop-navigation CSS and this documentation only.
+
+### Full-width header refinement
+
+The visible content constraint was `.header-shell`: it used `--page-width` / `--page-margin` to cap and center both header rows. The outer glass already spanned the viewport. Header-specific CSS now explicitly gives the wrapper, glass and shell 100% inline width, no maximum width or inline margins, and square outer corners. The global section grid and homepage hero widths are unchanged.
+
+The shell uses token-based horizontal padding: 16px below 48rem, 24px from 48rem, and a 32–48px clamp from 64rem. Desktop uses balanced side columns around centered search, with the configured logo width retained and actions aligned right. Mobile/tablet keep the hamburger followed by the left-aligned brand, with search/cart actions on the right. Navigation fills the padded shell beneath the main row; compact row spacing, glass, search tones and badge centering are unchanged.
+
+Local preview checks at 390, 768, 1440 and 1920px found no horizontal overflow. Header and shell start at x=0 and span the available browser width excluding the scrollbar; the desktop hero remains 1200px wide. Screenshots are in `design/header-full-width/`, including sticky-scrolled glass at 1440px. Theme Check and existing header/cart/search/design-system validators passed, as did `git diff --check`. This refinement changes header CSS and documentation only; no publication or commit was initiated.
+
+### Glass appearance refinement
+
+The original glass pass had an 88%-opaque beige surface, matching the search fill and suppressing most background detail. Inspection of the live preview confirmed a transparent sticky wrapper at z-index 30, an inner backdrop-filter stacking context, no top border, and no opaque intermediate background. The desktop header measured about 125px (72px main row plus 52px navigation and the separator).
+
+The refined header blends the configured warm-ivory background (80%) with the configured surface (20%), then uses that blend at 74% opacity with the same 18px blur and 130% saturation. Search retains an opaque beige surface with a faint token-derived inset edge. Main-row/search padding and navigation padding are reduced; 44px navigation targets and the existing active primary-container pill remain. The desktop header now measures about 109px; mobile/tablet remain about 65px. The bottom separator mixes the configured border at 35% opacity, and the sticky-only shadow uses 3% foreground. Browsers lacking either color mixing or backdrop filtering retain an opaque header; reduced-transparency preferences also restore an opaque header.
+
+Initial and sticky-scrolled screenshots at 390, 768 and 1440px are in `design/header-glass-refinement/`. Each scrolled capture was checked with actual category images behind the header, with the wrapper at top 0 and no horizontal overflow. The initial view has uniform page background behind it, so little blur is visible there by design. Desktop predictive search returned eight suggestions for “hijab”; mobile search opened with visible focus, and the navigation dialog opened above the header and closed with Escape. Screenshots preserve the actual development-store menu and text logo fallback.
+
+Compared with `design/reference/salamshop-approved-design.png`, the header now has a lighter ivory base, more distinct tonal search and closely connected rows. No separate updated merchant screenshot was attached to this request, so comparison against that image remains unavailable. Theme Check reported zero issues; header, cart, search and design-system validators, all asset JavaScript syntax checks and whitespace checks passed. Production/catalog data, logos and unrelated layouts were unchanged; no commit or publication was initiated.
 
 Select the header under the header section group. The existing menu setting ID is retained. All new labels/help/default text have Swedish and English schema translations.
 
@@ -23,7 +59,6 @@ Select the header under the header section group. The existing menu setting ID i
 | Meny / Menu | Select a Shopify menu; defaults to `main-menu` |
 | Fast sidhuvud vid rullning | Sticky header on by default |
 | Visa sökfunktion | Show desktop product search and mobile search access; on by default |
-| Bakgrund för sidhuvud | Optional override; blank inherits global surface color |
 | Logotypens bredd på dator | 80–280px, default 180px |
 | Logotypens bredd på mobil | 60–160px, default 100px; shrinks if space is tight |
 | Mobilmenyns bredd | Compact (up to 24rem) or full width |
@@ -32,7 +67,7 @@ Select the header under the header section group. The existing menu setting ID i
 | Länk för meddelande | Optional destination; blank renders plain announcement text |
 | Visa meddelande på mobil | On by default; effective when announcement is enabled |
 
-The header can be removed/re-added through its preset, is limited to one instance, and is enabled only in header groups. Global colors, fonts, spacing and the original logo remain in Theme settings. Recheck contrast when overriding the header background, especially controls, focus rings and text.
+The header can be removed/re-added through its preset, is limited to one instance, and is enabled only in header groups. Global colors, fonts, spacing and the original logo remain in Theme settings. Header colors are configured through those existing global color settings.
 
 ## Original logo
 

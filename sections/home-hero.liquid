@@ -27,7 +27,7 @@
   }
 {% endstyle %}
 
-<section class="home-section home-hero home-hero--{{ section.settings.height_mode }}{% if hero_image == blank %} home-hero--empty{% endif %} full-width"{% if section.settings.heading != blank %} aria-labelledby="HomeHero-{{ section.id }}"{% endif %}>
+<section class="home-section home-hero home-hero--{{ section.settings.height_mode }}{% if section.settings.full_width == false %} home-hero--contained{% endif %}{% if hero_image == blank %} home-hero--empty{% endif %} full-width"{% if section.settings.heading != blank %} aria-labelledby="HomeHero-{{ section.id }}"{% endif %}>
   <div class="home-hero__media" aria-hidden="true">
     {% if hero_image != blank %}
       <picture>
@@ -82,6 +82,7 @@
     { "type": "text", "id": "secondary_label", "label": "t:homepage.common.button_label" },
     { "type": "url", "id": "secondary_link", "label": "t:homepage.common.button_link" },
     { "type": "header", "content": "t:homepage.common.layout" },
+    { "type": "checkbox", "id": "full_width", "label": "t:homepage.hero.full_width", "info": "t:homepage.hero.full_width_info", "default": true },
     { "type": "select", "id": "height_mode", "label": "t:homepage.hero.height_mode", "info": "t:homepage.hero.height_mode_info", "options": [{ "value": "editorial", "label": "t:homepage.hero.height_editorial" }, { "value": "custom", "label": "t:homepage.hero.height_custom" }], "default": "editorial" },
     {
       "type": "text_alignment",

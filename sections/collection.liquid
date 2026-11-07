@@ -32,7 +32,7 @@
   endunless
 %}
 
-<div class="collection-page">
+<div class="collection-page" style="--collection-banner-fit: {{ section.settings.banner_image_fit | default: 'cover' }};">
   <header class="collection-intro collection-intro--{{ intro_layout }}{% if has_banner_image %} has-image{% endif %}">
     <nav class="collection-breadcrumbs" aria-label="{{ 'collection_page.breadcrumbs' | t | escape }}">
       <ol>
@@ -147,11 +147,11 @@
 
       <div class="collection-results">
         {% if collection.products_count > 0 %}
-          <div class="collection-product-grid" style="--collection-columns: {{ section.settings.columns_desktop }};">
+          <div class="collection-product-grid home-product-grid--homepage home-product-grid--{{ section.settings.card_density | default: 'comfortable' }}" style="--collection-columns: {{ section.settings.columns_desktop }}; --home-card-image-fit: {{ section.settings.image_fit | default: 'cover' }};">
             {% for product in collection.products %}
               {% assign image_loading = 'lazy' %}
               {% if forloop.index <= section.settings.columns_desktop %}{% assign image_loading = 'eager' %}{% endif %}
-              {% render 'product-card', product: product, image_ratio: section.settings.image_ratio, image_loading: image_loading %}
+              {% render 'product-card', product: product, image_ratio: section.settings.image_ratio, image_loading: image_loading, homepage_card: true, show_description: section.settings.show_short_description, button_style: section.settings.card_button_style %}
             {% endfor %}
           </div>
         {% elsif active_filter_count > 0 %}
@@ -188,6 +188,7 @@
     { "type": "header", "content": "t:collection_page.introduction" },
     { "type": "checkbox", "id": "show_banner", "label": "t:collection_page.show_banner", "default": true },
     { "type": "checkbox", "id": "show_collection_image", "label": "t:collection_page.show_collection_image", "default": true },
+    { "type": "select", "id": "banner_image_fit", "label": "t:collections_directory.image_fit", "options": [{ "value": "cover", "label": "t:homepage.products.fit_cover" }, { "value": "contain", "label": "t:homepage.products.fit_contain" }], "default": "cover" },
     { "type": "image_picker", "id": "banner_image", "label": "t:collection_page.banner_image", "info": "t:collection_page.banner_image_info" },
     { "type": "image_picker", "id": "mobile_banner_image", "label": "t:collection_page.mobile_banner_image", "info": "t:collection_page.mobile_banner_image_info" },
     {
@@ -211,6 +212,10 @@
       ], "default": "sidebar"
     },
     { "type": "header", "content": "t:collection_page.product_grid" },
+    { "type": "select", "id": "image_fit", "label": "t:homepage.products.image_fit", "options": [{ "value": "cover", "label": "t:homepage.products.fit_cover" }, { "value": "contain", "label": "t:homepage.products.fit_contain" }], "default": "cover" },
+    { "type": "checkbox", "id": "show_short_description", "label": "t:homepage.products.show_short_description", "default": false },
+    { "type": "select", "id": "card_button_style", "label": "t:homepage.products.button_style", "options": [{ "value": "filled", "label": "t:homepage.products.button_gold" }, { "value": "tonal", "label": "t:homepage.products.button_tonal" }], "default": "filled" },
+    { "type": "select", "id": "card_density", "label": "t:homepage.products.density", "options": [{ "value": "comfortable", "label": "t:homepage.products.density_comfortable" }, { "value": "compact", "label": "t:homepage.products.density_compact" }], "default": "comfortable" },
     { "type": "range", "id": "columns_desktop", "label": "t:collection_page.columns_desktop", "min": 3, "max": 5, "step": 1, "default": 4 },
     { "type": "range", "id": "products_per_page", "label": "t:collection_page.products_per_page", "min": 12, "max": 48, "step": 4, "default": 24 },
     {

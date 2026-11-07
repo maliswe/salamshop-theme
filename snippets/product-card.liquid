@@ -5,6 +5,14 @@
   @param {string} image_ratio - "square", "portrait" or "landscape"
   @param {string} image_loading - "eager" for the first visible row, otherwise "lazy"
   @param {boolean} [search_settings] - Respect search image and price visibility settings
+  @param {boolean} [homepage_card] - Shared premium homepage/collection layout with a product-page CTA
+  @param {boolean} [show_description] - Show a real product description on premium cards
+  @param {string} [button_style] - "filled" or "tonal" purchase link
+  @param {boolean} [recommendation_card] - Enable recommendation-specific action/settings
+  @param {boolean} [show_prices] - Recommendation price visibility
+  @param {boolean} [show_badges] - Recommendation availability/sale badge visibility
+  @param {boolean} [show_actions] - Recommendation action visibility
+  @param {boolean} [quick_add_excluded] - Product requires additional customer input
 {% enddoc %}
 
 {% liquid
@@ -15,6 +23,15 @@
   assign loading_value = image_loading | default: 'lazy'
   assign show_card_image = true
   assign show_card_price = true
+  assign show_card_badges = true
+  if recommendation_card
+    if show_prices == false
+      assign show_card_price = false
+    endif
+    if show_badges == false
+      assign show_card_badges = false
+    endif
+  endif
   if search_settings
     assign show_card_image = settings.search_show_images
     assign show_card_price = settings.search_show_prices
@@ -24,8 +41,18 @@
     assign card_on_sale = true
   endif
 %}
+{% capture card_price %}
+  <span class="price home-product-card__price">
+    <span class="header-visually-hidden">{{ 'discovery.price' | t }} </span>
+    {% if card_product.price_varies %}{{ 'discovery.from_price' | t }} {% endif %}
+    {{ card_product.price | money_with_currency }}
+    {% if card_product.compare_at_price > card_product.price and card_product.price_varies == false and card_product.compare_at_price_varies == false %}
+      <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ card_product.compare_at_price | money_with_currency }}</s>
+    {% endif %}
+  </span>
+{% endcapture %}
 
-<article class="product-card home-product-card">
+<article class="product-card home-product-card{% if homepage_card %} home-product-card--homepage{% endif %}"{% if homepage_card %} style="--home-card-focal-point: {{ card_image.presentation.focal_point | default: 'center' }};"{% endif %}>
   <a class="home-product-card__link" href="{{ card_url }}">
     {% if show_card_image %}
     <span class="home-product-card__media home-product-card__media--{{ ratio_class }}">
@@ -34,31 +61,38 @@
       {% else %}
         {{ 'product-1' | placeholder_svg_tag: 'home-placeholder-svg' }}
       {% endif %}
-      {% if card_on_sale or card_product.available == false %}
+      {% if show_card_badges %}{% if card_on_sale or card_product.available == false %}
         <span class="home-product-card__badges">
           {% if card_on_sale %}<span class="badge badge--accent">{{ 'product.sale' | t }}</span>{% endif %}
           {% unless card_product.available %}<span class="badge">{{ 'product.sold_out' | t }}</span>{% endunless %}
         </span>
-      {% endif %}
+      {% endif %}{% endif %}
     </span>
     {% endif %}
 
     <span class="product-card__content home-product-card__content">
-      {% unless show_card_image %}
+      {% unless show_card_image %}{% if show_card_badges %}
         {% if card_on_sale %}<span class="badge badge--accent">{{ 'product.sale' | t }}</span>{% endif %}
         {% unless card_product.available %}<span class="badge">{{ 'product.sold_out' | t }}</span>{% endunless %}
-      {% endunless %}
+      {% endif %}{% endunless %}
       <span class="home-product-card__title">{{ card_product.title | escape }}</span>
-      {% if show_card_price %}
-      <span class="price home-product-card__price">
-        <span class="header-visually-hidden">{{ 'discovery.price' | t }} </span>
-        {% if card_product.price_varies %}{{ 'discovery.from_price' | t }} {% endif %}
-        {{ card_product.price | money_with_currency }}
-        {% if card_product.compare_at_price > card_product.price and card_product.price_varies == false and card_product.compare_at_price_varies == false %}
-          <s><span class="header-visually-hidden">{{ 'discovery.compare_price' | t }} </span>{{ card_product.compare_at_price | money_with_currency }}</s>
+      {% if homepage_card %}
+        {% if show_description and card_product.description != blank %}
+          <span class="home-product-card__description">{{ card_product.description | strip_html | strip | truncate: 160 | escape }}</span>
         {% endif %}
-      </span>
+      {% elsif show_card_price %}
+        {{ card_price }}
       {% endif %}
     </span>
   </a>
+  {% if homepage_card %}
+    <div class="home-product-card__footer">
+      {% if show_card_price %}{{ card_price }}{% endif %}
+      {% if recommendation_card %}
+        {% unless show_actions == false %}{% render 'recommendation-card-action', product: card_product, quick_add_excluded: quick_add_excluded %}{% endunless %}
+      {% else %}
+        <a class="button{% if button_style == 'tonal' %} button--secondary{% endif %} home-product-card__buy" href="{{ card_url }}" aria-label="{{ 'homepage.buy_now_product' | t: product: card_product.title | escape }}">{{ 'homepage.buy_now' | t }}</a>
+      {% endif %}
+    </div>
+  {% endif %}
 </article>

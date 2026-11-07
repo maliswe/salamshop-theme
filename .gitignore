@@ -9,6 +9,8 @@ dist/
 .env
 .env.*
 
+design/*
+
 # OS generated files
 .DS_Store
 Thumbs.db

@@ -187,12 +187,14 @@
     },
     "hero": {
       "name": "Premiumhero",
+      "full_width": "Fullbreddshero",
+      "full_width_info": "Stäng av för en centrerad layout med rundade hörn. Reglagen för anpassad höjd finns kvar nedan.",
       "image": "Bild för dator",
       "mobile_image": "Bild för mobil",
       "mobile_image_info": "Valfri. Om ingen mobilbild väljs används bilden för dator.",
       "content_position": "Innehållets placering",
       "height_mode": "Höjdläge",
-      "height_mode_info": "Redaktionellt följer den godkända kompositionen. Anpassad höjd använder reglagen nedan.",
+      "height_mode_info": "Redaktionell fullbredd använder 600–720px på större skärmar; centrerad layout följer bildformatet. Anpassad höjd använder reglagen nedan.",
       "height_editorial": "Redaktionellt bildformat",
       "height_custom": "Anpassad höjd",
       "height_mobile": "Höjd på mobil",
@@ -209,8 +211,28 @@
       "label_override_info": "Lämna tomt för att använda kollektionens namn."
     },
     "featured_products": { "name": "Utvalda produkter" },
-    "new_arrivals": { "name": "Nyheter" },
+    "new_arrivals": { "name": "Nya produkter" },
+    "news": {
+      "name": "Nyheter",
+      "heading": "Nyheter",
+      "selected_blog": "Välj blogg",
+      "article_limit": "Antal artiklar",
+      "show_date": "Visa publiceringsdatum",
+      "show_excerpt": "Visa utdrag",
+      "columns_desktop": "Kolumner på dator",
+      "show_view_all": "Visa länken Visa alla"
+    },
     "products": {
+      "image_fit": "Bildanpassning i produktkort",
+      "fit_cover": "Täck (fyll bildytan)",
+      "fit_contain": "Anpassa (visa hela bilden)",
+      "show_short_description": "Visa kort produktbeskrivning",
+      "button_style": "Köpknappens stil",
+      "button_gold": "Guld",
+      "button_tonal": "Tonal",
+      "density": "Luft i produktkort",
+      "density_comfortable": "Luftig",
+      "density_compact": "Kompakt",
       "show_view_all": "Visa länken Visa alla",
       "product_limit": "Antal produkter",
       "columns_mobile": "Kolumner på mobil",
@@ -219,6 +241,7 @@
     },
     "editorial": {
       "name": "Redaktionell kampanj",
+      "full_width": "Fullbreddssektion",
       "button_style": "Knappstil",
       "image_position": "Bildens placering"
     },
@@ -241,7 +264,7 @@
       "featured_eyebrow": "Utvalt",
       "featured_heading": "Omsorgsfullt utvalda favoriter",
       "arrivals_eyebrow": "Senast hos oss",
-      "arrivals_heading": "Nyheter",
+      "arrivals_heading": "Nya produkter",
       "editorial_eyebrow": "Berättelser",
       "editorial_heading": "Tradition i ett samtida hem",
       "editorial_description": "<p>Skapa en personlig berättelse om ett sortiment, en säsong eller en kampanj.</p>",
@@ -252,6 +275,14 @@
       "newsletter_description": "<p>Ta del av nyheter, inspiration och utvalda berättelser från SalamShop.</p>",
       "newsletter_button": "Prenumerera"
     }
+  },
+  "collections_directory": {
+    "heading": "Utforska våra kategorier",
+    "show_images": "Visa kollektionsbilder",
+    "landscape": "Liggande (4:3)",
+    "image_fit": "Anpassning av kollektionsbild",
+    "density": "Rutnätets täthet",
+    "image_override": "Anpassad kollektionsbild"
   },
   "collection_page": {
     "name": "Premiumkollektion",
@@ -279,6 +310,9 @@
     "products_per_page": "Produkter per sida"
   },
   "product_page": {
+    "image_fit": "Anpassning av produktbild",
+    "show_collection_label": "Visa kollektionsetikett",
+    "show_short_description": "Visa kort produktbeskrivning",
     "name": "Premiumproduktsida",
     "gallery": "Produktmedia",
     "image_ratio": "Bildformat",
@@ -317,6 +351,13 @@
     }
   },
   "product_recommendations": {
+    "heading": "Du kanske också gillar",
+    "show_prices": "Visa produktpriser",
+    "show_badges": "Visa rea- och tillgänglighetsmärken",
+    "show_actions": "Visa köpknappar",
+    "quick_add_exclusions": "Produkter som kräver extra uppgifter",
+    "quick_add_exclusions_info": "Dessa produkter länkar alltid till produktsidan. Välj produkter som kräver personalisering eller val via appar.",
+
     "name": "Produktrekommendationer",
     "enabled": "Visa produktrekommendationer"
   },

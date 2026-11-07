@@ -187,12 +187,14 @@
     },
     "hero": {
       "name": "Premium hero",
+      "full_width": "Full-width hero",
+      "full_width_info": "Turn off to use the contained layout with rounded corners. Custom height controls remain available below.",
       "image": "Desktop image",
       "mobile_image": "Mobile image",
       "mobile_image_info": "Optional. The desktop image is used when no mobile image is selected.",
       "content_position": "Content position",
       "height_mode": "Height mode",
-      "height_mode_info": "Editorial follows the approved composition. Custom height uses the controls below.",
+      "height_mode_info": "Full-width editorial uses 600–720px on larger screens; contained uses image proportions. Custom height uses the controls below.",
       "height_editorial": "Editorial proportions",
       "height_custom": "Custom height",
       "height_mobile": "Mobile height",
@@ -210,7 +212,27 @@
     },
     "featured_products": { "name": "Featured products" },
     "new_arrivals": { "name": "New arrivals" },
+    "news": {
+      "name": "News",
+      "heading": "News",
+      "selected_blog": "Select blog",
+      "article_limit": "Number of articles",
+      "show_date": "Show publication date",
+      "show_excerpt": "Show excerpt",
+      "columns_desktop": "Desktop columns",
+      "show_view_all": "Show View all link"
+    },
     "products": {
+      "image_fit": "Product-card image fit",
+      "fit_cover": "Cover (fill image area)",
+      "fit_contain": "Contain (show full image)",
+      "show_short_description": "Show short product description",
+      "button_style": "Purchase button style",
+      "button_gold": "Gold",
+      "button_tonal": "Tonal",
+      "density": "Product-card spacing",
+      "density_comfortable": "Comfortable",
+      "density_compact": "Compact",
       "show_view_all": "Show View all link",
       "product_limit": "Number of products",
       "columns_mobile": "Mobile columns",
@@ -219,6 +241,7 @@
     },
     "editorial": {
       "name": "Editorial promotion",
+      "full_width": "Full-width section",
       "button_style": "Button style",
       "image_position": "Image position"
     },
@@ -253,6 +276,14 @@
       "newsletter_button": "Subscribe"
     }
   },
+  "collections_directory": {
+    "heading": "Explore our categories",
+    "show_images": "Show collection images",
+    "landscape": "Landscape (4:3)",
+    "image_fit": "Collection image fit",
+    "density": "Grid density",
+    "image_override": "Collection image override"
+  },
   "collection_page": {
     "name": "Premium collection",
     "introduction": "Introduction",
@@ -279,6 +310,9 @@
     "products_per_page": "Products per page"
   },
   "product_page": {
+    "image_fit": "Product image fit",
+    "show_collection_label": "Show collection label",
+    "show_short_description": "Show short product description",
     "name": "Premium product page",
     "gallery": "Product media",
     "image_ratio": "Image ratio",
@@ -317,6 +351,13 @@
     }
   },
   "product_recommendations": {
+    "heading": "You may also like",
+    "show_prices": "Show product prices",
+    "show_badges": "Show sale and availability badges",
+    "show_actions": "Show product actions",
+    "quick_add_exclusions": "Products requiring additional input",
+    "quick_add_exclusions_info": "These products always link to their details instead of quick add. Include products requiring personalization or app-provided selections.",
+
     "name": "Product recommendations",
     "enabled": "Show product recommendations"
   },

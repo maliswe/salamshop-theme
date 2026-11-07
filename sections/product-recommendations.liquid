@@ -3,18 +3,38 @@
 <script src="{{ 'product-recommendations.js' | asset_url }}" defer></script>
 
 {% if section.settings.enabled %}
-  <product-recommendations class="product-recommendations section" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related"{% unless recommendations.performed? and recommendations.products_count > 0 %} hidden{% endunless %}>
-    {% if recommendations.performed? and recommendations.products_count > 0 %}
+  {% liquid
+    assign excluded_ids = section.settings.quick_add_exclusions | map: 'id'
+    assign seen_ids = '|'
+  %}
+  {% capture recommendation_cards %}
+    {% if recommendations.performed? %}
+      {% for recommended_product in recommendations.products limit: section.settings.products_to_show %}
+        {% assign product_key = recommended_product.id | prepend: '|' | append: '|' %}
+        {% if recommended_product.id == product.id or seen_ids contains product_key %}{% continue %}{% endif %}
+        {% assign seen_ids = seen_ids | append: product_key %}
+        {% assign quick_add_excluded = false %}
+        {% if excluded_ids contains recommended_product.id %}{% assign quick_add_excluded = true %}{% endif %}
+        {% render 'product-card', product: recommended_product, image_ratio: section.settings.image_ratio, image_loading: 'lazy', homepage_card: true, recommendation_card: true, show_prices: section.settings.show_prices, show_badges: section.settings.show_badges, show_actions: section.settings.show_actions, quick_add_excluded: quick_add_excluded %}
+      {% endfor %}
+    {% endif %}
+  {% endcapture %}
+  {% assign recommendation_cards = recommendation_cards | strip %}
+  <product-recommendations class="product-recommendations section" aria-labelledby="RecommendationsHeading-{{ section.id }}" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}&intent=related" data-loading-label="{{ 'product.adding_to_cart' | t | escape }}" data-added-label="{{ 'cart.added' | t | escape }}" data-uncertain-label="{{ 'product_recommendations.add_uncertain' | t | escape }}" data-error-label="{{ 'product_recommendations.add_error' | t | escape }}"{% if recommendation_cards == blank %} hidden{% endif %}>
+    {% if recommendation_cards != blank %}
       <div class="container">
-        <h2>{{ section.settings.heading | escape }}</h2>
-        <div class="product-recommendations__grid" style="--recommendation-columns: {{ section.settings.columns_desktop }};">
-          {% for recommended_product in recommendations.products %}
-            {% render 'product-card', product: recommended_product, image_ratio: section.settings.image_ratio, image_loading: 'lazy' %}
-          {% endfor %}
+        <h2 id="RecommendationsHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+        <div class="product-recommendations__grid home-product-grid--homepage" style="--recommendation-columns: {{ section.settings.columns_desktop }}; --home-card-image-fit: {{ section.settings.image_fit | default: 'cover' }};">
+          {{ recommendation_cards }}
         </div>
       </div>
     {% endif %}
   </product-recommendations>
+  {% unless recommendations.performed? %}
+    <noscript><p><a class="button button--secondary" href="{{ routes.all_products_collection_url }}">{{ 'product_recommendations.browse_products' | t }}</a></p></noscript>
+  {% endunless %}
+{% else %}
+  {% style %}#shopify-section-{{ section.id }} { display: none; }{% endstyle %}
 {% endif %}
 
 {% schema %}
@@ -22,9 +42,14 @@
   "name": "t:product_recommendations.name",
   "settings": [
     { "type": "checkbox", "id": "enabled", "label": "t:product_recommendations.enabled", "default": true },
-    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "Du kanske också gillar" },
-    { "type": "range", "id": "products_to_show", "label": "t:homepage.products.product_limit", "min": 2, "max": 8, "step": 1, "default": 4 },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "t:product_recommendations.heading" },
+    { "type": "range", "id": "products_to_show", "label": "t:homepage.products.product_limit", "min": 2, "max": 10, "step": 1, "default": 4 },
     { "type": "range", "id": "columns_desktop", "label": "t:homepage.products.columns_desktop", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_prices", "label": "t:product_recommendations.show_prices", "default": true },
+    { "type": "checkbox", "id": "show_badges", "label": "t:product_recommendations.show_badges", "default": true },
+    { "type": "checkbox", "id": "show_actions", "label": "t:product_recommendations.show_actions", "default": true },
+    { "type": "product_list", "id": "quick_add_exclusions", "label": "t:product_recommendations.quick_add_exclusions", "info": "t:product_recommendations.quick_add_exclusions_info", "limit": 50 },
+    { "type": "select", "id": "image_fit", "label": "t:homepage.products.image_fit", "options": [{ "value": "cover", "label": "t:homepage.products.fit_cover" }, { "value": "contain", "label": "t:homepage.products.fit_contain" }], "default": "cover" },
     { "type": "select", "id": "image_ratio", "label": "t:homepage.products.image_ratio", "options": [{ "value": "portrait", "label": "t:homepage.options.portrait" }, { "value": "square", "label": "t:homepage.options.square" }], "default": "portrait" }
   ],
   "presets": [{ "name": "t:product_recommendations.name" }],

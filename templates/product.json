@@ -23,7 +23,7 @@
       "settings": {
         "image_ratio": "editorial",
         "information_surface": "plain",
-        "thumbnail_position": "side",
+        "thumbnail_position": "bottom",
         "enable_zoom": true,
         "show_vendor": false,
         "show_tax_note": true,

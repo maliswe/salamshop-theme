@@ -54,6 +54,7 @@
     }
   },
   "collections": {
+    "explore": "Utforska kollektionen",
     "title": "Kollektioner",
     "empty": "Det finns inga kollektioner att visa."
   },
@@ -76,7 +77,16 @@
     "no_results_html": "Inga resultat hittades för {{ terms }}",
     "results_for_html": "{{ count }} resultat hittades för {{ terms }}"
   },
+  "product_recommendations": {
+    "browse_products": "Utforska fler produkter",
+    "choose_options": "Välj alternativ",
+    "choose_product": "Välj alternativ: {{ title }}",
+    "add_product": "Lägg i varukorgen: {{ title }}",
+    "add_error": "Det gick inte att lägga till produkten. Försök igen.",
+    "add_uncertain": "Vi kunde inte bekräfta uppdateringen. Kontrollera varukorgen innan du försöker igen."
+  },
   "product": {
+    "in_stock": "I lager",
     "add_to_cart": "Lägg i varukorgen",
     "sold_out": "Slutsåld",
     "sale": "Rea",
@@ -173,6 +183,15 @@
     "close_search": "Stäng sökningen"
   },
   "homepage": {
+    "news": {
+      "heading": "Nyheter",
+      "read_more": "Läs mer",
+      "read_article": "Läs mer: {{ title }}",
+      "editor_empty": "Välj en blogg med publicerade artiklar för att visa nyheter här. Sektionen är dold för kunder tills artiklar finns tillgängliga."
+    },
+    "buy_now": "Köp nu",
+    "buy_now_product": "Köp nu: {{ product }}",
+    "categories_navigation": "Handla efter kategori",
     "view_all": "Visa alla",
     "newsletter": {
       "email": "E-postadress",

@@ -18,6 +18,7 @@ const sectionFiles = [
   'sections/home-featured-products.liquid',
   'sections/home-editorial.liquid',
   'sections/home-new-arrivals.liquid',
+  'sections/home-news.liquid',
   'sections/home-brand-values.liquid',
   'sections/home-newsletter.liquid'
 ];
@@ -30,13 +31,31 @@ for (const file of sectionFiles) {
 }
 
 const index = parseShopifyJson(read('templates/index.json'));
-const expectedTypes = sectionFiles.map(file => path.basename(file, '.liquid'));
+// New arrivals remains addable and validated, but News owns its former homepage slot.
+const expectedTypes = sectionFiles.filter(file => file !== 'sections/home-new-arrivals.liquid').map(file => path.basename(file, '.liquid'));
 for (const type of expectedTypes) {
   assert.ok(Object.values(index.sections).some(section => section.type === type), `Homepage is missing ${type}`);
 }
 assert.deepEqual(new Set(index.order), new Set(Object.keys(index.sections)), 'Homepage order and section map must match');
 assert.equal(index.sections.categories.block_order.length, 7, 'Default homepage must expose seven category blocks');
 assert.equal(index.sections.values.disabled, true, 'Unapproved brand claims stay disabled by default');
+assert.equal(index.sections.arrivals.type, 'home-news', 'Nyheter must display articles, not products');
+assert.ok(index.order.indexOf('arrivals') > index.order.indexOf('editorial'), 'News keeps its position after editorial');
+
+const news = schemaFor('sections/home-news.liquid');
+assert.ok(news.schema.settings.some(setting => setting.id === 'selected_blog' && setting.type === 'blog'), 'News needs a native Shopify blog picker');
+for (const id of ['heading', 'article_limit', 'show_date', 'show_excerpt', 'columns_desktop', 'show_view_all']) {
+  assert.ok(news.schema.settings.some(setting => setting.id === id), `News setting missing: ${id}`);
+}
+assert.match(news.source, /news_blog\.articles limit: section\.settings\.article_limit/);
+assert.match(news.source, /news_article\.url/);
+assert.match(news.source, /news_blog\.url/);
+assert.match(news.source, /news_article\.published_at \| time_tag/);
+assert.match(news.source, /news_article\.excerpt \| default: news_article\.content \| strip_html/);
+assert.match(news.source, /news_blog\.articles_count > 0/);
+assert.match(news.source, /if has_articles or request\.design_mode/);
+assert.match(news.source, /#shopify-section-{{ section.id }} \{ display: none; \}/, 'Empty storefront news must not leave wrapper spacing');
+assert.doesNotMatch(news.source, /product-grid|product-card|type": "collection"|buy_now|compare_at_price|money_with_currency/, 'News must not render commerce content');
 
 const hero = schemaFor('sections/home-hero.liquid');
 for (const id of ['image', 'mobile_image', 'eyebrow', 'heading', 'description', 'primary_label', 'primary_link', 'secondary_label', 'secondary_link', 'text_alignment', 'content_position', 'height_mobile', 'height_desktop', 'overlay_opacity']) {
@@ -86,7 +105,71 @@ assert.match(newsletter, /form\.errors/);
 const css = read('assets/homepage.css');
 assert.match(css, /@media \(min-width: 48rem\)/);
 assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-assert.doesNotMatch(css, /overflow-x:\s*(auto|scroll)/, 'Homepage must not rely on horizontal scrolling');
+// Only the category track may scroll horizontally; other homepage rules retain
+// the original ban. Match declarations and selectors rather than exempting a file.
+const cssRules = [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/([^{}]+)\{([^{}]*)\}/g)];
+let categoryScrollRules = 0;
+for (const [, selector, declarations] of cssRules) {
+  if (!/overflow(?:-x|-inline)?\s*:\s*(?:auto|scroll)\b/.test(declarations)) continue;
+  assert.equal(selector.trim(), '.home-categories__grid', 'Only the category track may scroll horizontally');
+  categoryScrollRules++;
+  assert.match(declarations, /scrollbar-width:\s*none/, 'Firefox scrollbar must stay hidden');
+  assert.match(declarations, /scroll-snap-type:\s*inline proximity/, 'Native category snap behavior');
+}
+assert.equal(categoryScrollRules, 1, 'Categories need exactly one native scrolling rule');
+assert.match(css, /\.home-categories__grid::-webkit-scrollbar\s*\{[^}]*display:\s*none/, 'WebKit/Chromium scrollbar must stay hidden');
+assert.match(css, /@container home-categories \(min-width: 60rem\)/, 'Desktop fit follows available category width');
+assert.match(categories.source, /role="region"[^>]*aria-label="[^>]*tabindex="0"/, 'Native track must be named and keyboard focusable');
+// The optional enhancement fixes partial native focus reveal; scrolling itself
+// remains CSS-driven. Check right/left visibility, desktop no-op and cleanup.
+const vm = require('node:vm');
+const tracks = new Map();
+class Track extends EventTarget {
+  constructor() {
+    super();
+    this.clientWidth = 300;
+    this.scrollWidth = 952;
+    this.scrolls = [];
+  }
+  getBoundingClientRect() { return { left: 0, right: 300 }; }
+  scrollBy(options) { this.scrolls.push(options); }
+}
+const trackContext = vm.createContext({
+  HTMLElement: Track,
+  AbortController,
+  getComputedStyle: () => ({ paddingInlineStart: '8px' }),
+  customElements: {
+    get: name => tracks.get(name),
+    define: (name, value) => { assert.ok(!tracks.has(name)); tracks.set(name, value); }
+  }
+});
+const trackSource = read('assets/home-categories.js');
+vm.runInContext(trackSource, trackContext);
+vm.runInContext(trackSource, trackContext);
+const track = new (tracks.get('salam-category-track'))();
+track.connectedCallback();
+track.connectedCallback();
+const card = { parentElement: track, getBoundingClientRect: () => ({ left: 230, right: 350 }) };
+card.closest = () => card;
+const focusCard = () => {
+  const event = new Event('focusin');
+  Object.defineProperty(event, 'target', { value: card });
+  track.dispatchEvent(event);
+};
+focusCard();
+assert.equal(track.scrolls.length, 1, 'Repeated connection must not duplicate focus listeners');
+assert.equal(track.scrolls[0].left, 58, 'Reveal the right edge plus focus inset');
+assert.equal(track.scrolls[0].behavior, 'instant', 'Focus reveal must not animate');
+card.getBoundingClientRect = () => ({ left: -20, right: 100 });
+focusCard();
+assert.equal(track.scrolls[1].left, -28, 'Reveal the left edge plus focus inset');
+track.scrollWidth = track.clientWidth;
+focusCard();
+assert.equal(track.scrolls.length, 2, 'Desktop grid must not scroll');
+track.scrollWidth = 952;
+track.disconnectedCallback();
+focusCard();
+assert.equal(track.scrolls.length, 2, 'Detached tracks must clean up listeners');
 assert.match(read('layout/theme.liquid'), /template\.name == 'index'[\s\S]*homepage\.css/);
 
-console.log('Homepage passed: seven editor sections/presets, JSON composition, shared product cards, responsive images/layout, customer newsletter form, localization hooks and reduced-motion support');
+console.log('Homepage passed: eight editor sections/presets, news blog picker/articles/empty states, JSON composition, preserved New arrivals, shared product cards, responsive images/layout, newsletter, localization and reduced-motion support');

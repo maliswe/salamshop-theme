@@ -1,0 +1,29 @@
+{% doc %}
+  Recommendation-only purchase action using the shared native/Ajax cart flow.
+  @param {product} product - Real recommended product
+  @param {boolean} [quick_add_excluded] - Merchant opt-out for additional inputs
+{% enddoc %}
+{% liquid
+  assign quick_variant = product.variants.first
+  assign quick_add_eligible = false
+  if product.has_only_default_variant and product.variants.size == 1 and quick_variant.available
+    unless product.requires_selling_plan or product.selling_plan_groups.size > 0 or product.template_suffix != blank or quick_add_excluded or product.metafields.custom.requires_personalization.value == true or product.metafields.custom.quick_add_disabled.value == true
+      assign quick_add_eligible = true
+    endunless
+  endif
+%}
+{% unless product.available %}
+  <button class="button home-product-card__buy recommendation-card__action" type="button" disabled>{{ 'product.sold_out' | t }}</button>
+{% elsif quick_add_eligible %}
+  {% assign quick_form_id = 'RecommendationQuickAdd-' | append: section.id | append: '-' | append: product.id %}
+  {% form 'product', product, id: quick_form_id, class: 'recommendation-quick-add' %}
+    <input type="hidden" name="id" value="{{ quick_variant.id }}">
+    <input type="hidden" name="quantity" value="1">
+    <button class="button home-product-card__buy recommendation-card__action" type="submit" data-quick-add-button aria-label="{{ 'product_recommendations.add_product' | t: title: product.title | escape }}">{{ 'product.add_to_cart' | t }}</button>
+    <span class="header-visually-hidden" data-quick-add-status role="status" aria-live="polite"></span>
+    <p class="recommendation-quick-add__error" data-quick-add-error role="alert" hidden></p>
+    <a class="recommendation-quick-add__recovery" href="{{ routes.cart_url }}" hidden data-quick-add-recovery>{{ 'cart.view_cart' | t }}</a>
+  {% endform %}
+{% else %}
+  <a class="button home-product-card__buy recommendation-card__action" href="{{ product.url }}" aria-label="{{ 'product_recommendations.choose_product' | t: title: product.title | escape }}">{{ 'product_recommendations.choose_options' | t }}</a>
+{% endunless %}

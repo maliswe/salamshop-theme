@@ -1,10 +1,10 @@
 {{ 'header.css' | asset_url | stylesheet_tag }}
 {% style %}
   #shopify-section-{{ section.id }} {
-    --header-background: {{ section.settings.header_background | default: settings.background_color }};
     --header-logo-width: {{ section.settings.logo_width }}px;
     --header-logo-width-mobile: {{ section.settings.mobile_logo_width }}px;
     {% if section.settings.sticky_header %}
+      --header-sticky-shadow: 0 0.125rem 0.5rem color-mix(in srgb, var(--color-foreground) 3%, transparent);
       position: sticky;
       inset-block-start: 0;
       z-index: 30;
@@ -100,7 +100,6 @@
     { "type": "link_list", "id": "menu", "label": "t:labels.menu", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky_header", "label": "t:header_settings.sticky", "default": true },
     { "type": "checkbox", "id": "show_search", "label": "t:header_settings.show_search", "default": true },
-    { "type": "color", "id": "header_background", "label": "t:header_settings.background", "info": "t:header_settings.background_info" },
     { "type": "header", "content": "t:header_settings.logo" },
     { "type": "paragraph", "content": "t:header_settings.logo_info" },
     { "type": "range", "id": "logo_width", "label": "t:header_settings.logo_width", "min": 80, "max": 280, "step": 10, "unit": "px", "default": 180 },

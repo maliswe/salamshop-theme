@@ -54,6 +54,7 @@
     }
   },
   "collections": {
+    "explore": "Explore collection",
     "title": "Collections",
     "empty": "No collections found."
   },
@@ -76,7 +77,16 @@
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
   },
+  "product_recommendations": {
+    "browse_products": "Explore more products",
+    "choose_options": "Choose options",
+    "choose_product": "Choose options: {{ title }}",
+    "add_product": "Add to cart: {{ title }}",
+    "add_error": "The product could not be added. Please try again.",
+    "add_uncertain": "We could not confirm the cart update. Check your cart before trying again."
+  },
   "product": {
+    "in_stock": "In stock",
     "add_to_cart": "Add to cart",
     "sold_out": "Sold out",
     "sale": "Sale",
@@ -173,6 +183,15 @@
     "close_search": "Close search"
   },
   "homepage": {
+    "news": {
+      "heading": "News",
+      "read_more": "Read more",
+      "read_article": "Read more: {{ title }}",
+      "editor_empty": "Select a blog with published articles to display news here. This section is hidden from customers until articles are available."
+    },
+    "buy_now": "Buy now",
+    "buy_now_product": "Buy now: {{ product }}",
+    "categories_navigation": "Shop by category",
     "view_all": "View all",
     "newsletter": {
       "email": "Email address",

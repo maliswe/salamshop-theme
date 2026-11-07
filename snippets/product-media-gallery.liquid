@@ -1,5 +1,5 @@
 {% if product.media.size > 0 %}
-  <product-media class="product-media product-media--thumbs-{{ section.settings.thumbnail_position }} product-media--{{ section.settings.image_ratio }}">
+  <product-media class="product-media product-media--thumbs-{{ section.settings.thumbnail_position }} product-media--{{ section.settings.image_ratio }}" style="--product-image-fit: {{ section.settings.image_fit | default: 'contain' }};">
     <div class="product-media__viewport" data-media-track>
       {% for media in product.media %}
         {% assign is_active = false %}

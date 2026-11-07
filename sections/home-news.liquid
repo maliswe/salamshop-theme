@@ -1,0 +1,73 @@
+{% liquid
+  assign news_blog = section.settings.selected_blog
+  assign has_articles = false
+  if news_blog != blank and news_blog.articles_count > 0
+    assign has_articles = true
+  endif
+  assign heading = section.settings.heading | default: news_blog.title
+  if heading == blank
+    assign heading = 'homepage.news.heading' | t
+  endif
+%}
+
+{% if has_articles or request.design_mode %}
+  <section class="home-section home-news" aria-labelledby="HomeNews-{{ section.id }}">
+    <div class="home-section__inner">
+      <div class="home-section__header">
+        <div class="home-section__heading-group">
+          <h2 id="HomeNews-{{ section.id }}">{{ heading | escape }}</h2>
+        </div>
+        {% if has_articles and section.settings.show_view_all %}
+          <a class="home-section__action" href="{{ news_blog.url }}">{{ 'homepage.view_all' | t }}</a>
+        {% endif %}
+      </div>
+
+      {% if has_articles %}
+        <div class="home-news__grid" style="--home-news-columns: {{ section.settings.columns_desktop }};">
+          {% for news_article in news_blog.articles limit: section.settings.article_limit %}
+            <article class="home-news-card">
+              {% if news_article.image != blank %}
+                <a class="home-news-card__media" href="{{ news_article.url }}" tabindex="-1" aria-hidden="true">
+                  {{ news_article.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '360, 540, 720, 960, 1200', sizes: '(min-width: 80rem) 400px, (min-width: 64rem) 30vw, (min-width: 48rem) 45vw, 100vw', alt: '' }}
+                </a>
+              {% endif %}
+              <div class="home-news-card__content">
+                <h3><a href="{{ news_article.url }}">{{ news_article.title | escape }}</a></h3>
+                {% if section.settings.show_date %}
+                  <div class="home-news-card__date">{{ news_article.published_at | time_tag: format: 'date' }}</div>
+                {% endif %}
+                {% if section.settings.show_excerpt %}
+                  {% assign summary = news_article.excerpt | default: news_article.content | strip_html | strip %}
+                  {% if summary != blank %}<p class="home-news-card__excerpt">{{ summary | truncatewords: 28 | escape }}</p>{% endif %}
+                {% endif %}
+                <a class="home-news-card__more" href="{{ news_article.url }}" aria-label="{{ 'homepage.news.read_article' | t: title: news_article.title | escape }}">{{ 'homepage.news.read_more' | t }} <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="home-news__empty"><p>{{ 'homepage.news.editor_empty' | t }}</p></div>
+      {% endif %}
+    </div>
+  </section>
+{% else %}
+  {% style %}#shopify-section-{{ section.id }} { display: none; }{% endstyle %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:homepage.news.name",
+  "class": "home-section-wrapper",
+  "enabled_on": { "templates": ["index"] },
+  "settings": [
+    { "type": "blog", "id": "selected_blog", "label": "t:homepage.news.selected_blog" },
+    { "type": "text", "id": "heading", "label": "t:homepage.common.heading", "default": "t:homepage.news.heading" },
+    { "type": "range", "id": "article_limit", "label": "t:homepage.news.article_limit", "min": 1, "max": 12, "step": 1, "default": 3 },
+    { "type": "checkbox", "id": "show_date", "label": "t:homepage.news.show_date", "default": true },
+    { "type": "checkbox", "id": "show_excerpt", "label": "t:homepage.news.show_excerpt", "default": true },
+    { "type": "select", "id": "columns_desktop", "label": "t:homepage.news.columns_desktop", "options": [{ "value": "3", "label": "3" }, { "value": "4", "label": "4" }], "default": "3" },
+    { "type": "checkbox", "id": "show_view_all", "label": "t:homepage.news.show_view_all", "default": true }
+  ],
+  "presets": [{ "name": "t:homepage.news.name" }]
+}
+{% endschema %}

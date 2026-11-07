@@ -19,7 +19,7 @@
       {% endif %}
     </div>
 
-    {% render 'product-grid', sort_recent: true, collection: arrivals_collection, limit: section.settings.product_limit, columns_desktop: section.settings.columns_desktop, columns_mobile: section.settings.columns_mobile, image_ratio: section.settings.image_ratio %}
+    {% render 'product-grid', sort_recent: true, collection: arrivals_collection, limit: section.settings.product_limit, columns_desktop: section.settings.columns_desktop, columns_mobile: section.settings.columns_mobile, image_ratio: section.settings.image_ratio, image_fit: section.settings.image_fit, show_description: section.settings.show_short_description, button_style: section.settings.card_button_style, card_density: section.settings.card_density %}
   </div>
 </section>
 
@@ -34,6 +34,10 @@
     { "type": "richtext", "id": "description", "label": "t:homepage.common.description" },
     { "type": "checkbox", "id": "show_view_all", "label": "t:homepage.products.show_view_all", "default": true },
     { "type": "header", "content": "t:homepage.common.layout" },
+    { "type": "select", "id": "image_fit", "label": "t:homepage.products.image_fit", "options": [{ "value": "cover", "label": "t:homepage.products.fit_cover" }, { "value": "contain", "label": "t:homepage.products.fit_contain" }], "default": "cover" },
+    { "type": "checkbox", "id": "show_short_description", "label": "t:homepage.products.show_short_description", "default": false },
+    { "type": "select", "id": "card_button_style", "label": "t:homepage.products.button_style", "options": [{ "value": "filled", "label": "t:homepage.products.button_gold" }, { "value": "tonal", "label": "t:homepage.products.button_tonal" }], "default": "filled" },
+    { "type": "select", "id": "card_density", "label": "t:homepage.products.density", "options": [{ "value": "comfortable", "label": "t:homepage.products.density_comfortable" }, { "value": "compact", "label": "t:homepage.products.density_compact" }], "default": "comfortable" },
     { "type": "range", "id": "product_limit", "label": "t:homepage.products.product_limit", "min": 2, "max": 12, "step": 1, "default": 4 },
     {
       "type": "select", "id": "columns_mobile", "label": "t:homepage.products.columns_mobile",
